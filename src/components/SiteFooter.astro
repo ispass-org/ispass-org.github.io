@@ -1,0 +1,103 @@
+---
+/**
+ * Site footer. Deliberately plain: contact, policies, and where the site
+ * itself comes from, so a future Web Chair can find the repository.
+ */
+interface FooterColumn {
+  title: string;
+  links: Array<{ label: string; href: string; external?: boolean }>;
+}
+
+interface Props {
+  title: string;
+  maintainedBy: string;
+  contactEmail?: string | null;
+  columns?: FooterColumn[];
+  note?: string | null;
+}
+
+const { title, maintainedBy, contactEmail = null, columns = [], note = null } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <p class="footer-title">{title}</p>
+      <p class="small muted">
+        IEEE International Symposium on Performance Analysis of Systems and Software
+      </p>
+      {note && <p class="small muted footer-note">{note}</p>}
+    </div>
+
+    {columns.map((column) => (
+      <nav class="footer-col" aria-label={column.title}>
+        <h2 class="eyebrow">{column.title}</h2>
+        <ul class="list-plain">
+          {column.links.map((link) => (
+            <li>
+              <a href={link.href} rel={link.external ? 'noopener' : undefined}>
+                {link.label}{link.external && <span class="ext" aria-hidden="true"> ↗</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+  </div>
+
+  <div class="wrap footer-base">
+    <p class="small muted">
+      Maintained by {maintainedBy}.
+      {contactEmail && (
+        <> Questions about this website: <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</>
+      )}
+    </p>
+    <p class="small muted">© {year} IEEE. This site sets no cookies and uses no trackers.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--s-9);
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .footer-inner {
+    display: grid;
+    gap: var(--s-6);
+    padding-block: var(--s-7) var(--s-5);
+    grid-template-columns: 1fr;
+  }
+
+  .footer-title {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
+  .footer-note { margin-top: var(--s-3); max-width: 34ch; }
+
+  .footer-col .eyebrow { margin-bottom: var(--s-3); }
+  .footer-col li + li { margin-top: var(--s-2); }
+  .footer-col a {
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: var(--step--1);
+  }
+  .footer-col a:hover { color: var(--accent); text-decoration: underline; }
+
+  .footer-base {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-5);
+    justify-content: space-between;
+    padding-block: var(--s-4) var(--s-6);
+    border-top: 1px solid var(--line);
+    margin-top: var(--s-2);
+  }
+
+  @media (min-width: 48rem) {
+    .footer-inner { grid-template-columns: 1.6fr repeat(auto-fit, minmax(9rem, 1fr)); }
+  }
+</style>

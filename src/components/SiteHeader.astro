@@ -1,0 +1,319 @@
+---
+/**
+ * Site header and primary navigation.
+ *
+ * Desktop: a single row of top-level groups, each opening a panel on hover or
+ * focus. The panels are plain CSS (:hover / :focus-within), so the menu works
+ * with JavaScript disabled and with a keyboard.
+ *
+ * Mobile: a <details> disclosure. Again no JavaScript — <details> is natively
+ * keyboard accessible and announces its expanded state to screen readers.
+ */
+import Logo from './Logo.astro';
+import type { NavSection } from '../lib/nav';
+import { isCurrent } from '../lib/nav';
+import type { CallToAction } from '../lib/phase';
+
+interface Props {
+  /** Accessible name of the home link, e.g. "ISPASS 2027". */
+  title: string;
+  /**
+   * Edition shown beside the logo, e.g. "2027". Omitted on the evergreen
+   * pages, where the logo stands alone.
+   */
+  edition?: string | null;
+  /** Where the wordmark links to. */
+  home: string;
+  sections: NavSection[];
+  pathname: string;
+  /** Phase-appropriate action, promoted into the header bar. */
+  action?: CallToAction | null;
+}
+
+const { title, edition = null, home, sections, pathname, action = null } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href={home} aria-label={`${title} home`}>
+      <Logo height="clamp(1.9rem, 1.55rem + 0.9vw, 2.4rem)" label="" />
+      {edition && <span class="wordmark-edition" aria-hidden="true">{edition}</span>}
+    </a>
+
+    <nav class="nav-desktop" aria-label="Main">
+      <ul class="nav-groups">
+        {sections.map((section) => (
+          <li class="nav-group">
+            <span class="nav-group-label">
+              {section.label}
+              <svg class="chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+            <div class="nav-panel">
+              <ul>
+                {section.items.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      aria-current={isCurrent(item.href, pathname) ? 'page' : undefined}
+                    >
+                      <span>{item.label}</span>
+                      {item.pending && <span class="nav-pending" title="Not published yet">soon</span>}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    {action && (
+      <a
+        class="btn btn-primary header-cta no-print"
+        href={action.href}
+        rel={action.external ? 'noopener' : undefined}
+      >
+        {action.label}
+        {action.external && <span class="ext" aria-hidden="true">↗</span>}
+      </a>
+    )}
+
+    <details class="nav-mobile">
+      <summary aria-label="Menu">
+        <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="burger-text">Menu</span>
+      </summary>
+      <div class="nav-mobile-panel">
+        <nav aria-label="Main, mobile">
+          {sections.map((section) => (
+            <section>
+              <h2 class="eyebrow">{section.label}</h2>
+              <ul class="list-plain">
+                {section.items.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      aria-current={isCurrent(item.href, pathname) ? 'page' : undefined}
+                    >
+                      <span>{item.label}</span>
+                      {item.pending && <span class="nav-pending">soon</span>}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </nav>
+        {action && (
+          <a class="btn btn-primary mobile-cta" href={action.href} rel={action.external ? 'noopener' : undefined}>
+            {action.label}
+            {action.external && <span class="ext" aria-hidden="true">↗</span>}
+          </a>
+        )}
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: saturate(140%) blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--s-4);
+    min-height: 4rem;
+  }
+
+  /* --- Wordmark --------------------------------------------------------- */
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    margin-right: auto;
+    padding-block: 0.35rem;
+    border-radius: var(--radius);
+  }
+  /* The edition sits on the logo's cap height, set apart by a hairline so it
+     reads as a label on the mark rather than as part of the wordmark. */
+  .wordmark-edition {
+    font-family: var(--font-text);
+    font-size: clamp(1rem, 0.9rem + 0.3vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    padding-left: 0.6rem;
+    border-left: 1px solid var(--line-strong);
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  /* --- Desktop navigation ----------------------------------------------- */
+
+  .nav-desktop { display: none; }
+
+  .nav-groups {
+    display: flex;
+    align-items: center;
+    gap: var(--s-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-group { position: relative; }
+
+  /* A label, not a control: the panel opens on hover and on focus-within, so
+     there is nothing here for a keyboard user to activate. Making it a button
+     with a permanently false aria-expanded would misreport the state. */
+  .nav-group-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    padding: 0.55rem 0.7rem;
+    border-radius: var(--radius);
+    color: var(--ink-2);
+    font-size: 0.94rem;
+    font-weight: 600;
+    cursor: default;
+    user-select: none;
+  }
+  .nav-group:hover .nav-group-label,
+  .nav-group:focus-within .nav-group-label { color: var(--ink); background: var(--surface-2); }
+  .chev { transition: transform 120ms ease; }
+  .nav-group:hover .chev,
+  .nav-group:focus-within .chev { transform: rotate(180deg); }
+
+  .nav-panel {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    min-width: 15rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-2);
+    padding: var(--s-2);
+    /* Hidden with opacity rather than display:none or visibility:hidden.
+       Both of those remove the links from the tab order, which would make
+       :focus-within unreachable and the whole menu keyboard-inaccessible
+       without JavaScript. The links stay tabbable; tabbing into one reveals
+       its panel. */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity 120ms ease, transform 120ms ease;
+  }
+  .nav-group:hover .nav-panel,
+  .nav-group:focus-within .nav-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav-panel ul { list-style: none; margin: 0; padding: 0; }
+  .nav-panel a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding: 0.5rem 0.7rem;
+    border-radius: var(--radius);
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 0.94rem;
+  }
+  .nav-panel a:hover { background: var(--surface-2); color: var(--ink); }
+  .nav-panel a[aria-current='page'] {
+    color: var(--accent);
+    background: var(--accent-wash);
+    font-weight: 600;
+  }
+
+  .nav-pending {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.05em 0.45em;
+  }
+
+  .header-cta { display: none; padding: 0.5em 1em; font-size: 0.92rem; }
+
+  /* --- Mobile navigation ------------------------------------------------- */
+
+  .nav-mobile { position: relative; }
+
+  .nav-mobile > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    list-style: none;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .nav-mobile > summary::-webkit-details-marker { display: none; }
+
+  .burger { display: grid; gap: 3px; }
+  .burger i { display: block; width: 16px; height: 2px; background: currentColor; border-radius: 1px; }
+
+  .nav-mobile-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    width: min(21rem, calc(100vw - 2rem));
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-2);
+    padding: var(--s-4);
+  }
+  .nav-mobile-panel section + section { margin-top: var(--s-4); }
+  .nav-mobile-panel .eyebrow { margin-bottom: var(--s-2); }
+  .nav-mobile-panel a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding: 0.55rem 0.5rem;
+    border-radius: var(--radius);
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+  .nav-mobile-panel a:hover { background: var(--surface-2); }
+  .nav-mobile-panel a[aria-current='page'] {
+    color: var(--accent);
+    background: var(--accent-wash);
+    font-weight: 600;
+  }
+  .mobile-cta { width: 100%; justify-content: center; margin-top: var(--s-4); }
+
+  @media (min-width: 62rem) {
+    .nav-desktop { display: block; }
+    .nav-mobile { display: none; }
+    .header-cta { display: inline-flex; }
+    .wordmark { margin-right: var(--s-5); }
+    .nav-groups { margin-right: auto; }
+  }
+</style>

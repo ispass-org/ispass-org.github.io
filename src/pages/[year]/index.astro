@@ -1,0 +1,265 @@
+---
+/**
+ * Conference homepage for one year — /2027/, /2028/, …
+ *
+ * There is exactly one of these. Which sections appear, in what order, and what
+ * the primary action is, all come from the conference phase (src/lib/phase.ts).
+ * Adding a year adds a directory under conferences/; no code changes.
+ */
+import type { GetStaticPaths } from 'astro';
+import ConferenceLayout from '../../layouts/ConferenceLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ImportantDates from '../../components/ImportantDates.astro';
+import Announcements from '../../components/Announcements.astro';
+import KeynoteCard from '../../components/KeynoteCard.astro';
+import SponsorGrid from '../../components/SponsorGrid.astro';
+import {
+  conferenceYears,
+  loadConference,
+  hasProgram,
+  hasSponsorSlots,
+  visibleDates,
+} from '../../lib/conferences';
+import { homePlan } from '../../lib/phase';
+import { formatDate } from '../../lib/dates';
+
+export const getStaticPaths = (() =>
+  conferenceYears().map((year) => ({ params: { year: String(year) } }))) satisfies GetStaticPaths;
+
+const year = Number(Astro.params.year);
+const c = loadConference(year);
+const meta = c.conference;
+const plan = homePlan(c);
+
+const sections = new Set(plan.sections);
+const keynotes = c.keynotes;
+const showKeynotes = sections.has('keynotes') && keynotes.length > 0;
+const showProgram = sections.has('program') && hasProgram(c);
+// Placeholder slots count here, so the homepage shows its final shape during
+// review. The nav's "soon" marker, by contrast, waits for a real sponsor.
+const showSponsors = sections.has('sponsors') && hasSponsorSlots(c);
+const upcomingDates = visibleDates(c);
+
+/** External systems worth surfacing on the homepage, once they exist. */
+const externalLinks = [
+  { label: 'Submit a paper', href: c.links.paper_submission, note: 'Paper submission system' },
+  { label: 'Register', href: c.links.registration, note: 'Conference registration' },
+  { label: 'Submit a poster', href: c.links.poster_submission, note: 'Poster abstracts' },
+  { label: 'Proceedings', href: c.links.proceedings, note: 'IEEE Xplore' },
+].filter((link): link is { label: string; href: string; note: string } => Boolean(link.href));
+
+/** Chairs confirmed so far, for the homepage summary. */
+const leadership = c.committee.roles.filter((role) => role.people.length > 0).slice(0, 4);
+
+const programPreview = showProgram
+  ? c.program.days.slice(0, 3).map((day) => ({
+      date: day.date,
+      label: day.label,
+      sessions: day.slots.flatMap((slot) => slot.sessions).filter((s) => s.kind === 'papers' || s.kind === 'keynote').length,
+    }))
+  : [];
+---
+
+<ConferenceLayout conference={c} title={meta.short_name} showHeaderAction={false}>
+  <Hero conference={c} status={plan.status} primary={plan.primary} secondary={plan.secondary} />
+
+  {sections.has('announcements') && c.announcements.length > 0 && (
+    <section class="section" aria-labelledby="h-news">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="h-news">Latest news</h2>
+          {c.announcements.length > 3 && (
+            <a class="section-more" href={`/${year}/news/`}>All announcements →</a>
+          )}
+        </div>
+        <Announcements conference={c} limit={3} />
+      </div>
+    </section>
+  )}
+
+  {sections.has('dates') && upcomingDates.length > 0 && (
+    <section class="section-alt" aria-labelledby="h-dates">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="h-dates">Important dates</h2>
+          <a class="section-more" href={`/${year}/dates/`}>All dates →</a>
+        </div>
+        <ImportantDates conference={c} limit={6} />
+      </div>
+    </section>
+  )}
+
+  {showProgram && (
+    <section class="section" aria-labelledby="h-program">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="h-program">Program</h2>
+          <a class="section-more" href={`/${year}/program/`}>Full schedule →</a>
+        </div>
+        <ul class="list-plain grid">
+          {programPreview.map((day) => (
+            <li class="card">
+              <p class="eyebrow">{formatDate(day.date)}</p>
+              <p class="preview-label">{day.label ?? 'Conference day'}</p>
+              <p class="small muted">{day.sessions} session{day.sessions === 1 ? '' : 's'}</p>
+              <p class="small"><a href={`/${year}/program/#day-${day.date}`}>View day →</a></p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {showKeynotes && (
+    <section class="section" aria-labelledby="h-keynotes">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="h-keynotes">Keynotes</h2>
+          <a class="section-more" href={`/${year}/keynotes/`}>Details →</a>
+        </div>
+        <div class="keynote-list">
+          {keynotes.map((keynote, index) => (
+            <KeynoteCard keynote={keynote} index={index} keynotesHref={`/${year}/keynotes/`} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {sections.has('about') && (
+    <section class="section-alt" aria-labelledby="h-about">
+      <div class="wrap about-grid">
+        <div>
+          <div class="section-head"><h2 id="h-about">About ISPASS</h2></div>
+          <p class="lede">
+            ISPASS is the leading forum for research on the measurement,
+            characterization, modelling and simulation of computer systems and
+            software — work concerned with how systems actually behave.
+          </p>
+          <p class="about-more">
+            <a class="btn btn-secondary" href={`/${year}/about/`}>About {meta.short_name}</a>
+            <a class="btn btn-secondary" href={`/${year}/cfp/`}>Call for Papers</a>
+          </p>
+        </div>
+        <ul class="list-plain facts">
+          <li><b>Held annually since</b><span>2000</span></li>
+          <li><b>Proceedings</b><span>IEEE Xplore</span></li>
+          <li><b>Artifact evaluation</b><span>Optional, IEEE badges</span></li>
+          <li><b>Sponsored by</b><span>IEEE Computer Society</span></li>
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {sections.has('venue') && (
+    <section class="section" aria-labelledby="h-venue">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="h-venue">Venue and travel</h2>
+          <a class="section-more" href={`/${year}/venue/`}>Venue details →</a>
+        </div>
+        <ul class="list-plain grid">
+          <li class="card">
+            <p class="eyebrow">Host</p>
+            <p class="card-value">{meta.host ?? <span class="tbd">TBD</span>}</p>
+            <p class="small muted">{[meta.city, meta.country].filter(Boolean).join(', ') || 'Location TBD'}</p>
+          </li>
+          <li class="card">
+            <p class="eyebrow">Venue</p>
+            <p class="card-value">{meta.venue ?? <span class="tbd">To be announced</span>}</p>
+            <p class="small"><a href={`/${year}/venue/`}>Directions and accessibility →</a></p>
+          </li>
+          <li class="card">
+            <p class="eyebrow">Getting there</p>
+            <p class="card-value">Travel and visas</p>
+            <p class="small">
+              <a href={`/${year}/travel/`}>Travel →</a> · <a href={`/${year}/visa/`}>Visa information →</a>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {sections.has('committee') && leadership.length > 0 && (
+    <section class="section" aria-labelledby="h-committee">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="h-committee">Organizing committee</h2>
+          <a class="section-more" href={`/${year}/committee/`}>Full committee →</a>
+        </div>
+        <ul class="list-plain grid">
+          {leadership.map((role) => (
+            <li class="card">
+              <p class="eyebrow">{role.role}</p>
+              {role.people.map((person) => (
+                <p class="card-value">
+                  {person.name}
+                  <span class="small muted card-sub">{person.affiliation ?? ''}</span>
+                </p>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {sections.has('links') && externalLinks.length > 0 && (
+    <section class="section" aria-labelledby="h-links">
+      <div class="wrap">
+        <div class="section-head"><h2 id="h-links">Conference systems</h2></div>
+        <ul class="list-plain grid">
+          {externalLinks.map((link) => (
+            <li>
+              <a class="card card-link" href={link.href} rel="noopener">
+                <p class="card-value">{link.label} <span class="ext" aria-hidden="true">↗</span></p>
+                <p class="small muted">{link.note}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {showSponsors && (
+    <section class="section-alt" aria-labelledby="h-sponsors">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="h-sponsors">Sponsors</h2>
+          <a class="section-more" href={`/${year}/sponsors/`}>All sponsors →</a>
+        </div>
+        <SponsorGrid sponsors={c.sponsors} />
+      </div>
+    </section>
+  )}
+</ConferenceLayout>
+
+<style>
+  .preview-label { font-family: var(--font-display); font-size: var(--step-1); margin-top: var(--s-1); }
+  .card-value { font-family: var(--font-display); font-size: var(--step-1); margin-block: var(--s-1) var(--s-2); }
+  .card-sub { display: block; font-family: var(--font-text); }
+
+  .keynote-list { display: grid; gap: var(--s-5); }
+
+  .about-grid { display: grid; gap: var(--s-6); }
+  .about-more { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-5); }
+
+  .facts { border-top: 1px solid var(--line); }
+  .facts li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding-block: var(--s-3);
+    border-bottom: 1px solid var(--line);
+    font-size: var(--step--1);
+  }
+  .facts b { color: var(--ink-3); font-weight: 600; }
+  .facts span { color: var(--ink); font-weight: 600; text-align: right; }
+
+  @media (min-width: 52rem) {
+    .about-grid { grid-template-columns: 1.5fr 1fr; gap: var(--s-8); align-items: start; }
+    .keynote-list { grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr)); }
+  }
+</style>

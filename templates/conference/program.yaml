@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# ISPASS {{YEAR}} technical program.
+#
+# Empty until sessions are assigned. The Program page shows a "not yet
+# published" notice while `days` is empty, so there is nothing to do here until
+# papers have been accepted.
+#
+# Structure, once you fill it in:
+#   days[]            one per conference day
+#     date            YYYY-MM-DD
+#     label           e.g. "Workshops & Tutorials"; defaults to the weekday
+#     slots[]         one row of the schedule, in time order
+#       start/end     HH:MM local time (program.timezone)
+#       sessions[]    one entry = one track. Two or more entries in the same
+#                     slot render side by side as parallel tracks.
+#         id          unique slug, used as the deep-link anchor
+#         kind        papers | keynote | break | social | poster | workshop |
+#                     tutorial | admin
+#         title, start, end, room, chair, speaker, description
+#         papers[]    title, authors[], award, badges[], recorded
+#
+# See conferences/2027/program.yaml in the repository history for a complete
+# worked example, or `git show` an earlier edition.
+# ---------------------------------------------------------------------------
+
+sample: false
+draft: true
+timezone: "UTC"
+note: null
+
+legend:
+  - symbol: "★"
+    meaning: "Best paper nominee"
+  - symbol: "◆"
+    meaning: "Artifact evaluated"
+
+days: []

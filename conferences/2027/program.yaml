@@ -1,0 +1,370 @@
+# ---------------------------------------------------------------------------
+# ISPASS 2027 technical program.
+#
+#  >>> EVERYTHING BELOW IS SAMPLE CONTENT. <<<
+#
+# `sample: true` makes the Program page render an unmissable banner, and
+# `npm run validate` refuses to build once the conference phase reaches
+# `program_published` while this flag is still set. Replace the days below with
+# the real schedule and set `sample: false`.
+#
+# Structure:
+#   days[]            one per conference day
+#     date            YYYY-MM-DD
+#     label           e.g. "Workshops & Tutorials"; defaults to the weekday
+#     slots[]         one row of the schedule, in time order
+#       start/end     HH:MM local time (program.timezone)
+#       sessions[]    one entry = one track. Two or more entries in the same
+#                     slot render side by side as parallel tracks.
+#         kind        papers | keynote | break | social | poster | workshop |
+#                     tutorial | admin
+#         papers[]    title, authors[], award, badges[], recorded
+#
+# Author names are written as free text exactly as they should appear, e.g.
+# "Jane Example (Example University)".
+# ---------------------------------------------------------------------------
+
+sample: true
+draft: true
+timezone: "America/New_York"
+note: null
+
+legend:
+  - symbol: "★"
+    meaning: "Best paper nominee"
+  - symbol: "◆"
+    meaning: "Artifact evaluated"
+
+days:
+  # ---------------------------------------------------------------- day 1 ---
+  - date: 2027-04-25
+    label: "Workshops & Tutorials"
+    note: "Sample day. Workshop and tutorial rooms are assigned once proposals are accepted."
+    slots:
+      - start: "08:00"
+        end: "09:00"
+        sessions:
+          - id: d1-registration
+            kind: admin
+            title: "Registration and breakfast"
+            start: "08:00"
+            end: "09:00"
+            room: "Foyer"
+
+      - start: "09:00"
+        end: "12:30"
+        sessions:
+          - id: d1-workshop-a
+            kind: workshop
+            title: "Workshop: Performance Modelling for Machine Learning Systems"
+            start: "09:00"
+            end: "12:30"
+            room: "Room A"
+            description: "Sample workshop entry."
+          - id: d1-tutorial-a
+            kind: tutorial
+            title: "Tutorial: Reproducible Simulation Workflows"
+            start: "09:00"
+            end: "12:30"
+            room: "Room B"
+            description: "Sample tutorial entry."
+
+      - start: "12:30"
+        end: "14:00"
+        sessions:
+          - id: d1-lunch
+            kind: break
+            title: "Lunch"
+            start: "12:30"
+            end: "14:00"
+
+      - start: "14:00"
+        end: "17:30"
+        sessions:
+          - id: d1-workshop-b
+            kind: workshop
+            title: "Workshop: Memory Systems Characterization"
+            start: "14:00"
+            end: "17:30"
+            room: "Room A"
+          - id: d1-tutorial-b
+            kind: tutorial
+            title: "Tutorial: Hardware Performance Counters in Practice"
+            start: "14:00"
+            end: "17:30"
+            room: "Room B"
+
+  # ---------------------------------------------------------------- day 2 ---
+  - date: 2027-04-26
+    label: "Main Conference"
+    slots:
+      - start: "08:00"
+        end: "08:45"
+        sessions:
+          - id: d2-breakfast
+            kind: break
+            title: "Breakfast"
+            start: "08:00"
+            end: "08:45"
+            room: "Foyer"
+
+      - start: "08:45"
+        end: "09:00"
+        sessions:
+          - id: d2-opening
+            kind: admin
+            title: "Welcome and opening remarks"
+            start: "08:45"
+            end: "09:00"
+            room: "Auditorium"
+
+      - start: "09:00"
+        end: "10:00"
+        sessions:
+          - id: d2-keynote
+            kind: keynote
+            title: "Keynote I"
+            start: "09:00"
+            end: "10:00"
+            room: "Auditorium"
+            speaker: "Speaker to be announced"
+            chair: "Program Chair"
+
+      - start: "10:00"
+        end: "10:30"
+        sessions:
+          - id: d2-coffee-1
+            kind: break
+            title: "Coffee break"
+            start: "10:00"
+            end: "10:30"
+
+      - start: "10:30"
+        end: "12:00"
+        sessions:
+          - id: d2-s1a
+            kind: papers
+            title: "Session 1A: Machine Learning Systems"
+            start: "10:30"
+            end: "12:00"
+            room: "Auditorium"
+            chair: "Session chair to be announced"
+            papers:
+              - title: "Characterizing Inference Latency in Disaggregated Serving Systems"
+                authors: ["Ada Example (Example University)", "Bo Sample (Sample Institute)"]
+                award: "Best Paper Nominee"
+                badges: ["Available", "Reviewed"]
+              - title: "A Measurement Study of Collective Communication on Multi-Accelerator Nodes"
+                authors: ["Chen Placeholder (Placeholder Labs)", "Dara Example (Example University)"]
+              - title: "Quantifying the Cost of Attention Kernels Across Three Accelerator Families"
+                authors: ["Eli Sample (Sample Institute)"]
+                recorded: true
+
+          - id: d2-s1b
+            kind: papers
+            title: "Session 1B: Memory and Storage"
+            start: "10:30"
+            end: "12:00"
+            room: "Room B"
+            chair: "Session chair to be announced"
+            papers:
+              - title: "Revisiting Page Fault Costs on Modern NVMe Storage"
+                authors: ["Fenna Example (Example University)", "Gil Placeholder (Placeholder Labs)"]
+                badges: ["Available"]
+              - title: "An Empirical Model of DRAM Refresh Overheads Under Mixed Workloads"
+                authors: ["Hana Sample (Sample Institute)", "Ivo Example (Example University)"]
+              - title: "Bandwidth Accounting for Tiered Memory Systems"
+                authors: ["Jo Placeholder (Placeholder Labs)"]
+
+      - start: "12:00"
+        end: "13:30"
+        sessions:
+          - id: d2-lunch
+            kind: break
+            title: "Lunch"
+            start: "12:00"
+            end: "13:30"
+
+      - start: "13:30"
+        end: "15:00"
+        sessions:
+          - id: d2-s2a
+            kind: papers
+            title: "Session 2A: Simulation and Modelling"
+            start: "13:30"
+            end: "15:00"
+            room: "Auditorium"
+            chair: "Session chair to be announced"
+            papers:
+              - title: "Sampling Strategies for Full-System Simulation at Scale"
+                authors: ["Kai Example (Example University)"]
+                award: "Best Paper Nominee"
+              - title: "Validating Architectural Simulators Against Production Hardware"
+                authors: ["Lena Sample (Sample Institute)", "Milo Placeholder (Placeholder Labs)"]
+                badges: ["Available", "Reviewed", "Reproducible"]
+              - title: "Fast Warm-Up for Cache Hierarchy Simulation"
+                authors: ["Nur Example (Example University)"]
+
+          - id: d2-s2b
+            kind: papers
+            title: "Session 2B: Tools and Benchmarks"
+            start: "13:30"
+            end: "15:00"
+            room: "Room B"
+            chair: "Session chair to be announced"
+            papers:
+              - title: "A Benchmark Suite for Sparse Linear Algebra on Accelerators"
+                authors: ["Omar Placeholder (Placeholder Labs)", "Pia Example (Example University)"]
+                badges: ["Available"]
+              - title: "Low-Overhead Continuous Profiling for Long-Running Services"
+                authors: ["Quinn Sample (Sample Institute)"]
+              - title: "Open Tracing Infrastructure for Heterogeneous Runtimes"
+                authors: ["Rune Example (Example University)"]
+                recorded: true
+
+      - start: "15:00"
+        end: "16:30"
+        sessions:
+          - id: d2-posters
+            kind: poster
+            title: "Poster session and refreshments"
+            start: "15:00"
+            end: "16:30"
+            room: "Foyer"
+            description: "Extended poster abstracts presented alongside afternoon refreshments."
+
+      - start: "16:30"
+        end: "18:00"
+        sessions:
+          - id: d2-s3
+            kind: papers
+            title: "Session 3: Security and Reliability"
+            start: "16:30"
+            end: "18:00"
+            room: "Auditorium"
+            chair: "Session chair to be announced"
+            papers:
+              - title: "Performance Implications of Confidential Computing on Accelerators"
+                authors: ["Sana Example (Example University)", "Tom Placeholder (Placeholder Labs)"]
+              - title: "Characterizing Fault Injection Campaigns on Out-of-Order Cores"
+                authors: ["Uma Sample (Sample Institute)"]
+                badges: ["Available", "Reviewed"]
+              - title: "The Cost of Memory Safety in Systems Software"
+                authors: ["Vik Example (Example University)"]
+
+      - start: "19:00"
+        end: "21:30"
+        sessions:
+          - id: d2-banquet
+            kind: social
+            title: "Conference banquet"
+            start: "19:00"
+            end: "21:30"
+            room: "Venue to be announced"
+            description: "Awards are presented during the banquet."
+
+  # ---------------------------------------------------------------- day 3 ---
+  - date: 2027-04-27
+    label: "Main Conference"
+    slots:
+      - start: "08:00"
+        end: "08:45"
+        sessions:
+          - id: d3-breakfast
+            kind: break
+            title: "Breakfast"
+            start: "08:00"
+            end: "08:45"
+            room: "Foyer"
+
+      - start: "08:45"
+        end: "09:45"
+        sessions:
+          - id: d3-keynote
+            kind: keynote
+            title: "Keynote II"
+            start: "08:45"
+            end: "09:45"
+            room: "Auditorium"
+            speaker: "Speaker to be announced"
+            chair: "General Chair"
+
+      - start: "09:45"
+        end: "10:15"
+        sessions:
+          - id: d3-coffee
+            kind: break
+            title: "Coffee break"
+            start: "09:45"
+            end: "10:15"
+
+      - start: "10:15"
+        end: "12:00"
+        sessions:
+          - id: d3-s4a
+            kind: papers
+            title: "Session 4A: Microarchitecture"
+            start: "10:15"
+            end: "12:00"
+            room: "Auditorium"
+            chair: "Session chair to be announced"
+            papers:
+              - title: "Understanding Branch Predictor Behaviour on Front-End Bound Workloads"
+                authors: ["Wren Example (Example University)"]
+                award: "Best Paper Nominee"
+              - title: "A Counter Architecture for Cycle Accounting on Out-of-Order Cores"
+                authors: ["Xan Sample (Sample Institute)", "Yara Placeholder (Placeholder Labs)"]
+              - title: "Measuring Prefetcher Interference in Shared Caches"
+                authors: ["Zev Example (Example University)"]
+
+          - id: d3-s4b
+            kind: papers
+            title: "Session 4B: Datacenter and Cloud"
+            start: "10:15"
+            end: "12:00"
+            room: "Room B"
+            chair: "Session chair to be announced"
+            papers:
+              - title: "Tail Latency Attribution in Multi-Tenant Serverless Platforms"
+                authors: ["Ana Placeholder (Placeholder Labs)"]
+                badges: ["Available"]
+              - title: "Energy Accounting for Mixed CPU and Accelerator Fleets"
+                authors: ["Ben Example (Example University)", "Cleo Sample (Sample Institute)"]
+              - title: "Characterizing Network Overheads in Distributed Training"
+                authors: ["Dev Example (Example University)"]
+
+      - start: "12:00"
+        end: "13:30"
+        sessions:
+          - id: d3-lunch
+            kind: break
+            title: "Lunch"
+            start: "12:00"
+            end: "13:30"
+
+      - start: "13:30"
+        end: "15:00"
+        sessions:
+          - id: d3-s5
+            kind: papers
+            title: "Session 5: Emerging Architectures"
+            start: "13:30"
+            end: "15:00"
+            room: "Auditorium"
+            chair: "Session chair to be announced"
+            papers:
+              - title: "Performance Analysis of Processing-in-Memory Sorting Primitives"
+                authors: ["Eve Sample (Sample Institute)"]
+                badges: ["Available", "Reviewed"]
+              - title: "An Early Look at Chiplet Interconnect Bottlenecks"
+                authors: ["Finn Example (Example University)", "Gia Placeholder (Placeholder Labs)"]
+
+      - start: "15:00"
+        end: "15:30"
+        sessions:
+          - id: d3-closing
+            kind: admin
+            title: "Awards and closing remarks"
+            start: "15:00"
+            end: "15:30"
+            room: "Auditorium"

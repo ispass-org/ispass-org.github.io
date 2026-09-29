@@ -1,0 +1,40 @@
+---
+/**
+ * Shown on every page of a past edition, so a visitor who arrives from a search
+ * result knows immediately that they are not looking at the current conference.
+ */
+import { loadSite } from '../lib/conferences';
+
+interface Props { year: number }
+const { year } = Astro.props;
+const site = loadSite();
+const current = site.current_year;
+---
+
+<div class="archived" role="note">
+  <div class="wrap archived-inner">
+    <span class="pill pill-muted">Archived</span>
+    <p>
+      This is the ISPASS {year} site and is no longer updated.
+      {current !== year && (
+        <> The current symposium is <a href={`/${current}/`}>ISPASS {current}</a>.</>
+      )}
+    </p>
+  </div>
+</div>
+
+<style>
+  .archived {
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .archived-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    flex-wrap: wrap;
+    padding-block: var(--s-3);
+    font-size: var(--step--1);
+    color: var(--ink-2);
+  }
+</style>

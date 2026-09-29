@@ -1,0 +1,10 @@
+# ---------------------------------------------------------------------------
+# Accepted poster abstracts.
+#
+# Leave `published: false` until notifications have gone out; the page then
+# shows the call for posters and the deadline instead of an empty list.
+# ---------------------------------------------------------------------------
+
+published: false
+note: null
+posters: []

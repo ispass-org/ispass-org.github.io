@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------------------
+# ISPASS 2027 — core facts.
+#
+# This is the first file to edit when a new year starts. Every page reads from
+# here; nothing below is repeated in any template.
+#
+# Anything not yet decided is `null`. The site renders `null` as "TBD" and,
+# where it matters, hides the surrounding section entirely. Do not write the
+# string "TBD" by hand and do not guess a value.
+# ---------------------------------------------------------------------------
+
+short_name: "ISPASS 2027"
+full_name: "IEEE International Symposium on Performance Analysis of Systems and Software"
+acronym: "ISPASS"
+
+# e.g. "26th". Left null until confirmed against the IEEE record.
+edition: null
+
+year: 2027
+
+city: "New York City"
+region: "New York"
+country: "USA"
+host: "New York University"
+
+# Building and room. Not yet confirmed.
+venue: null
+venue_address: null
+
+# Conference dates. Confirm with the General Chair before filling these in;
+# once set, they flow into the hero, the schedule, the ICS feed and the
+# structured event metadata automatically.
+start_date: null
+end_date: null
+
+# Local timezone of the conference. Used for the program and for calendar
+# export. New York is America/New_York.
+timezone: "America/New_York"
+
+# Lifecycle phase. Controls the homepage call to action and which sections
+# appear. See docs/content-model.md for the full list and what each one does.
+#   pre_cfp -> cfp_open -> submissions_open -> review -> accepted_papers
+#   -> registration_open -> program_published -> conference -> archived
+phase: "pre_cfp"
+
+tagline: "Performance analysis of systems and software"
+
+# Used verbatim as the meta description and the OpenGraph description.
+description: >-
+  ISPASS 2027, the IEEE International Symposium on Performance Analysis of
+  Systems and Software, will be hosted by New York University in New York City,
+  USA. ISPASS is the leading forum for research on performance analysis,
+  measurement, simulation and modelling of computer systems and software.
+
+# Accent colour for this edition. Each year may pick its own without touching
+# any other file; the rest of the palette is fixed. ISPASS navy — the colour of
+# the logo and of the original ispass.org links. Must clear 4.5:1 against white
+# (npm run validate checks it), because the accent is used for link text.
+accent: "#000080"
+
+maintained_by: "the ISPASS 2027 Organizing Committee"
+
+# A role address, not a personal one. Null until an address exists.
+contact_email: null
+
+archived: false

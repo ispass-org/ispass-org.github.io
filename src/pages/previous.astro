@@ -1,0 +1,156 @@
+---
+/**
+ * Previous symposia.
+ *
+ * Lists every edition, whether its site is served from this repository or still
+ * from the legacy host, and whether that archive currently works. The last part
+ * matters: as of the audit, most pre-2018 archives are broken, and sending a
+ * reader to a dead page without warning is worse than saying so.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { conferenceYears, loadSite } from '../lib/conferences';
+
+const site = loadSite();
+const managedHere = new Set(conferenceYears());
+
+const editions = site.past_conferences
+  .slice()
+  .sort((a, b) => b.year - a.year)
+  .map((edition) => ({
+    ...edition,
+    here: edition.managed_here || managedHere.has(edition.year),
+  }));
+
+const broken = editions.filter(
+  (e) => !e.here && (e.archive_status === 'broken' || e.archive_status === 'missing'),
+).length;
+
+const STATUS_NOTE: Record<string, string> = {
+  broken: 'Archive currently unavailable',
+  missing: 'Archive no longer online',
+  unknown: 'Archive not checked',
+};
+---
+
+<SiteLayout
+  title="Previous Symposia"
+  description="Every edition of the IEEE International Symposium on Performance Analysis of Systems and Software, from 2000 onwards."
+>
+  <div class="page-header">
+    <div class="wrap">
+      <p class="eyebrow">ISPASS</p>
+      <h1>Previous Symposia</h1>
+      <p class="lede">
+        ISPASS has been held annually since 2000. Editions hosted on this site are
+        linked directly; earlier ones link to their original archived sites.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    {broken > 0 && (
+      <aside class="callout callout-warning">
+        <b class="callout-title">Archive problems</b>
+        <p>
+          {broken} of the archived sites linked below do not currently load
+          correctly on the legacy host. They are listed for the record and marked
+          accordingly. Restoring them is tracked in the repository's migration
+          plan; the original URLs have deliberately not been changed.
+        </p>
+      </aside>
+    )}
+
+    <ol class="list-plain editions">
+      {editions.map((edition) => {
+        const place = [edition.city, edition.country].filter(Boolean).join(', ');
+        const href = edition.here ? `/${edition.year}/` : edition.url;
+        const reachable = edition.here || edition.archive_status === 'ok';
+        return (
+          <li class:list={['edition', !reachable && 'is-unreachable']}>
+            <span class="edition-year">{edition.year}</span>
+
+            <span class="edition-place">
+              {place || <span class="tbd">Location not recorded</span>}
+            </span>
+
+            <span class="edition-links small">
+              {href && reachable ? (
+                <a href={href} rel={edition.here ? undefined : 'noopener'}>
+                  {edition.here ? 'Conference site' : 'Archived site'}
+                  {!edition.here && <span aria-hidden="true"> ↗</span>}
+                </a>
+              ) : (
+                <span class="muted">{STATUS_NOTE[edition.archive_status] ?? 'Unavailable'}</span>
+              )}
+              {edition.proceedings && (
+                <a href={edition.proceedings} rel="noopener">Proceedings ↗</a>
+              )}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
+
+    <section class="urls">
+      <div class="section-head"><h2>A note on URLs</h2></div>
+      <p>
+        Historic ISPASS sites live at addresses of the form
+        <code>ispass.org/ispass2019/</code>. Those URLs are cited in papers, in
+        mailing-list archives and in search results, and this project treats them
+        as permanent: they are not changed, and any future migration keeps them
+        working through redirects rather than removing them.
+      </p>
+      <p>
+        New editions published from this repository use the shorter
+        <code>ispass.org/2027/</code> form.
+      </p>
+    </section>
+  </div>
+</SiteLayout>
+
+<style>
+  .page-header {
+    padding-block: var(--s-6) var(--s-5);
+    border-bottom: 1px solid var(--line);
+  }
+  .page-header h1 { font-size: var(--step-3); margin-top: var(--s-2); }
+  .page-header .lede { margin-top: var(--s-4); }
+
+  .editions { border-top: 1px solid var(--line); margin-top: var(--s-5); }
+
+  .edition {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: var(--s-1) var(--s-4);
+    padding-block: var(--s-4);
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .edition-year {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    font-size: var(--step-1);
+    color: var(--ink);
+  }
+  .edition-place { color: var(--ink-2); }
+  .edition-links {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+  }
+  .edition-links a { text-decoration: none; }
+  .edition-links a:hover { text-decoration: underline; }
+
+  .edition.is-unreachable .edition-year,
+  .edition.is-unreachable .edition-place { color: var(--ink-faint); }
+
+  .urls { margin-top: var(--s-8); }
+  .urls p { max-width: var(--measure); color: var(--ink-2); }
+  .urls p + p { margin-top: var(--s-4); }
+
+  @media (min-width: 44rem) {
+    .edition { grid-template-columns: 4.5rem 1fr auto; }
+    .edition-links { grid-column: auto; justify-content: flex-end; }
+  }
+</style>

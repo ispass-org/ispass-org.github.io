@@ -1,0 +1,83 @@
+---
+/**
+ * Wrapper for the evergreen ISPASS pages (/, /about/, /previous/, /policies/).
+ *
+ * Deliberately separate from ConferenceLayout: these pages outlive any single
+ * year, so their navigation points at the ISPASS layer, with one link across to
+ * the current conference.
+ */
+import BaseLayout from './BaseLayout.astro';
+import { loadConference, loadSite } from '../lib/conferences';
+import type { NavSection } from '../lib/nav';
+
+interface Props {
+  title: string;
+  description?: string | null;
+  noindex?: boolean;
+}
+
+const { title, description = null, noindex = false } = Astro.props;
+
+const site = loadSite();
+const current = loadConference(site.current_year);
+
+const nav: NavSection[] = [
+  {
+    id: 'conference',
+    label: 'Current Conference',
+    items: [
+      { label: current.conference.short_name, href: `/${site.current_year}/` },
+      { label: 'Call for Papers', href: `/${site.current_year}/cfp/` },
+      { label: 'Important Dates', href: `/${site.current_year}/dates/` },
+      { label: 'Committee', href: `/${site.current_year}/committee/` },
+    ],
+  },
+  {
+    id: 'community',
+    label: 'ISPASS',
+    items: [
+      { label: 'About ISPASS', href: '/about/' },
+      { label: 'Previous Symposia', href: '/previous/' },
+      { label: 'Steering Committee', href: '/steering-committee/' },
+      { label: 'Policies', href: '/policies/' },
+    ],
+  },
+];
+
+const footerColumns = [
+  {
+    title: 'ISPASS',
+    links: [
+      { label: 'About', href: '/about/' },
+      { label: 'Previous Symposia', href: '/previous/' },
+      { label: 'Policies', href: '/policies/' },
+    ],
+  },
+  {
+    title: current.conference.short_name,
+    links: [
+      { label: 'Conference home', href: `/${site.current_year}/` },
+      { label: 'Call for Papers', href: `/${site.current_year}/cfp/` },
+      { label: 'Registration', href: `/${site.current_year}/registration/` },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title === site.name ? `${site.name} — ${site.full_name}` : `${title} — ${site.name}`}
+  description={description ?? site.description}
+  brand={site.name}
+  brandHref="/"
+  nav={nav}
+  headerAction={{
+    label: `Go to ${current.conference.short_name}`,
+    href: `/${site.current_year}/`,
+  }}
+  footerColumns={footerColumns}
+  maintainedBy="the ISPASS Web Chair"
+  footerNote="The permanent home of the IEEE International Symposium on Performance Analysis of Systems and Software."
+  noindex={noindex}
+>
+  <slot />
+</BaseLayout>

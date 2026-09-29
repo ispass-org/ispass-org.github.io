@@ -1,0 +1,47 @@
+---
+/**
+ * Evergreen Markdown pages: site/about.md becomes /about/.
+ */
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Prose from '../components/Prose.astro';
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('evergreen');
+  return pages.map((page) => ({
+    params: { slug: page.data.slug ?? page.id },
+    props: { page },
+  }));
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<SiteLayout
+  title={page.data.title}
+  description={page.data.description}
+  noindex={page.data.draft}
+>
+  <div class="page-header">
+    <div class="wrap">
+      <p class="eyebrow">ISPASS</p>
+      <h1>{page.data.title}</h1>
+      {page.data.description && <p class="lede">{page.data.description}</p>}
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <Prose><Content /></Prose>
+  </div>
+</SiteLayout>
+
+<style>
+  .page-header {
+    padding-block: var(--s-6) var(--s-5);
+    border-bottom: 1px solid var(--line);
+  }
+  .page-header h1 { font-size: var(--step-3); margin-top: var(--s-2); }
+  .page-header .lede { margin-top: var(--s-4); }
+</style>

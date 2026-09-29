@@ -1,0 +1,12 @@
+# ---------------------------------------------------------------------------
+# Accepted workshops and tutorials.
+#
+# Leave `published: false` until proposals have been accepted; the page then
+# shows the call for proposals instead of an empty list.
+#
+# Each item may carry its own mini-schedule, which renders as a small table.
+# ---------------------------------------------------------------------------
+
+published: false
+note: null
+items: []

@@ -1,0 +1,57 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { loadSite } from '../lib/conferences';
+
+const site = loadSite();
+---
+
+<SiteLayout
+  title="Policies"
+  description="Conduct, open conference and publication policies that apply at every ISPASS."
+>
+  <div class="page-header">
+    <div class="wrap">
+      <p class="eyebrow">ISPASS</p>
+      <h1>Policies</h1>
+      <p class="lede">
+        These policies apply at every edition of ISPASS, to attendees, authors,
+        organizers and sponsor representatives alike.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <ul class="list-plain policy-list">
+      {site.policies.map((policy) => (
+        <li>
+          <a class="card card-link" href={policy.url} rel="noopener">
+            <p class="policy-title">{policy.title} <span class="ext" aria-hidden="true">↗</span></p>
+            {policy.description && <p class="small muted">{policy.description}</p>}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <section class="privacy">
+      <div class="section-head"><h2>This website</h2></div>
+      <p>
+        This site is a set of static files. It sets no cookies, includes no
+        analytics or advertising trackers, and sends no data about you to any
+        third party. External systems linked from it — registration, paper
+        submission and the IEEE digital library — operate under their own
+        privacy policies.
+      </p>
+    </section>
+  </div>
+</SiteLayout>
+
+<style>
+  .page-header { padding-block: var(--s-6) var(--s-5); border-bottom: 1px solid var(--line); }
+  .page-header h1 { font-size: var(--step-3); margin-top: var(--s-2); }
+  .page-header .lede { margin-top: var(--s-4); }
+
+  .policy-list { display: grid; gap: var(--s-4); }
+  .policy-title { font-family: var(--font-display); font-size: var(--step-1); margin-bottom: var(--s-1); }
+  .privacy { margin-top: var(--s-8); }
+  .privacy p { max-width: var(--measure); color: var(--ink-2); }
+</style>

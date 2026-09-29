@@ -1,0 +1,75 @@
+---
+import type { GetStaticPaths } from 'astro';
+import ConferenceLayout from '../../layouts/ConferenceLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ImportantDates from '../../components/ImportantDates.astro';
+import { conferenceYears, loadConference } from '../../lib/conferences';
+
+export const getStaticPaths = (() =>
+  conferenceYears().map((year) => ({ params: { year: String(year) } }))) satisfies GetStaticPaths;
+
+const year = Number(Astro.params.year);
+const c = loadConference(year);
+const { published, posters, note } = c.posters;
+---
+
+<ConferenceLayout
+  conference={c}
+  title="Accepted Posters"
+  description={`Extended poster abstracts accepted to ${c.conference.short_name}.`}
+  noindex={!published}
+>
+  <PageHeader
+    title="Accepted Posters"
+    eyebrow={c.conference.short_name}
+    lede={published ? `${posters.length} poster${posters.length === 1 ? '' : 's'} accepted.` : null}
+    breadcrumb={[{ label: c.conference.short_name, href: `/${year}/` }]}
+  />
+
+  <div class="wrap section">
+    {note && <p class="lede">{note}</p>}
+
+    {!published ? (
+      <>
+        <aside class="callout callout-tbd">
+          <b class="callout-title">Not yet decided</b>
+          <p>
+            Poster notifications for {c.conference.short_name} have not gone out. The
+            accepted posters will be listed here afterwards.
+          </p>
+        </aside>
+        <section class="next">
+          <div class="section-head"><h2>Submitting a poster</h2></div>
+          <p>
+            See the <a href={`/${year}/call-for-posters/`}>Call for Posters</a> and the
+            <a href={`/${year}/poster-submission/`}>submission instructions</a>.
+          </p>
+          <ImportantDates conference={c} categories={['poster']} compact calendar={false} />
+        </section>
+      </>
+    ) : (
+      <ol class="poster-list">
+        {posters.map((poster) => (
+          <li class="poster">
+            <p class="poster-title">
+              {poster.url ? <a href={poster.url} rel="noopener">{poster.title}</a> : poster.title}
+            </p>
+            {poster.authors.length > 0 && (
+              <p class="poster-authors small muted">{poster.authors.join('; ')}</p>
+            )}
+          </li>
+        ))}
+      </ol>
+    )}
+  </div>
+</ConferenceLayout>
+
+<style>
+  .next { margin-top: var(--s-7); }
+  .poster-list { padding-left: 1.5em; border-top: 1px solid var(--line); }
+  .poster { padding-block: var(--s-4); border-bottom: 1px solid var(--line); }
+  .poster-title { font-weight: 600; color: var(--ink); }
+  .poster-title a { color: inherit; text-decoration: none; }
+  .poster-title a:hover { color: var(--accent); text-decoration: underline; }
+  .poster-authors { margin-top: 0.2em; }
+</style>

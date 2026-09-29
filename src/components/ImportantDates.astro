@@ -1,0 +1,225 @@
+---
+/**
+ * The reusable important-dates list.
+ *
+ * Reads dates.yaml through `visibleDates` — never a hard-coded date. Renders
+ * chronologically, distinguishes past from upcoming, and always shows the
+ * timezone, because "December 15" means four different instants depending on
+ * who is reading.
+ *
+ * Expiry is computed at build time so the page works with JavaScript off. A
+ * tiny inline script re-checks at view time, which matters for a page that was
+ * built days ago and is being read on the morning of a deadline.
+ */
+import type { ConferenceData } from '../lib/conferences';
+import { visibleDates } from '../lib/conferences';
+import { classifyDates, deadlineInstant, formatDate, formatDateRange } from '../lib/dates';
+import type { dateCategories } from '../lib/schema';
+
+interface Props {
+  conference: ConferenceData;
+  /** Restrict to these categories. Empty = all. */
+  categories?: Array<(typeof dateCategories)[number]>;
+  /** Cap the number of rows, for the homepage summary. */
+  limit?: number;
+  /** Compact variant for sidebars. */
+  compact?: boolean;
+  /** Offer per-row calendar download. */
+  calendar?: boolean;
+}
+
+const { conference: c, categories = [], limit, compact = false, calendar = true } = Astro.props;
+
+let entries = visibleDates(c);
+if (categories.length) entries = entries.filter((e) => categories.includes(e.category));
+
+const classified = classifyDates(entries);
+const shown = limit ? classified.slice(0, limit) : classified;
+
+const anyScheduled = shown.some(({ entry }) => entry.date);
+const icsHref = `/${c.year}/dates.ics`;
+---
+
+{shown.length === 0 ? (
+  <p class="muted">No dates in this category yet.</p>
+) : (
+  <div class:list={['dates', compact && 'dates-compact']}>
+    <ol class="list-plain dates-list">
+      {shown.map(({ entry, status }) => {
+        const instant = deadlineInstant(entry);
+        const when = entry.end_date
+          ? formatDateRange(entry.date, entry.end_date)
+          : formatDate(entry.date);
+        return (
+          <li
+            class:list={['date-row', `is-${status}`]}
+            data-deadline={instant ? instant.toISOString() : undefined}
+          >
+            <div class="date-when">
+              <span class="date-value">{entry.date ? when : <span class="tbd">TBD</span>}</span>
+              <span class="date-tz small">
+                {entry.time ? `${entry.time} ` : ''}{entry.date ? entry.timezone : ''}
+              </span>
+            </div>
+
+            <div class="date-what">
+              <span class="date-name">{entry.name}</span>
+              {entry.extended && <span class="pill pill-warn">Extended</span>}
+              {status === 'next' && <span class="pill pill-accent">Next</span>}
+              {status === 'past' && <span class="pill pill-muted">Passed</span>}
+              {entry.note && <span class="date-note small muted">{entry.note}</span>}
+            </div>
+
+            {calendar && entry.date && (
+              <a class="date-cal small no-print" href={`${icsHref}?d=${entry.id}`} download>
+                <span aria-hidden="true">＋</span>
+                <span class="visually-hidden">Add {entry.name} to calendar</span>
+                <span class="date-cal-text" aria-hidden="true">Calendar</span>
+              </a>
+            )}
+          </li>
+        );
+      })}
+    </ol>
+
+    {calendar && anyScheduled && (
+      <p class="dates-foot small no-print">
+        <a href={icsHref} download>Download all dates (.ics)</a>
+        <span class="muted"> — times shown in the timezone listed for each deadline.</span>
+      </p>
+    )}
+  </div>
+)}
+
+{/* Re-evaluates "passed" in the reader's browser, so a page built last week is
+    still correct on the morning of a deadline. Purely additive: with scripting
+    disabled, the build-time classification stands. */}
+<script is:inline>
+  (() => {
+    const now = Date.now();
+    for (const row of document.querySelectorAll('.date-row[data-deadline]')) {
+      const due = Date.parse(row.getAttribute('data-deadline'));
+      if (Number.isNaN(due) || due >= now) continue;
+      if (row.classList.contains('is-past')) continue;
+      row.classList.remove('is-next', 'is-upcoming');
+      row.classList.add('is-past');
+      const pill = row.querySelector('.pill-accent');
+      if (pill) {
+        pill.classList.replace('pill-accent', 'pill-muted');
+        pill.textContent = 'Passed';
+      }
+    }
+    // The first row that is still in the future becomes the new "Next".
+    const upcoming = document.querySelector('.date-row:not(.is-past):not(.is-unscheduled)');
+    if (upcoming && !upcoming.querySelector('.pill-accent')) {
+      const marker = document.createElement('span');
+      marker.className = 'pill pill-accent';
+      marker.textContent = 'Next';
+      upcoming.querySelector('.date-name')?.after(marker);
+    }
+  })();
+</script>
+
+<style>
+  .dates-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .date-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'what cal'
+      'when cal';
+    gap: var(--s-1) var(--s-4);
+    align-items: start;
+    padding-block: var(--s-4);
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* min-width: 0 keeps long names from forcing the grid wider than its
+     container — which a narrow sidebar makes very visible. */
+  .date-when { grid-area: when; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-2); }
+  .date-what { grid-area: what; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+  .date-cal  { grid-area: cal; }
+
+  .date-value {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .date-tz { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .date-name { font-weight: 500; color: var(--ink-2); }
+  .date-note { flex-basis: 100%; }
+
+  /* Past deadlines: dimmed and struck, and also labelled "Passed" — the state
+     is never conveyed by styling alone. */
+  .date-row.is-past { color: var(--ink-faint); }
+  .date-row.is-past .date-value {
+    color: var(--ink-faint);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+  .date-row.is-past .date-name { color: var(--ink-faint); }
+
+  /* Offsets stay smaller than the page's minimum side gutter (1rem), so the
+     highlight never bleeds to the viewport edge on a phone. */
+  .date-row.is-next {
+    background: var(--accent-wash);
+    border-inline: 3px solid transparent;
+    border-left-color: var(--accent);
+    padding-inline: var(--s-3);
+    margin-inline: calc(var(--s-3) * -1);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .date-row.is-next .date-value { color: var(--ink); }
+
+  .date-row.is-unscheduled .date-name { color: var(--ink-3); }
+
+  .date-cal {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    color: var(--ink-3);
+    text-decoration: none;
+    padding: 0.2em 0.5em;
+    border-radius: var(--radius);
+    white-space: nowrap;
+  }
+  .date-cal:hover { color: var(--accent); background: var(--surface-2); }
+  .date-cal-text { display: none; }
+
+  .dates-foot { margin-top: var(--s-4); }
+
+  /* Two columns once there is room: date on the left, label on the right. */
+  @media (min-width: 40rem) {
+    .date-row {
+      grid-template-columns: 15rem 1fr auto;
+      grid-template-areas: 'when what cal';
+      align-items: baseline;
+    }
+    .date-when { flex-direction: column; gap: 0; }
+    .date-cal-text { display: inline; }
+  }
+
+  /* The compact variant lives in a ~19rem sidebar. It therefore always stacks:
+     the viewport-width media query above cannot know how narrow its container
+     is, and a two-column layout overflows the box. */
+  .dates-compact .date-row {
+    padding-block: var(--s-3);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'what' 'when';
+    margin-inline: 0;
+    padding-inline: 0;
+    background: none;
+    border-inline: 0;
+  }
+  .dates-compact .date-row.is-next {
+    border-left: 3px solid var(--accent);
+    padding-left: var(--s-3);
+    margin-left: calc(var(--s-3) * -1);
+  }
+  .dates-compact .date-cal { display: none; }
+  .dates-compact .date-name { font-weight: 600; color: var(--ink); }
+  .dates-compact .date-note { display: none; }
+</style>

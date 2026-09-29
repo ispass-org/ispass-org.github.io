@@ -1,0 +1,24 @@
+# ---------------------------------------------------------------------------
+# Every external system ISPASS {{YEAR}} points at.
+#
+# Keeping them here means a submission site or registration link is changed in
+# exactly one place, and that the homepage call-to-action switches itself on the
+# moment a link exists. A `null` link renders as "to be announced" rather than
+# as a dead button.
+#
+# CRITICAL: none of these may be copied from a previous year. HotCRP instances,
+# IEEE registration pages and CPS camera-ready portals are per-conference, and
+# a stale link sends authors' submissions to the wrong conference.
+# ---------------------------------------------------------------------------
+
+paper_submission: null          # e.g. https://ispass{{YEAR}}.hotcrp.com/
+poster_submission: null         # separate HotCRP instance for poster abstracts
+artifact_submission: null       # artifact evaluation HotCRP instance
+camera_ready: null              # IEEE CPS submission portal
+registration: null              # IEEE / host registration system
+travel_grant_application: null  # application form
+hotel_booking: null             # conference room block
+proceedings: null               # IEEE Xplore proceedings, after the conference
+workshop_proposals: null        # where to send workshop/tutorial proposals
+cfp_pdf: null                   # optional one-page CFP PDF in public/files/
+sponsorship: null               # sponsorship prospectus

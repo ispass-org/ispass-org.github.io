@@ -1,0 +1,62 @@
+# ---------------------------------------------------------------------------
+# ISPASS {{YEAR}} — core facts.
+#
+# This is the first file to edit. Every page reads from here; nothing below is
+# repeated in any template.
+#
+# Anything not yet decided is `null`. The site renders `null` as "TBD" and,
+# where it matters, hides the surrounding section entirely. Do not write the
+# string "TBD" by hand (`npm run validate` will reject it) and do not guess.
+# ---------------------------------------------------------------------------
+
+short_name: "ISPASS {{YEAR}}"
+full_name: "IEEE International Symposium on Performance Analysis of Systems and Software"
+acronym: "ISPASS"
+
+# e.g. "27th". Confirm against the IEEE record before filling in.
+edition: null
+
+year: {{YEAR}}
+
+city: null
+region: null
+country: null
+host: null
+
+venue: null
+venue_address: null
+
+start_date: null
+end_date: null
+
+# Local timezone of the conference, an IANA name such as America/New_York or
+# Europe/Zurich. Used for the program and for calendar export.
+timezone: "UTC"
+
+# Lifecycle phase. Controls the homepage call to action and which sections
+# appear. See docs/content-model.md.
+#   pre_cfp -> cfp_open -> submissions_open -> review -> accepted_papers
+#   -> registration_open -> program_published -> conference -> archived
+phase: "pre_cfp"
+
+tagline: "Performance analysis of systems and software"
+
+# Used verbatim as the meta description and the OpenGraph description.
+# Rewrite this once the city and host are known.
+description: >-
+  ISPASS {{YEAR}}, the IEEE International Symposium on Performance Analysis of
+  Systems and Software. ISPASS is the leading forum for research on performance
+  analysis, measurement, simulation and modelling of computer systems and
+  software.
+
+# Accent colour for this edition. Pick something that suits the host
+# institution; the rest of the palette is fixed. Must have enough contrast
+# against white for button text — check it before committing.
+accent: "#000080"
+
+maintained_by: "the ISPASS {{YEAR}} Organizing Committee"
+
+# A role address, not a personal one. Null until an address exists.
+contact_email: null
+
+archived: false

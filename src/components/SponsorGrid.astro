@@ -1,0 +1,169 @@
+---
+/**
+ * Sponsor logos by tier.
+ *
+ * Logo sizing comes from the tier's `prominence`, not from per-sponsor markup,
+ * so tiers stay visually consistent as sponsors come and go. A sponsor without
+ * a logo file falls back to its name set in type — better than a broken image.
+ *
+ * Entries marked `placeholder: true` render as empty, labelled tiles at the
+ * size a real logo in that tier would occupy. They exist so the page and the
+ * homepage can be reviewed in their final shape before any sponsor is
+ * confirmed, and they say so on screen.
+ */
+import type { Sponsors } from '../lib/schema';
+
+interface Props {
+  sponsors: Sponsors;
+  /** Hide tiers that have no sponsors yet. */
+  hideEmpty?: boolean;
+  /**
+   * Heading level for the tier names. The sponsors page renders these directly
+   * under its <h1> (so 2); the homepage renders them under a section <h2>
+   * (so 3).
+   */
+  headingLevel?: 2 | 3;
+}
+
+const { sponsors, hideEmpty = true, headingLevel = 3 } = Astro.props;
+const TierHeading = `h${headingLevel}` as 'h2' | 'h3';
+const tiers = hideEmpty
+  ? sponsors.tiers.filter((tier) => tier.sponsors.length > 0)
+  : sponsors.tiers;
+
+const anyPlaceholder = tiers.some((tier) => tier.sponsors.some((s) => s.placeholder));
+---
+
+{tiers.length === 0 ? (
+  <p class="tbd">Sponsors for this edition have not been confirmed yet.</p>
+) : (
+  <div class="sponsor-tiers">
+    {anyPlaceholder && (
+      <p class="placeholder-note small">
+        <span class="pill pill-warn">Placeholder</span>
+        Dashed tiles are reserved slots showing where sponsor logos will appear.
+        No sponsors have been confirmed yet.
+      </p>
+    )}
+
+    {tiers.map((tier) => (
+      <section class="tier">
+        <TierHeading class="tier-name">{tier.tier}</TierHeading>
+        {tier.sponsors.length === 0 ? (
+          <p class="tbd small">To be announced</p>
+        ) : (
+          <ul class:list={['list-plain', 'logos', `size-${tier.prominence}`]}>
+            {tier.sponsors.map((sponsor) => (
+              <li>
+                {sponsor.placeholder ? (
+                  <span class="slot">
+                    <span class="slot-label">Sponsor logo</span>
+                    <span class="visually-hidden">, placeholder for a {tier.tier} sponsor</span>
+                  </span>
+                ) : sponsor.url ? (
+                  <a href={sponsor.url} rel="noopener" class="logo-link">
+                    {sponsor.logo ? (
+                      <img src={sponsor.logo} alt={sponsor.name} loading="lazy" />
+                    ) : (
+                      <span class="logo-text">{sponsor.name}</span>
+                    )}
+                  </a>
+                ) : sponsor.logo ? (
+                  <img src={sponsor.logo} alt={sponsor.name} loading="lazy" />
+                ) : (
+                  <span class="logo-text">{sponsor.name}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))}
+  </div>
+)}
+
+<style>
+  .sponsor-tiers { display: grid; gap: var(--s-6); }
+
+  .placeholder-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2) var(--s-3);
+    color: var(--ink-3);
+  }
+
+  .tier-name {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: var(--s-2);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: var(--s-4);
+  }
+
+  .logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-5) var(--s-6);
+  }
+
+  /* One size scale per tier, shared by real logos and reserved slots, so a
+     placeholder occupies exactly the space its replacement will. */
+  .size-high   { --logo-h: 4.5rem;  --slot-w: 13rem; }
+  .size-medium { --logo-h: 3.25rem; --slot-w: 10rem; }
+  .size-low    { --logo-h: 2.5rem;  --slot-w: 8rem;  }
+
+  .logos img {
+    width: auto;
+    max-height: var(--logo-h);
+    object-fit: contain;
+    /* Logos arrive in every colour; a light plate keeps them legible in dark
+       mode without asking sponsors for a second asset. */
+    background: #fff;
+    border-radius: var(--radius);
+    padding: var(--s-2);
+  }
+
+  .logo-link { display: block; }
+  .logo-link:hover img { outline: 1px solid var(--accent-line); }
+
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    color: var(--ink-2);
+  }
+
+  .slot {
+    display: grid;
+    place-items: center;
+    /* A percentage width would resolve against the shrink-wrapped flex item
+       and collapse to the label. Size from the tier, capped by the viewport. */
+    width: var(--slot-w);
+    max-width: calc(100vw - var(--page-gutter) * 2);
+    padding-inline: var(--s-3);
+    text-align: center;
+    height: calc(var(--logo-h) + var(--s-2) * 2);
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius);
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent 0 8px,
+        color-mix(in srgb, var(--line) 45%, transparent) 8px 9px
+      ),
+      var(--surface);
+  }
+  .slot-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .size-low .slot-label { font-size: 0.66rem; }
+</style>

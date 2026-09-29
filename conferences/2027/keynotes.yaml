@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------------------
+# Keynote speakers.
+#
+# Placeholders (`placeholder: true`) render as "Speaker to be announced" cards
+# so the page has shape before speakers are confirmed. Fill in the fields and
+# set `placeholder: false` to publish one.
+#
+# Do NOT carry speakers over from a previous year.
+#
+# `photo` is a path under public/, e.g. /images/keynotes/jane-doe.jpg.
+# `npm run validate` fails if the file is missing. Always write `photo_alt`.
+# ---------------------------------------------------------------------------
+
+- id: keynote-1
+  placeholder: true
+  speaker: null
+  affiliation: null
+  title: null
+  abstract: null
+  bio: null
+  photo: null
+  photo_alt: null
+  url: null
+
+- id: keynote-2
+  placeholder: true
+  speaker: null
+  affiliation: null
+  title: null
+  abstract: null
+  bio: null
+  photo: null
+  photo_alt: null
+  url: null

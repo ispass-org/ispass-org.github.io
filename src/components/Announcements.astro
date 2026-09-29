@@ -1,0 +1,97 @@
+---
+/**
+ * News list, newest first, from announcements.yaml.
+ *
+ * Entries flagged `placeholder: true` are rendered with a visible marker so an
+ * example entry can never be mistaken for real news.
+ */
+import type { ConferenceData } from '../lib/conferences';
+import { sortedAnnouncements } from '../lib/conferences';
+import { formatDate } from '../lib/dates';
+
+interface Props {
+  conference: ConferenceData;
+  limit?: number;
+  /**
+   * Heading level for each item. The news page renders these directly under its
+   * <h1> (so 2); the homepage renders them under a section <h2> (so 3).
+   */
+  headingLevel?: 2 | 3;
+}
+
+const { conference: c, limit, headingLevel = 3 } = Astro.props;
+const Title = `h${headingLevel}` as 'h2' | 'h3';
+const all = sortedAnnouncements(c);
+const items = limit ? all.slice(0, limit) : all;
+---
+
+{items.length === 0 ? (
+  <p class="muted">No announcements yet.</p>
+) : (
+  <ol class="list-plain news">
+    {items.map((item) => (
+      <li class:list={['news-item', item.importance === 'high' && 'is-high']}>
+        <time class="news-date small" datetime={item.date}>{formatDate(item.date)}</time>
+        <div class="news-body">
+          <Title class="news-title">
+            {item.title}
+            {item.placeholder && <span class="pill pill-warn">Example entry</span>}
+          </Title>
+          {item.body && <p class="news-text">{item.body}</p>}
+          {item.link && (
+            <p class="news-link">
+              <a href={item.link} rel={item.link.startsWith('http') ? 'noopener' : undefined}>
+                {item.link_text ?? 'Read more'}
+                <span aria-hidden="true"> →</span>
+              </a>
+            </p>
+          )}
+        </div>
+      </li>
+    ))}
+  </ol>
+)}
+
+<style>
+  .news { border-top: 1px solid var(--line); }
+
+  .news-item {
+    display: grid;
+    gap: var(--s-1) var(--s-5);
+    padding-block: var(--s-5);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .news-date {
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    padding-top: 0.2em;
+  }
+
+  .news-title {
+    font-size: var(--step-1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2);
+  }
+  .news-text { margin-top: var(--s-2); color: var(--ink-2); max-width: var(--measure); }
+  .news-link { margin-top: var(--s-2); font-size: var(--step--1); }
+  .news-link a { text-decoration: none; font-weight: 600; }
+  .news-link a:hover { text-decoration: underline; }
+
+  /* High-importance items get a rule, not a colour block: the marker also
+     appears as text, so colour is never the only signal. */
+  /* The offset stays smaller than the page's minimum side gutter (1rem), so
+     the bar never sits flush against the viewport edge on a phone. */
+  .news-item.is-high {
+    border-left: 3px solid var(--accent);
+    padding-left: var(--s-3);
+    margin-left: calc(var(--s-3) * -1);
+  }
+
+  @media (min-width: 44rem) {
+    .news-item { grid-template-columns: 10rem 1fr; }
+  }
+</style>

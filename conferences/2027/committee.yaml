@@ -1,0 +1,64 @@
+# ---------------------------------------------------------------------------
+# ISPASS 2027 committee.
+#
+# Only confirmed people appear here. A role with an empty `people:` list is
+# rendered as "To be announced", which is the honest state early in the cycle —
+# delete the role only if ISPASS 2027 genuinely will not have it.
+#
+# Personal email addresses are deliberately not part of this schema. Link to a
+# public profile page with `url:` instead, and route contact through the role
+# address in conference.yaml. See docs/content-model.md.
+# ---------------------------------------------------------------------------
+
+roles:
+  - role: "General Chair"
+    people:
+      - name: "Brandon Reagen"
+        affiliation: "New York University"
+
+  - role: "Program Chair"
+    people: []
+
+  - role: "Finance Chair"
+    people: []
+
+  - role: "Registration Chair"
+    people: []
+
+  - role: "Web Chair"
+    people:
+      - name: "Konstantinos Kanellopoulos"
+        affiliation: "ETH Zürich"
+
+  - role: "Workshops and Tutorials Chair"
+    people: []
+
+  - role: "Sponsorship Chair"
+    people: []
+
+  - role: "Artifact Evaluation Chairs"
+    people: []
+
+  - role: "Submissions Chairs"
+    people: []
+
+  - role: "Student Travel Grants Chair"
+    people: []
+
+  - role: "Publications Chair"
+    people: []
+
+  - role: "Local Arrangements Chair"
+    people: []
+
+  - role: "Publicity Chairs"
+    people: []
+
+  - role: "Posters Chair"
+    people: []
+
+# The technical program committee, once the Program Chair has assembled it.
+# Rendered as a plain alphabetical list, grouped by initial.
+program_committee: []
+
+extra_groups: []

@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------------------
+# Sponsors and supporting organizations.
+#
+# Tiers render in the order written here. `prominence` controls logo size only.
+# Logos live in public/logos/ and must be referenced by path; `npm run validate`
+# fails if a referenced file is missing.
+#
+# Sponsors are NOT carried over between years. Each tier starts empty.
+# ---------------------------------------------------------------------------
+
+intro: >-
+  ISPASS is made possible by the support of its sponsors and of the IEEE
+  Computer Society technical committees that sponsor the symposium.
+
+contact: "Contact the ISPASS 2027 Sponsorship Chair for the sponsorship prospectus."
+prospectus: null
+
+tiers:
+  # Every entry below is a RESERVED SLOT (placeholder: true), not a sponsor.
+  # Each renders as an empty dashed tile at the size a real logo in that tier
+  # will occupy, labelled "Sponsor logo", with a notice above the grid.
+  #
+  # When a sponsor is confirmed, replace one slot in its tier with:
+  #   - name: "Company Name"
+  #     logo: /logos/company-name.svg     # file in public/logos/
+  #     url: "https://www.example.com/"
+  # Delete leftover slots before launch. `npm run validate` warns while any
+  # remain.
+  #
+  # Never give a placeholder a real company's name or logo.
+
+  - tier: "Gold"
+    prominence: high
+    sponsors:
+      - { name: "Gold sponsor", placeholder: true }
+      - { name: "Gold sponsor", placeholder: true }
+
+  - tier: "Silver"
+    prominence: medium
+    sponsors:
+      - { name: "Silver sponsor", placeholder: true }
+      - { name: "Silver sponsor", placeholder: true }
+      - { name: "Silver sponsor", placeholder: true }
+
+  - tier: "Bronze"
+    prominence: low
+    sponsors:
+      - { name: "Bronze sponsor", placeholder: true }
+      - { name: "Bronze sponsor", placeholder: true }
+      - { name: "Bronze sponsor", placeholder: true }
+      - { name: "Bronze sponsor", placeholder: true }
+
+  - tier: "Supporting Organizations"
+    prominence: medium
+    sponsors:
+      - { name: "Supporting organization", placeholder: true }
+      - { name: "Supporting organization", placeholder: true }
+      - { name: "Supporting organization", placeholder: true }

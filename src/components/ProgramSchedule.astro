@@ -1,0 +1,489 @@
+---
+/**
+ * The conference schedule.
+ *
+ * Layout strategy:
+ *  - Desktop (>= 60rem): a two-column grid per slot — a sticky-ish time gutter
+ *    on the left, and the slot's sessions in an auto-fit grid on the right.
+ *    Parallel tracks therefore sit side by side and are obviously parallel,
+ *    without a fixed-layout table that squeezes long paper titles.
+ *  - Mobile: the time gutter collapses to a label above each card and tracks
+ *    stack. This is a different layout, not a shrunken table.
+ *
+ * Filtering (day + free text) is progressive enhancement: the controls are
+ * inserted by script and every session is present in the HTML, so with
+ * JavaScript off the full schedule still renders and prints.
+ */
+import type { ConferenceData } from '../lib/conferences';
+import { formatDate, weekdayName } from '../lib/dates';
+import type { Session } from '../lib/schema';
+
+interface Props {
+  conference: ConferenceData;
+}
+
+const { conference: c } = Astro.props;
+const program = c.program;
+
+const dayLabel = (date: string, label: string | null) => label ?? weekdayName(date);
+
+/** Text blob a session is matched against when filtering. */
+function searchText(session: Session): string {
+  return [
+    session.title,
+    session.room,
+    session.chair,
+    session.speaker,
+    session.description,
+    ...session.papers.flatMap((p) => [p.title, ...p.authors]),
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+}
+
+const KIND_LABEL: Record<string, string> = {
+  keynote: 'Keynote',
+  break: 'Break',
+  social: 'Social',
+  poster: 'Posters',
+  workshop: 'Workshop',
+  tutorial: 'Tutorial',
+  admin: '',
+  papers: '',
+};
+---
+
+<div class="program" data-program>
+  {program.sample && (
+    <aside class="callout callout-warning sample-banner">
+      <b class="callout-title">Sample content</b>
+      <p>
+        This schedule is <strong>example data shipped with the website template</strong>.
+        It is not the ISPASS {c.year} program. Sessions, papers and authors below are
+        fictional placeholders.
+      </p>
+    </aside>
+  )}
+
+  {!program.sample && program.draft && (
+    <aside class="callout sample-banner">
+      <b class="callout-title">Provisional</b>
+      <p>This program is provisional and may change. Check back closer to the conference.</p>
+    </aside>
+  )}
+
+  <div class="program-toolbar no-print">
+    <nav class="day-nav" aria-label="Jump to day">
+      <ul class="list-plain">
+        {program.days.map((day) => (
+          <li>
+            <a href={`#day-${day.date}`} data-day-link={day.date}>
+              <span class="day-nav-label">{dayLabel(day.date, day.label)}</span>
+              <span class="day-nav-date small">{formatDate(day.date)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="program-tools" data-program-tools hidden>
+      <div class="filter-search">
+        <label for="program-search" class="visually-hidden">Search the program</label>
+        <input
+          id="program-search"
+          type="search"
+          placeholder="Search titles, authors, rooms…"
+          autocomplete="off"
+          data-program-search
+        />
+      </div>
+      <p class="filter-status small muted" role="status" data-program-status></p>
+    </div>
+  </div>
+
+  <p class="program-meta small muted">
+    All times are local to the conference
+    ({program.timezone.replace('_', ' ')}).
+    {program.legend.length > 0 && (
+      <>
+        {' '}
+        {program.legend.map((item) => (
+          <span class="legend-item"><b>{item.symbol}</b> {item.meaning}</span>
+        ))}
+      </>
+    )}
+    {program.note && <> {program.note}</>}
+  </p>
+
+  {program.days.map((day) => (
+    <section class="day" id={`day-${day.date}`} data-day={day.date}>
+      <header class="day-head">
+        <h2>{dayLabel(day.date, day.label)}</h2>
+        <p class="day-date">{formatDate(day.date)}</p>
+        {day.note && <p class="small muted day-note">{day.note}</p>}
+      </header>
+
+      <div class="slots">
+        {day.slots.map((slot) => (
+          <div class="slot" data-parallel={slot.sessions.length > 1 ? 'true' : undefined}>
+            <div class="slot-time">
+              <span class="t-start">{slot.start}</span>
+              <span class="t-dash" aria-hidden="true">–</span>
+              <span class="t-end">{slot.end}</span>
+            </div>
+
+            <div class="slot-sessions" data-count={slot.sessions.length}>
+              {slot.sessions.map((session) => (
+                <article
+                  class:list={['session', `kind-${session.kind}`]}
+                  id={`session-${session.id}`}
+                  data-session
+                  data-search={searchText(session)}
+                >
+                  <header class="session-head">
+                    <h3 class="session-title">{session.title}</h3>
+                    <p class="session-meta small">
+                      {KIND_LABEL[session.kind] && (
+                        <span class="pill pill-muted">{KIND_LABEL[session.kind]}</span>
+                      )}
+                      {session.room && (
+                        <span class="meta-item"><span class="meta-key">Room</span> {session.room}</span>
+                      )}
+                      {session.chair && (
+                        <span class="meta-item"><span class="meta-key">Chair</span> {session.chair}</span>
+                      )}
+                      {session.speaker && (
+                        <span class="meta-item"><span class="meta-key">Speaker</span> {session.speaker}</span>
+                      )}
+                      <span class="meta-item meta-time">{session.start}–{session.end}</span>
+                    </p>
+                    {session.description && <p class="session-desc small">{session.description}</p>}
+                  </header>
+
+                  {session.papers.length > 0 && (
+                    <ol class="list-plain papers">
+                      {session.papers.map((paper) => (
+                        <li class="paper" data-paper data-search={`${paper.title} ${paper.authors.join(' ')}`.toLowerCase()}>
+                          <p class="paper-title">
+                            {paper.award && (
+                              <span class="award" title={paper.award}>
+                                <span aria-hidden="true">★</span>
+                                <span class="visually-hidden">{paper.award}: </span>
+                              </span>
+                            )}
+                            {paper.url ? (
+                              <a href={paper.url} rel="noopener">{paper.title}</a>
+                            ) : (
+                              paper.title
+                            )}
+                          </p>
+                          {paper.authors.length > 0 && (
+                            <p class="paper-authors small">{paper.authors.join('; ')}</p>
+                          )}
+                          {(paper.badges.length > 0 || paper.recorded || paper.award) && (
+                            <p class="paper-tags">
+                              {paper.award && <span class="pill pill-accent">{paper.award}</span>}
+                              {paper.badges.map((badge) => (
+                                <span class="pill pill-good">◆ {badge}</span>
+                              ))}
+                              {paper.recorded && <span class="pill pill-muted">Recorded</span>}
+                            </p>
+                          )}
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <p class="empty-state" data-program-empty hidden>
+    No sessions match that search. <button type="button" data-program-clear class="btn btn-quiet">Clear the search</button>
+  </p>
+</div>
+
+<script>
+  /**
+   * Progressive enhancement for the schedule: free-text filtering across
+   * session titles, paper titles, authors, rooms and chairs.
+   *
+   * The whole schedule is already in the HTML. This only hides rows, so with
+   * scripting off nothing is lost.
+   */
+  const root = document.querySelector<HTMLElement>('[data-program]');
+  if (root) {
+    const tools = root.querySelector<HTMLElement>('[data-program-tools]');
+    const input = root.querySelector<HTMLInputElement>('[data-program-search]');
+    const status = root.querySelector<HTMLElement>('[data-program-status]');
+    const empty = root.querySelector<HTMLElement>('[data-program-empty]');
+    const clear = root.querySelector<HTMLButtonElement>('[data-program-clear]');
+
+    // Only reveal the controls once we know they will work.
+    tools?.removeAttribute('hidden');
+
+    const sessions = Array.from(root.querySelectorAll<HTMLElement>('[data-session]'));
+    const papers = Array.from(root.querySelectorAll<HTMLElement>('[data-paper]'));
+    const slots = Array.from(root.querySelectorAll<HTMLElement>('.slot'));
+    const days = Array.from(root.querySelectorAll<HTMLElement>('[data-day]'));
+
+    function apply(query: string) {
+      const q = query.trim().toLowerCase();
+
+      for (const paper of papers) {
+        const hit = !q || (paper.dataset.search ?? '').includes(q);
+        paper.hidden = !hit;
+      }
+
+      let visibleSessions = 0;
+      for (const session of sessions) {
+        const selfHit = !q || (session.dataset.search ?? '').includes(q);
+        session.hidden = !selfHit;
+        if (selfHit) visibleSessions += 1;
+        // When the session itself matched, show all of its papers again.
+        if (selfHit && q) {
+          const ownPapers = session.querySelectorAll<HTMLElement>('[data-paper]');
+          const anyPaperHit = Array.from(ownPapers).some((p) => !p.hidden);
+          if (!anyPaperHit) for (const p of ownPapers) p.hidden = false;
+        }
+      }
+
+      for (const slot of slots) {
+        const any = slot.querySelector('[data-session]:not([hidden])');
+        slot.hidden = !any;
+      }
+      for (const day of days) {
+        const any = day.querySelector('.slot:not([hidden])');
+        day.hidden = !any;
+      }
+
+      if (empty) empty.hidden = visibleSessions > 0;
+      if (status) {
+        status.textContent = q
+          ? `${visibleSessions} session${visibleSessions === 1 ? '' : 's'} match “${query.trim()}”.`
+          : '';
+      }
+    }
+
+    let timer: ReturnType<typeof setTimeout>;
+    input?.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => apply(input.value), 120);
+    });
+
+    clear?.addEventListener('click', () => {
+      if (input) input.value = '';
+      apply('');
+      input?.focus();
+    });
+  }
+</script>
+
+<style>
+  .program { --gutter: 6.5rem; }
+
+  .sample-banner { margin-bottom: var(--s-5); }
+
+  /* --- Toolbar ---------------------------------------------------------- */
+
+  .program-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding-block: var(--s-4);
+    border-block: 1px solid var(--line);
+    position: sticky;
+    top: 4rem;
+    z-index: 5;
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    backdrop-filter: blur(6px);
+  }
+
+  .day-nav ul { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .day-nav a {
+    display: block;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink-2);
+    line-height: 1.3;
+  }
+  .day-nav a:hover { border-color: var(--accent); color: var(--accent); }
+  .day-nav-label { display: block; font-weight: 600; font-size: 0.9rem; }
+  .day-nav-date { display: block; color: var(--ink-faint); }
+
+  .program-tools { display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; }
+  .filter-search input {
+    width: min(22rem, 60vw);
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--paper);
+  }
+  .filter-search input:focus-visible { outline: var(--focus); outline-offset: 1px; }
+
+  .program-meta { margin-block: var(--s-4) var(--s-6); }
+  .legend-item { margin-right: var(--s-4); white-space: nowrap; }
+  .legend-item b { color: var(--accent); }
+
+  /* --- Day -------------------------------------------------------------- */
+
+  .day { margin-bottom: var(--s-8); scroll-margin-top: 9rem; }
+
+  .day-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-2) var(--s-4);
+    padding-bottom: var(--s-3);
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: var(--s-5);
+  }
+  .day-head h2 { font-size: var(--step-2); }
+  .day-date { color: var(--ink-3); font-size: var(--step-0); }
+  .day-note { flex-basis: 100%; }
+
+  /* --- Slots ------------------------------------------------------------ */
+
+  .slot { padding-block: var(--s-4); border-bottom: 1px solid var(--line); }
+  .slot:last-child { border-bottom: none; }
+
+  .slot-time {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--ink-3);
+    font-size: var(--step--1);
+    margin-bottom: var(--s-2);
+  }
+
+  .slot-sessions { display: grid; gap: var(--s-4); }
+
+  /* --- Session cards ---------------------------------------------------- */
+
+  .session {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--s-4) var(--s-5);
+    background: var(--paper);
+    scroll-margin-top: 9rem;
+  }
+
+  .session-title { font-size: var(--step-1); line-height: 1.25; }
+
+  .session-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-1) var(--s-4);
+    margin-top: var(--s-2);
+    color: var(--ink-3);
+  }
+  .meta-key {
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.78em;
+    color: var(--ink-faint);
+    margin-right: 0.25em;
+  }
+  .meta-time { font-variant-numeric: tabular-nums; }
+
+  .session-desc { margin-top: var(--s-3); color: var(--ink-3); }
+
+  /* Breaks and social events are structural, not content: quieter, denser. */
+  .session.kind-break,
+  .session.kind-admin {
+    background: var(--surface);
+    border-style: dashed;
+    padding-block: var(--s-3);
+  }
+  .session.kind-break .session-title,
+  .session.kind-admin .session-title {
+    font-family: var(--font-text);
+    font-size: var(--step-0);
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+
+  .session.kind-keynote {
+    border-color: var(--accent-line);
+    background: var(--accent-wash);
+  }
+  .session.kind-social { background: var(--surface); }
+
+  /* --- Papers ----------------------------------------------------------- */
+
+  .papers { margin-top: var(--s-4); border-top: 1px solid var(--line); }
+  .paper { padding-block: var(--s-3); border-bottom: 1px solid var(--line); }
+  .paper:last-child { border-bottom: none; padding-bottom: 0; }
+
+  /* Title dominates; authors are secondary by size and colour. */
+  .paper-title {
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .paper-title a { color: inherit; text-decoration: none; }
+  .paper-title a:hover { color: var(--accent); text-decoration: underline; }
+  .paper-authors { color: var(--ink-3); margin-top: 0.2em; }
+  .paper-tags { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-2); }
+  .award { color: var(--accent); margin-right: 0.3em; }
+
+  .empty-state { padding: var(--s-6) 0; color: var(--ink-3); }
+
+  /* --- Desktop ----------------------------------------------------------
+     Time moves into a left gutter and parallel tracks sit side by side.    */
+
+  @media (min-width: 60rem) {
+    .slot {
+      display: grid;
+      grid-template-columns: var(--gutter) 1fr;
+      gap: var(--s-5);
+      align-items: start;
+    }
+    .slot-time {
+      flex-direction: column;
+      gap: 0;
+      align-items: flex-start;
+      margin-bottom: 0;
+      padding-top: var(--s-4);
+      font-size: var(--step-0);
+    }
+    .t-dash { display: none; }
+    .t-end { color: var(--ink-faint); font-weight: 400; }
+    .t-end::before { content: '– '; }
+
+    .slot-sessions[data-count='2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .slot-sessions[data-count='3'] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    /* A parallel slot gets a visible bracket, so "these run at the same time"
+       is legible without reading the times. */
+    .slot[data-parallel] .slot-sessions {
+      position: relative;
+      padding-left: var(--s-4);
+      border-left: 2px solid var(--accent-line);
+    }
+  }
+
+  /* --- Print ------------------------------------------------------------- */
+
+  @media print {
+    .program-toolbar, .empty-state { display: none; }
+    .day { break-before: page; margin-bottom: var(--s-5); }
+    .day:first-of-type { break-before: auto; }
+    .slot, .session { break-inside: avoid; }
+    .session { border-radius: 0; padding: var(--s-2) var(--s-3); }
+    .slot-sessions { gap: var(--s-2); }
+  }
+</style>

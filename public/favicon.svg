@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="t">
+  <title id="t">ISPASS</title>
+  <rect width="256" height="256" rx="56" fill="#000080"/>
+  <path fill="#ffffff" transform="translate(40.00 46.48) scale(0.9263)" d="M88 0h102v44h-102zM44 66h146v44h-146zM0 132h190v44h-190z"/>
+</svg>

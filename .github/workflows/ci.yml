@@ -1,0 +1,39 @@
+# Checks every pull request and every push to main.
+#
+# Nothing here deploys. It answers one question: is this change safe to merge?
+# Content is validated first, because malformed conference data is the most
+# likely mistake and the cheapest to catch.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Validate conference content
+        run: npm run validate
+      - name: Type-check
+        run: npm run check
+      - name: Build
+        run: npm run build:only
+      - name: Lint the built site
+        run: npm run lint
+      # Lets a reviewer download exactly what would be published.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist
+          retention-days: 14

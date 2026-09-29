@@ -1,0 +1,122 @@
+---
+import { siteConfig } from '../lib/site-config.mjs';
+/**
+ * The only <html> document in the site.
+ *
+ * Owns: metadata, canonical URLs, OpenGraph, theme colour, the skip link, and
+ * the accent colour injected from conference.yaml. Every page renders through
+ * here, directly or through ConferenceLayout.
+ */
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import type { NavSection } from '../lib/nav';
+import type { CallToAction } from '../lib/phase';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Site name (the home link's accessible name) and its link target. */
+  brand: string;
+  brandHref: string;
+  /** Edition label beside the logo, e.g. "2027". Omit for evergreen pages. */
+  brandEdition?: string | null;
+  nav: NavSection[];
+  headerAction?: CallToAction | null;
+  footerColumns?: Array<{ title: string; links: Array<{ label: string; href: string; external?: boolean }> }>;
+  maintainedBy: string;
+  contactEmail?: string | null;
+  footerNote?: string | null;
+  /**
+   * Per-edition accent colour from conference.yaml. Injected as the seed, from
+   * which the light and dark accents are derived — see src/styles/tokens.css.
+   */
+  accent?: string;
+  /** Keep a page out of search results (drafts, phase-gated stubs). */
+  noindex?: boolean;
+  /** JSON-LD, serialised into a script tag. */
+  structuredData?: unknown;
+  /** Extra class on <main>, used by the program page for print rules. */
+  mainClass?: string;
+}
+
+const {
+  title,
+  description,
+  brand,
+  brandHref,
+  brandEdition = null,
+  nav,
+  headerAction = null,
+  footerColumns = [],
+  maintainedBy,
+  contactEmail = null,
+  footerNote = null,
+  accent = '#000080',
+  noindex = false,
+  structuredData,
+  mainClass = '',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.origin).href;
+const ogImage = new URL('/images/og-default.png', Astro.site ?? siteConfig.origin).href;
+---
+
+<!doctype html>
+<html lang="en" style={`--accent-seed: ${accent};`}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="ISPASS" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Matches the header background, so mobile browser chrome blends in. -->
+    <meta name="theme-color" content="#ffffff" />
+
+    {structuredData && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
+
+    <slot name="head" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <SiteHeader
+      title={brand}
+      edition={brandEdition}
+      home={brandHref}
+      sections={nav}
+      pathname={Astro.url.pathname}
+      action={headerAction}
+    />
+
+    <main id="main" class={mainClass} tabindex="-1">
+      <slot />
+    </main>
+
+    <SiteFooter
+      title={brand}
+      maintainedBy={maintainedBy}
+      contactEmail={contactEmail}
+      columns={footerColumns}
+      note={footerNote}
+    />
+  </body>
+</html>

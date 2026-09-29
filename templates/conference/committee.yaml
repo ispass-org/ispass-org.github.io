@@ -1,0 +1,63 @@
+# ---------------------------------------------------------------------------
+# ISPASS {{YEAR}} committee.
+#
+# Only confirmed people appear here. A role with an empty `people:` list renders
+# as "To be announced", which is the honest state early in the cycle — delete a
+# role only if ISPASS {{YEAR}} genuinely will not have it, and add roles this
+# edition introduces.
+#
+# NOTHING has been carried over from the previous year. Every name must be
+# confirmed for THIS edition before being added.
+#
+# Personal email addresses are deliberately not part of this schema. Link to a
+# public profile page with `url:` instead. See docs/content-model.md.
+# ---------------------------------------------------------------------------
+
+roles:
+  - role: "General Chair"
+    people: []
+
+  - role: "Program Chair"
+    people: []
+
+  - role: "Finance Chair"
+    people: []
+
+  - role: "Registration Chair"
+    people: []
+
+  - role: "Web Chair"
+    people: []
+
+  - role: "Workshops and Tutorials Chair"
+    people: []
+
+  - role: "Sponsorship Chair"
+    people: []
+
+  - role: "Artifact Evaluation Chairs"
+    people: []
+
+  - role: "Submissions Chairs"
+    people: []
+
+  - role: "Student Travel Grants Chair"
+    people: []
+
+  - role: "Publications Chair"
+    people: []
+
+  - role: "Local Arrangements Chair"
+    people: []
+
+  - role: "Publicity Chairs"
+    people: []
+
+  - role: "Posters Chair"
+    people: []
+
+# The technical program committee, once the Program Chair has assembled it.
+# Each entry is { name, affiliation }.
+program_committee: []
+
+extra_groups: []

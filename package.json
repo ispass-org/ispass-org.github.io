@@ -1,0 +1,35 @@
+{
+  "name": "ispass-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reusable static website infrastructure for the IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS).",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "npm run validate && astro build",
+    "build:only": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "validate": "tsx scripts/validate-content.ts",
+    "new-conference": "tsx scripts/new-conference.ts",
+    "lint": "tsx scripts/lint.ts",
+    "test": "npm run validate && npm run check && npm run build:only"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^5.18.2",
+    "remark-directive": "^4.0.0",
+    "yaml": "^2.9.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,10 @@
+# ---------------------------------------------------------------------------
+# Site news, newest first (order in this file does not matter — the site sorts).
+#
+# Fields: id, date (YYYY-MM-DD), title, body, link, link_text, importance.
+# `importance: high` marks the item on the homepage.
+#
+# Start with a single real entry when the site goes live. Do not carry
+# announcements over from a previous edition.
+# ---------------------------------------------------------------------------
+[]

@@ -1,0 +1,138 @@
+---
+/**
+ * One keynote. Renders as a placeholder card until the speaker is confirmed,
+ * so the page has its final shape from day one.
+ */
+import type { Keynote } from '../lib/schema';
+
+interface Props {
+  keynote: Keynote;
+  index: number;
+  /** Full detail (keynotes page) or a summary (homepage). */
+  detail?: boolean;
+  /** Year-scoped keynotes page, for the "read more" link on summaries. */
+  keynotesHref?: string;
+  /**
+   * Heading level for the talk title. The keynotes page renders these directly
+   * under its <h1> (so 2); the homepage renders them under a section <h2>
+   * (so 3).
+   */
+  headingLevel?: 2 | 3;
+}
+
+const { keynote: k, index, detail = false, keynotesHref = '', headingLevel = 3 } = Astro.props;
+const Title = `h${headingLevel}` as 'h2' | 'h3';
+const SubHeading = `h${headingLevel + 1}` as 'h3' | 'h4';
+const ordinal = ['I', 'II', 'III', 'IV', 'V', 'VI'][index] ?? String(index + 1);
+---
+
+<article class:list={['keynote', k.placeholder && 'is-placeholder']} id={k.id}>
+  <div class="keynote-portrait">
+    {k.photo ? (
+      <img src={k.photo} alt={k.photo_alt ?? `${k.speaker ?? 'Keynote speaker'}`} width="160" height="160" loading="lazy" />
+    ) : (
+      <div class="portrait-empty" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+        </svg>
+      </div>
+    )}
+  </div>
+
+  <div class="keynote-body">
+    <p class="eyebrow">Keynote {ordinal}</p>
+
+    <Title class="keynote-title">
+      {k.title ?? <span class="tbd">Title to be announced</span>}
+    </Title>
+
+    <p class="keynote-speaker">
+      {k.speaker ? (
+        k.url ? <a href={k.url} rel="noopener">{k.speaker}</a> : k.speaker
+      ) : (
+        <span class="tbd">Speaker to be announced</span>
+      )}
+      {k.affiliation && <span class="keynote-aff">{k.affiliation}</span>}
+    </p>
+
+    {detail && k.abstract && (
+      <div class="keynote-section">
+        <SubHeading>Abstract</SubHeading>
+        <p>{k.abstract}</p>
+      </div>
+    )}
+
+    {detail && k.bio && (
+      <div class="keynote-section">
+        <SubHeading>Biography</SubHeading>
+        <p>{k.bio}</p>
+      </div>
+    )}
+
+    {!detail && !k.placeholder && keynotesHref && (
+      <p class="keynote-more small"><a href={`${keynotesHref}#${k.id}`}>Abstract and biography →</a></p>
+    )}
+  </div>
+</article>
+
+<style>
+  .keynote {
+    display: grid;
+    gap: var(--s-4) var(--s-5);
+    grid-template-columns: 1fr;
+    padding: var(--s-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--paper);
+    scroll-margin-top: 6rem;
+  }
+  .keynote.is-placeholder { background: var(--surface); border-style: dashed; }
+
+  .keynote-portrait img {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line);
+  }
+  .portrait-empty {
+    width: 8rem;
+    height: 8rem;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--line-strong);
+    color: var(--ink-faint);
+    background: var(--surface-2);
+  }
+
+  .keynote-title { font-size: var(--step-1); margin-top: var(--s-2); }
+
+  .keynote-speaker { margin-top: var(--s-3); font-weight: 600; color: var(--ink); }
+  .keynote-speaker a { color: inherit; }
+  .keynote-aff {
+    display: block;
+    font-weight: 400;
+    font-size: var(--step--1);
+    color: var(--ink-3);
+  }
+
+  .keynote-section { margin-top: var(--s-5); }
+  .keynote-section :is(h3, h4) {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: var(--s-2);
+  }
+  .keynote-section p { color: var(--ink-2); max-width: var(--measure); }
+
+  .keynote-more { margin-top: var(--s-4); }
+  .keynote-more a { text-decoration: none; font-weight: 600; }
+
+  @media (min-width: 40rem) {
+    .keynote { grid-template-columns: auto 1fr; }
+  }
+</style>

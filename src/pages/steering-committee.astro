@@ -1,0 +1,57 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { loadSite } from '../lib/conferences';
+
+const site = loadSite();
+const members = site.steering_committee;
+---
+
+<SiteLayout
+  title="Steering Committee"
+  description="The ISPASS Steering Committee, which oversees the symposium across years."
+>
+  <div class="page-header">
+    <div class="wrap">
+      <p class="eyebrow">ISPASS</p>
+      <h1>Steering Committee</h1>
+      {site.steering_committee_note && <p class="lede">{site.steering_committee_note}</p>}
+    </div>
+  </div>
+
+  <div class="wrap section">
+    {members.length === 0 ? (
+      <aside class="callout callout-tbd">
+        <b class="callout-title">Not yet published</b>
+        <p>
+          The current Steering Committee membership has not been confirmed for
+          publication on this site. It will be listed here once verified.
+        </p>
+      </aside>
+    ) : (
+      <ul class="list-plain members">
+        {members.map((person) => (
+          <li class="member">
+            <span class="member-name">
+              {person.url ? <a href={person.url} rel="noopener">{person.name}</a> : person.name}
+            </span>
+            {person.affiliation && <span class="member-aff small muted">{person.affiliation}</span>}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</SiteLayout>
+
+<style>
+  .page-header { padding-block: var(--s-6) var(--s-5); border-bottom: 1px solid var(--line); }
+  .page-header h1 { font-size: var(--step-3); margin-top: var(--s-2); }
+  .page-header .lede { margin-top: var(--s-4); }
+
+  .members {
+    display: grid;
+    gap: var(--s-4);
+    grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+  }
+  .member-name { display: block; font-weight: 600; }
+  .member-aff { display: block; }
+</style>

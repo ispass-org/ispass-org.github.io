@@ -1,0 +1,30 @@
+# ---------------------------------------------------------------------------
+# Site news, newest first (order in this file does not matter — the site sorts).
+#
+# Every entry below is a PLACEHOLDER with `placeholder: true`, which renders a
+# visible "example entry" marker. Delete them as you publish real news; do not
+# leave placeholders live once the site is public.
+#
+# Fields: id, date (YYYY-MM-DD), title, body, link, link_text, importance.
+# `importance: high` pins the item to the top of the homepage with a marker.
+# ---------------------------------------------------------------------------
+
+- id: example-site-launch
+  date: 2026-09-20
+  title: "ISPASS 2027 website launched"
+  body: >-
+    The ISPASS 2027 site is live. Dates, venue and committee details will be
+    added here as they are confirmed.
+  importance: normal
+  placeholder: true
+
+- id: example-cfp
+  date: 2026-10-12
+  title: "Call for Papers available"
+  body: >-
+    The Call for Papers for ISPASS 2027 has been published, including the
+    abstract and full paper deadlines.
+  link: "/2027/cfp/"
+  link_text: "Read the Call for Papers"
+  importance: high
+  placeholder: true

@@ -1,0 +1,131 @@
+---
+import { siteConfig } from '../lib/site-config.mjs';
+/**
+ * Wrapper for every page belonging to one conference year.
+ *
+ * Builds the navigation, the footer columns and the structured event metadata
+ * from that year's data, so an individual page only has to supply its title and
+ * its body.
+ */
+import BaseLayout from './BaseLayout.astro';
+import ArchivedBanner from '../components/ArchivedBanner.astro';
+import type { ConferenceData } from '../lib/conferences';
+import { buildNav } from '../lib/nav';
+import { homePlan } from '../lib/phase';
+import { formatDateRange } from '../lib/dates';
+
+interface Props {
+  conference: ConferenceData;
+  title: string;
+  description?: string | null;
+  /** Suppress the header action on the homepage, where it is already the hero. */
+  showHeaderAction?: boolean;
+  noindex?: boolean;
+  mainClass?: string;
+}
+
+const {
+  conference: c,
+  title,
+  description = null,
+  showHeaderAction = true,
+  noindex = false,
+  mainClass = '',
+} = Astro.props;
+
+const nav = await buildNav(c);
+const plan = homePlan(c);
+const meta = c.conference;
+
+const pageTitle = title === meta.short_name ? `${meta.short_name} — ${meta.city ?? 'ISPASS'}` : `${title} — ${meta.short_name}`;
+
+const location = [meta.city, meta.country].filter(Boolean).join(', ');
+
+/**
+ * schema.org Event metadata. Only emitted once dates exist — an Event without a
+ * startDate is invalid, and publishing a placeholder would be worse than
+ * publishing nothing.
+ */
+const structuredData = meta.start_date
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: meta.full_name,
+      alternateName: meta.short_name,
+      description: meta.description,
+      startDate: meta.start_date,
+      endDate: meta.end_date ?? meta.start_date,
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      eventStatus: 'https://schema.org/EventScheduled',
+      url: new URL(`/${c.year}/`, Astro.site ?? siteConfig.origin).href,
+      ...(location
+        ? {
+            location: {
+              '@type': 'Place',
+              name: meta.venue ?? meta.host ?? location,
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: meta.city ?? undefined,
+                addressRegion: meta.region ?? undefined,
+                addressCountry: meta.country ?? undefined,
+                streetAddress: meta.venue_address ?? undefined,
+              },
+            },
+          }
+        : {}),
+      organizer: meta.host
+        ? { '@type': 'Organization', name: meta.host }
+        : { '@type': 'Organization', name: 'IEEE Computer Society' },
+    }
+  : undefined;
+
+const footerColumns = [
+  {
+    title: 'Authors',
+    links: [
+      { label: 'Call for Papers', href: `/${c.year}/cfp/` },
+      { label: 'Submission Instructions', href: `/${c.year}/submission/` },
+      { label: 'Artifact Evaluation', href: `/${c.year}/artifact-evaluation/` },
+    ],
+  },
+  {
+    title: 'Attend',
+    links: [
+      { label: 'Registration', href: `/${c.year}/registration/` },
+      { label: 'Venue', href: `/${c.year}/venue/` },
+      { label: 'Visa Information', href: `/${c.year}/visa/` },
+    ],
+  },
+  {
+    title: 'ISPASS',
+    links: [
+      { label: 'About ISPASS', href: '/about/' },
+      { label: 'Previous Symposia', href: '/previous/' },
+      { label: 'Conference Policies', href: `/${c.year}/policies/` },
+    ],
+  },
+];
+
+const dateLine = formatDateRange(meta.start_date, meta.end_date);
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={description ?? meta.description}
+  brand={meta.short_name}
+  brandHref={`/${c.year}/`}
+  brandEdition={String(c.year)}
+  nav={nav}
+  headerAction={showHeaderAction ? plan.primary : null}
+  footerColumns={footerColumns}
+  maintainedBy={meta.maintained_by}
+  contactEmail={meta.contact_email}
+  footerNote={location ? `${location}${meta.start_date ? ` · ${dateLine}` : ''}` : null}
+  accent={meta.accent}
+  noindex={noindex}
+  structuredData={structuredData}
+  mainClass={mainClass}
+>
+  {meta.archived && <ArchivedBanner year={c.year} />}
+  <slot />
+</BaseLayout>

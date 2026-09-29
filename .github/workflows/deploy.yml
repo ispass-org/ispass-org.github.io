@@ -1,0 +1,57 @@
+# Publishes the site to GitHub Pages on every push to main.
+#
+# While the repository is PRIVATE this workflow builds but skips the deploy
+# step: GitHub Pages is not available for private repositories on the free
+# plan. When the repository is made public, deploys start automatically —
+# no edit needed.
+#
+# Pointing ispass.org at the published site is a separate, manual step. See
+# docs/migration-plan.md, Phase D.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once, and never cancel one halfway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      # Malformed content must never reach the live site.
+      - run: npm run validate
+      - run: npm run check
+      - run: npm run build:only
+      - run: npm run lint
+      - uses: actions/upload-pages-artifact@v3
+        if: ${{ !github.event.repository.private }}
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    # Skipped while the repository is private. See the note at the top.
+    if: ${{ !github.event.repository.private }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

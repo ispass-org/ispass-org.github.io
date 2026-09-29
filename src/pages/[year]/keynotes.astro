@@ -1,0 +1,54 @@
+---
+import type { GetStaticPaths } from 'astro';
+import ConferenceLayout from '../../layouts/ConferenceLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import KeynoteCard from '../../components/KeynoteCard.astro';
+import { conferenceYears, loadConference, hasKeynotes } from '../../lib/conferences';
+
+export const getStaticPaths = (() =>
+  conferenceYears().map((year) => ({ params: { year: String(year) } }))) satisfies GetStaticPaths;
+
+const year = Number(Astro.params.year);
+const c = loadConference(year);
+const announced = hasKeynotes(c);
+---
+
+<ConferenceLayout
+  conference={c}
+  title="Keynotes"
+  description={`Keynote speakers at ${c.conference.short_name}.`}
+>
+  <PageHeader
+    title="Keynotes"
+    eyebrow={c.conference.short_name}
+    lede="Invited talks at this edition of ISPASS."
+    breadcrumb={[{ label: c.conference.short_name, href: `/${year}/` }]}
+  />
+
+  <div class="wrap section">
+    {!announced && c.keynotes.length > 0 && (
+      <aside class="callout callout-tbd">
+        <b class="callout-title">Speakers not yet announced</b>
+        <p>
+          {c.conference.short_name} will have {c.keynotes.length} keynote
+          {c.keynotes.length === 1 ? ' talk' : ' talks'}. Speakers and titles are
+          announced here as they are confirmed.
+        </p>
+      </aside>
+    )}
+
+    {c.keynotes.length === 0 ? (
+      <p class="tbd">Keynotes for this edition have not been arranged yet.</p>
+    ) : (
+      <div class="keynotes">
+        {c.keynotes.map((keynote, index) => (
+          <KeynoteCard keynote={keynote} index={index} detail headingLevel={2} />
+        ))}
+      </div>
+    )}
+  </div>
+</ConferenceLayout>
+
+<style>
+  .keynotes { display: grid; gap: var(--s-6); }
+</style>

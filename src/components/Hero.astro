@@ -1,0 +1,238 @@
+---
+/**
+ * Homepage hero.
+ *
+ * Answers what / where / when / what next, and nothing else. Anything that is
+ * not yet decided renders as an explicit TBD rather than being hidden, so the
+ * page reads as "not announced yet" rather than as an oversight.
+ */
+import type { ConferenceData } from '../lib/conferences';
+import { formatDateRange } from '../lib/dates';
+import type { CallToAction } from '../lib/phase';
+
+interface Props {
+  conference: ConferenceData;
+  /** Where the conference is in its cycle. Carries the hero when there is no
+      action to offer yet. */
+  status: string | null;
+  primary: CallToAction | null;
+  secondary: CallToAction | null;
+}
+
+const { conference: c, status, primary, secondary } = Astro.props;
+const meta = c.conference;
+
+const place = [meta.city, meta.country].filter(Boolean).join(', ');
+const dates = formatDateRange(meta.start_date, meta.end_date);
+const datesKnown = Boolean(meta.start_date);
+---
+
+<section class="hero">
+  <div class="wrap"><div class="hero-inner">
+    <p class="hero-eyebrow">
+      {meta.edition && <span>{meta.edition} </span>}
+      IEEE International Symposium on
+    </p>
+
+    <h1 class="hero-title">
+      Performance Analysis of <br class="title-break" />Systems and Software
+    </h1>
+
+    <p class="hero-name">{meta.short_name}</p>
+
+    <dl class="hero-facts">
+      <div class="fact">
+        <dt>Where</dt>
+        <dd>
+          {place || <span class="tbd">TBD</span>}
+          {meta.host && <span class="fact-sub">{meta.host}</span>}
+          {meta.venue && <span class="fact-sub">{meta.venue}</span>}
+        </dd>
+      </div>
+      <div class="fact">
+        <dt>When</dt>
+        <dd>
+          {datesKnown ? dates : <span class="tbd">Dates to be announced</span>}
+          {datesKnown && <span class="fact-sub">{meta.timezone.replace('_', ' ')}</span>}
+        </dd>
+      </div>
+    </dl>
+
+    {status && (
+      <p class="hero-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        {status}
+      </p>
+    )}
+
+    {(primary || secondary) && (
+      <div class="hero-actions">
+        {primary && (
+          <div class="action">
+            <a
+              class="btn btn-primary"
+              href={primary.href}
+              rel={primary.external ? 'noopener' : undefined}
+              aria-disabled={primary.disabled ? 'true' : undefined}
+            >
+              {primary.label}
+              {primary.external && <span class="ext" aria-hidden="true">↗</span>}
+            </a>
+            {primary.note && <p class="action-note small">{primary.note}</p>}
+          </div>
+        )}
+        {secondary && (
+          <div class="action">
+            <a
+              class="btn btn-secondary"
+              href={secondary.href}
+              rel={secondary.external ? 'noopener' : undefined}
+            >
+              {secondary.label}
+              {secondary.external && <span class="ext" aria-hidden="true">↗</span>}
+            </a>
+            {secondary.note && <p class="action-note small">{secondary.note}</p>}
+          </div>
+        )}
+      </div>
+    )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(70rem 26rem at 12% -18%, var(--accent-wash), transparent 62%),
+      var(--paper);
+    overflow: hidden;
+  }
+
+  /* A single quiet graphic element: a faint rule grid, echoing a plot axis.
+     No motion, no gradient wash beyond the one tint above. */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 5.5rem 5.5rem;
+    -webkit-mask-image: linear-gradient(to bottom left, black, transparent 55%);
+    mask-image: linear-gradient(to bottom left, black, transparent 55%);
+    opacity: 0.5;
+  }
+
+  /* Capped for readability but left-aligned with every other section, so the
+     page keeps one consistent left edge. It is a child of .wrap rather than
+     .wrap itself, because .wrap centres itself and would indent the hero. */
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    padding-block: var(--s-8) var(--s-7);
+    max-width: 58rem;
+  }
+
+  .hero-eyebrow {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .hero-title {
+    margin-top: var(--s-3);
+    font-size: var(--step-4);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  /* The hard break gives a deliberate two-line title on wide screens. On a
+     phone it strands "of" on its own line, so let the text wrap naturally.
+     The markup keeps a space before the <br>: hiding the break must not glue
+     "of" and "Systems" together. */
+  .title-break { display: none; }
+  @media (min-width: 40rem) {
+    .title-break { display: inline; }
+  }
+
+  .hero-name {
+    margin-top: var(--s-4);
+    display: inline-block;
+    font-family: var(--font-text);
+    font-weight: 700;
+    font-size: var(--step-0);
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    border: 1px solid var(--accent-line);
+    background: var(--accent-wash);
+    border-radius: 999px;
+    padding: 0.25em 0.9em;
+  }
+
+  .hero-facts {
+    display: grid;
+    gap: var(--s-5);
+    margin-top: var(--s-6);
+    padding-top: var(--s-5);
+    border-top: 1px solid var(--line);
+  }
+  .fact dt {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: var(--s-1);
+  }
+  .fact dd {
+    margin: 0;
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .fact-sub {
+    display: block;
+    font-size: var(--step--1);
+    font-weight: 400;
+    color: var(--ink-3);
+    margin-top: 0.15em;
+  }
+
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    margin-top: var(--s-6);
+    font-family: var(--font-text);
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .status-dot {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-5);
+    margin-top: var(--s-4);
+  }
+  .action-note {
+    margin-top: var(--s-2);
+    color: var(--ink-3);
+    max-width: 22rem;
+  }
+
+  @media (min-width: 40rem) {
+    .hero-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-6); }
+  }
+</style>

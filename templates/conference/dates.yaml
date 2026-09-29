@@ -1,0 +1,123 @@
+# ---------------------------------------------------------------------------
+# The ONE canonical list of important dates.
+#
+# No deadline may be written anywhere else — not in Markdown, not in a page
+# template. Pages and the .ics feed read this file. `npm run validate` fails if
+# a date is malformed or an id is duplicated.
+#
+# Fields:
+#   id        stable slug, referenced by pages and by src/lib/phase.ts
+#   name      what the visitor sees
+#   date      YYYY-MM-DD, or null while unannounced
+#   time      HH:MM, 24-hour, or null for an all-day deadline
+#   end_date  set for ranges (rebuttal period, the conference itself)
+#   timezone  IANA name, or the special value AoE (Anywhere on Earth)
+#   category  groups the row; see docs/content-model.md
+#   note      short clarification shown under the date
+#   extended  true if the deadline was pushed back — say so, don't hide it
+#   hidden    true to keep a row out of the public site without deleting it
+#
+# The ids below are referenced by the homepage phase logic. Keep them.
+# ---------------------------------------------------------------------------
+
+- id: abstract
+  name: "Paper abstract submission"
+  date: null
+  time: null
+  timezone: "AoE"
+  category: submission
+  note: "An abstract is required before a full paper can be submitted."
+
+- id: paper
+  name: "Full paper submission"
+  date: null
+  time: null
+  timezone: "AoE"
+  category: submission
+
+- id: rebuttal
+  name: "Author rebuttal period"
+  date: null
+  end_date: null
+  timezone: "AoE"
+  category: review
+
+- id: notification
+  name: "Paper notification"
+  date: null
+  timezone: "AoE"
+  category: notification
+
+- id: workshop-proposal
+  name: "Workshop and tutorial proposals"
+  date: null
+  timezone: "AoE"
+  category: workshop
+
+- id: workshop-notification
+  name: "Workshop and tutorial notification"
+  date: null
+  timezone: "AoE"
+  category: workshop
+
+- id: poster-abstract
+  name: "Extended poster abstract submission"
+  date: null
+  timezone: "AoE"
+  category: poster
+
+- id: poster-notification
+  name: "Poster notification"
+  date: null
+  timezone: "AoE"
+  category: poster
+
+- id: artifact-registration
+  name: "Artifact evaluation registration"
+  date: null
+  timezone: "AoE"
+  category: artifact
+
+- id: artifact-submission
+  name: "Artifact evaluation submission"
+  date: null
+  timezone: "AoE"
+  category: artifact
+
+- id: artifact-notification
+  name: "Artifact evaluation decisions"
+  date: null
+  timezone: "AoE"
+  category: artifact
+
+- id: camera-ready
+  name: "Camera-ready deadline"
+  date: null
+  timezone: "AoE"
+  category: camera_ready
+
+- id: travel-grant
+  name: "Student travel grant applications"
+  date: null
+  timezone: "AoE"
+  category: travel_grant
+
+- id: early-registration
+  name: "Early registration deadline"
+  date: null
+  timezone: "UTC"
+  category: registration
+
+- id: hotel-block
+  name: "Conference hotel rate deadline"
+  date: null
+  timezone: "UTC"
+  category: registration
+
+- id: conference
+  name: "ISPASS {{YEAR}}"
+  date: null
+  end_date: null
+  timezone: "UTC"
+  category: conference
+  note: "Workshops and tutorials on the first day."

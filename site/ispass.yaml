@@ -1,0 +1,204 @@
+# ---------------------------------------------------------------------------
+# The evergreen ISPASS layer.
+#
+# Everything here outlives any single conference. It powers the permanent
+# landing page at /, the Previous Symposia page, and the steering committee and
+# policy pages.
+#
+# When a new year's site goes live, the ONLY change needed here is
+# `current_year`, plus moving the outgoing year into `past_conferences`.
+# ---------------------------------------------------------------------------
+
+name: "ISPASS"
+full_name: "IEEE International Symposium on Performance Analysis of Systems and Software"
+
+description: >-
+  ISPASS, the IEEE International Symposium on Performance Analysis of Systems
+  and Software, is the leading annual forum for research on the measurement,
+  characterization, modelling and simulation of computer systems and software.
+
+tagline: "Measuring how systems really behave, since 2000."
+
+# Which conference the landing page points at. This is the one line to change
+# when the next edition takes over.
+current_year: 2027
+
+sponsors_note: >-
+  ISPASS is sponsored by the IEEE Computer Society and has been supported by its
+  Technical Committee on Computer Architecture (TCCA) and its Technical
+  Committee on Microarchitecture (TCuARCH).
+
+# TBD: the ISPASS Steering Committee membership has not been confirmed for this
+# site. Add entries as { name, affiliation, url } once verified with the
+# Steering Committee chair. Do not copy names from an old conference page.
+steering_committee: []
+steering_committee_note: >-
+  The ISPASS Steering Committee oversees the symposium across years and appoints
+  each edition's General Chair. Its current membership has not yet been
+  confirmed for publication on this site.
+
+policies:
+  - title: "IEEE Event Conduct and Safety Statement"
+    url: "https://www.ieee.org/conferences/event-conduct-and-safety-statement.html"
+    description: >-
+      IEEE events are intended to provide a safe, productive and welcoming
+      environment for every participant. This statement applies at every ISPASS.
+  - title: "IEEE Computer Society Open Conference Statement"
+    url: "https://www.computer.org/about/policies/open-conference-statement"
+    description: >-
+      IEEE Computer Society conferences are open to all who wish to attend,
+      regardless of nationality.
+  - title: "IEEE Publication Principles"
+    url: "https://www.ieee.org/publications/rights/index.html"
+    description: >-
+      Authorship, plagiarism and duplicate submission policies for papers
+      published in IEEE Xplore.
+
+# ---------------------------------------------------------------------------
+# Previous symposia.
+#
+# `archive_status` records whether the linked archive actually works. As of the
+# survey recorded in docs/legacy-site-audit.md, every edition from 2000 to 2017
+# returns an HTTP 500 from its content frames, and 2002 is missing entirely.
+# Those links are still listed — deleting them would lose the record — but the
+# Previous Symposia page marks them so nobody is sent to a dead page silently.
+#
+# City and country are left null for 2000-2012 because no authoritative source
+# was checked for them. Recover them from IEEE Xplore rather than guessing.
+# ---------------------------------------------------------------------------
+past_conferences:
+  - year: 2026
+    city: "Seoul"
+    country: "South Korea"
+    url: "https://www.ispass.org/ispass2026/"
+    archive_status: ok
+  - year: 2025
+    city: "Ghent"
+    country: "Belgium"
+    url: "https://www.ispass.org/ispass2025/"
+    archive_status: ok
+  - year: 2024
+    city: "Indianapolis, Indiana"
+    country: "USA"
+    url: "https://www.ispass.org/ispass2024/"
+    archive_status: ok
+  - year: 2023
+    city: "Raleigh, North Carolina"
+    country: "USA"
+    url: "https://www.ispass.org/ispass2023/"
+    archive_status: ok
+  - year: 2022
+    city: "Singapore"
+    country: "Singapore"
+    url: "https://www.ispass.org/ispass2022/"
+    archive_status: ok
+  - year: 2021
+    city: "Virtual"
+    country: null
+    url: "https://www.ispass.org/ispass2021/"
+    archive_status: ok
+  - year: 2020
+    city: "Virtual"
+    country: null
+    url: "https://www.ispass.org/ispass2020/"
+    archive_status: ok
+  - year: 2019
+    city: "Madison, Wisconsin"
+    country: "USA"
+    url: "https://www.ispass.org/ispass2019/"
+    archive_status: ok
+  - year: 2018
+    city: "Belfast"
+    country: "United Kingdom"
+    url: "https://www.ispass.org/ispass2018/"
+    archive_status: ok
+  - year: 2017
+    city: "Santa Rosa, California"
+    country: "USA"
+    url: "https://www.ispass.org/ispass2017/"
+    archive_status: broken
+  - year: 2016
+    city: "Uppsala"
+    country: "Sweden"
+    url: "https://www.ispass.org/ispass2016/"
+    archive_status: broken
+  - year: 2015
+    city: "Philadelphia, Pennsylvania"
+    country: "USA"
+    url: "https://www.ispass.org/ispass2015/"
+    archive_status: broken
+  - year: 2014
+    city: "Monterey, California"
+    country: "USA"
+    url: "https://www.ispass.org/ispass2014/"
+    archive_status: broken
+  - year: 2013
+    city: "Austin, Texas"
+    country: "USA"
+    url: "https://www.ispass.org/ispass2013/"
+    archive_status: broken
+  - year: 2012
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2012/"
+    archive_status: broken
+  - year: 2011
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2011/"
+    archive_status: broken
+  - year: 2010
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2010/"
+    archive_status: broken
+  - year: 2009
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2009/"
+    archive_status: broken
+  - year: 2008
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2008/"
+    archive_status: broken
+  - year: 2007
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2007/"
+    archive_status: broken
+  - year: 2006
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2006/"
+    archive_status: broken
+  - year: 2005
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2005/"
+    archive_status: broken
+  - year: 2004
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2004/"
+    archive_status: broken
+  - year: 2003
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2003/"
+    archive_status: broken
+  - year: 2002
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2002/"
+    archive_status: missing
+  - year: 2001
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2001/"
+    archive_status: broken
+  - year: 2000
+    city: null
+    country: null
+    url: "https://www.ispass.org/ispass2000/"
+    archive_status: broken

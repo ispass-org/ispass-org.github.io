@@ -1,0 +1,30 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { loadSite } from '../lib/conferences';
+
+const site = loadSite();
+---
+
+<SiteLayout title="Page not found" description="That page does not exist on ispass.org." noindex>
+  <div class="wrap notfound">
+    <p class="eyebrow">Error 404</p>
+    <h1>Page not found</h1>
+    <p class="lede">
+      That address does not exist on this site. It may have moved, or it may
+      belong to an earlier edition of ISPASS.
+    </p>
+    <ul class="list-plain links">
+      <li><a href="/">ISPASS home</a></li>
+      <li><a href={`/${site.current_year}/`}>ISPASS {site.current_year}</a></li>
+      <li><a href="/previous/">Previous symposia</a></li>
+    </ul>
+  </div>
+</SiteLayout>
+
+<style>
+  .notfound { padding-block: var(--s-9); max-width: 44rem; }
+  .notfound h1 { font-size: var(--step-3); margin-top: var(--s-2); }
+  .notfound .lede { margin-top: var(--s-4); }
+  .links { display: flex; flex-wrap: wrap; gap: var(--s-5); margin-top: var(--s-6); }
+  .links a { font-weight: 600; }
+</style>

@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Design tokens.
+
+   The palette is the ISPASS palette, taken from the original ispass.org
+   stylesheet and from the logo artwork itself:
+
+     #000080  navy    the ISPASS blue — the logo wordmark, links, h1
+     #008000  green   section headings (the original stylesheet's `h2` colour)
+     #303030  charcoal the logo's bars
+     #e1e1ff  pale blue   the original sidebar background; here, the accent wash
+     #f5f5ef  warm paper  the original program table rows; here, banded sections
+     #ffffff  white   the page
+
+   Every one of those clears WCAG AA against the surfaces it is used on, so the
+   colours are used exactly as the original site had them — no "close enough"
+   substitutes. The layout, type and spacing are modern; the colour is ISPASS's.
+
+   The site is light-background only. There is no dark theme: a conference site
+   is a reference document, read in daylight and printed, and one well-tuned
+   light palette is easier to keep accessible than two.
+
+   No component writes a literal colour. Everything reads a var() from here.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Surfaces: white page, warm off-white bands. ----------------------- */
+  --paper:        #ffffff;
+  --surface:      #f5f5ef;   /* from the original .row-even */
+  --surface-2:    #e9e9dd;   /* from the original .row-odd, lightened */
+  --line:         #dcdcd0;
+  --line-strong:  #b8b8a6;
+
+  /* --- Text: near-black, warmed to sit on the beige bands. --------------- */
+  --ink:          #14140f;
+  --ink-2:        #3c3c33;
+  --ink-3:        #55554a;
+  --ink-faint:    #5c5c50;
+
+  /* --- Headings ----------------------------------------------------------
+     The original stylesheet coloured `h1` navy and `h2` green. Kept.        */
+  --heading-1:    #000080;
+  --heading-2:    #008000;
+
+  /* --- Brand: the ISPASS navy. Constant across editions. ----------------- */
+  --brand:        #000080;
+  --brand-2:      #1a1a9e;
+  --brand-ink:    #ffffff;
+  --brand-wash:   #e1e1ff;
+
+  /* --- Logo: sampled from the original logo artwork. --------------------- */
+  --logo-word:    #000080;
+  --logo-bars:    #303030;
+
+  /* --- Accent: per-conference, defaulting to the ISPASS navy. ------------
+     conference.yaml supplies --accent-seed inline on <html>; an edition may
+     choose its own. The wash and rule are derived, so a different seed stays
+     coherent. At the default seed the wash lands on the original #e1e1ff.  */
+  --accent-seed:  #000080;
+  --accent:       var(--accent-seed);
+  --accent-ink:   #ffffff;
+  --accent-wash:  color-mix(in srgb, var(--accent) 12%, var(--paper));
+  --accent-line:  color-mix(in srgb, var(--accent) 30%, var(--line));
+
+  /* --- Semantic: callouts, deadline states, badges. ----------------------
+     warn reuses the original site's own warning swatches (#fff3cd on #ffcc00),
+     note reuses its pale blue, good is drawn from the heading green.        */
+  --warn:         #7a5200;
+  --warn-wash:    #fff3cd;
+  --warn-line:    #ffcc00;
+  --note:         #000080;
+  --note-wash:    #e1e1ff;
+  --note-line:    #b6b6e8;
+  --good:         #006b00;
+  --good-wash:    #e8f2e8;
+  --good-line:    #a8cfa8;
+
+  /* --- Typography --------------------------------------------------------
+     No web fonts. A system serif for display, a system sans for text: the
+     pairing reads academic on every platform and costs zero bytes.          */
+  --font-display: ui-serif, Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --font-text: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Fluid type scale, clamped so nothing becomes silly at either end. */
+  --step--1: clamp(0.82rem, 0.79rem + 0.13vw, 0.88rem);
+  --step-0:  clamp(1rem, 0.96rem + 0.18vw, 1.08rem);
+  --step-1:  clamp(1.16rem, 1.09rem + 0.34vw, 1.36rem);
+  --step-2:  clamp(1.36rem, 1.22rem + 0.66vw, 1.75rem);
+  --step-3:  clamp(1.6rem, 1.35rem + 1.18vw, 2.3rem);
+  --step-4:  clamp(1.9rem, 1.44rem + 2.2vw, 3.1rem);
+
+  /* --- Spacing, on a 4px grid ------------------------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+
+  /* --- Structure --------------------------------------------------------- */
+  --measure: 68ch;          /* readable line length for long-form prose */
+  --page-max: 72rem;        /* outer content width */
+  --page-gutter: clamp(1rem, 4vw, 2.5rem);
+  --radius: 6px;
+  --radius-lg: 10px;
+
+  /* Restrained shadows. Depth comes from borders, not from glow. */
+  --shadow-1: 0 1px 2px rgb(20 20 15 / 0.06), 0 1px 1px rgb(20 20 15 / 0.04);
+  --shadow-2: 0 4px 12px rgb(20 20 15 / 0.08), 0 1px 3px rgb(20 20 15 / 0.06);
+
+  --focus: 2px solid var(--accent);
+  --focus-offset: 2px;
+}

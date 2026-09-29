@@ -1,0 +1,113 @@
+---
+/**
+ * Renders every Markdown page belonging to a conference year.
+ *
+ * A file at conferences/2027/cfp.md becomes /2027/cfp/. Nothing else is needed
+ * to add a page — no route, no nav entry, no template.
+ */
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import ConferenceLayout from '../../layouts/ConferenceLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Prose from '../../components/Prose.astro';
+import ImportantDates from '../../components/ImportantDates.astro';
+import { loadConference } from '../../lib/conferences';
+import { phaseAtLeast } from '../../lib/phase';
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages');
+  return pages.map((page) => {
+    const [year, file] = page.id.split('/');
+    return {
+      params: { year, slug: page.data.slug ?? file },
+      props: { page },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const year = Number(Astro.params.year);
+const c = loadConference(year);
+const { Content } = await render(page);
+
+/**
+ * A page gated on a later phase still builds — old links keep working — but it
+ * is kept out of search results until the conference reaches that phase.
+ */
+const gated = Boolean(
+  page.data.since_phase && !phaseAtLeast(c.conference.phase, page.data.since_phase),
+);
+---
+
+<ConferenceLayout
+  conference={c}
+  title={page.data.title}
+  description={page.data.description}
+  noindex={page.data.draft || gated}
+>
+  <PageHeader
+    title={page.data.title}
+    lede={page.data.description}
+    eyebrow={c.conference.short_name}
+    breadcrumb={[{ label: c.conference.short_name, href: `/${year}/` }]}
+  />
+
+  <div class="wrap page-body">
+    <article class="page-main">
+      {page.data.draft && (
+        <aside class="callout callout-warning">
+          <b class="callout-title">Draft</b>
+          <p>This page is unfinished and is not linked from the site navigation.</p>
+        </aside>
+      )}
+      <Prose><Content /></Prose>
+    </article>
+
+    {page.data.show_dates.length > 0 && (
+      <aside class="page-aside" aria-labelledby="aside-dates">
+        <div class="aside-box">
+          <h2 id="aside-dates" class="aside-title">Key dates</h2>
+          <ImportantDates
+            conference={c}
+            categories={page.data.show_dates}
+            compact
+            calendar={false}
+          />
+          <p class="small"><a href={`/${year}/dates/`}>All important dates →</a></p>
+        </div>
+      </aside>
+    )}
+  </div>
+</ConferenceLayout>
+
+<style>
+  .page-body {
+    display: grid;
+    gap: var(--s-7);
+    padding-block: var(--s-7) var(--s-8);
+    align-items: start;
+  }
+
+  .aside-box {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    padding: var(--s-5);
+  }
+  .aside-title {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: var(--s-2);
+  }
+  .aside-box .small a { text-decoration: none; font-weight: 600; }
+
+  @media (min-width: 62rem) {
+    .page-body:has(.page-aside) { grid-template-columns: minmax(0, 1fr) 19rem; gap: var(--s-8); }
+    /* Sticky only where there is room; never on a phone. */
+    .page-aside { position: sticky; top: 5.5rem; }
+  }
+</style>

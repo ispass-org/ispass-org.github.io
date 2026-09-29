@@ -1,0 +1,197 @@
+---
+/**
+ * The evergreen ISPASS landing page.
+ *
+ * This is the page that should eventually live at ispass.org: it belongs to the
+ * symposium, not to one year. It points at whichever conference is current
+ * (site/ispass.yaml -> current_year) and otherwise talks about ISPASS itself.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { loadConference, loadSite } from '../lib/conferences';
+import { formatDateRange } from '../lib/dates';
+import { phaseLabel } from '../lib/phase';
+
+const site = loadSite();
+const current = loadConference(site.current_year);
+const meta = current.conference;
+
+const place = [meta.city, meta.country].filter(Boolean).join(', ');
+const dates = formatDateRange(meta.start_date, meta.end_date);
+
+const recent = site.past_conferences.slice(0, 6);
+---
+
+<SiteLayout title={site.name} description={site.description}>
+  <section class="landing-hero">
+    <div class="wrap"><div class="landing-inner">
+      <p class="eyebrow">Since 2000</p>
+      <h1>ISPASS</h1>
+      <p class="full-name">{site.full_name}</p>
+      <p class="lede landing-lede">{site.description}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section current-band" aria-labelledby="h-current">
+    <div class="wrap">
+      <div class="section-head"><h2 id="h-current">Current conference</h2></div>
+
+      <div class="current-card">
+        <div class="current-main">
+          <p class="current-name">{meta.short_name}</p>
+          <p class="current-place">
+            {place || <span class="tbd">Location TBD</span>}
+            {meta.host && <span class="current-host">{meta.host}</span>}
+          </p>
+          <p class="current-dates">
+            {meta.start_date ? dates : <span class="tbd">Dates to be announced</span>}
+          </p>
+          <p class="current-status small muted">Status: {phaseLabel(meta.phase)}</p>
+        </div>
+        <div class="current-actions">
+          <a class="btn btn-primary" href={`/${site.current_year}/`}>Visit {meta.short_name}</a>
+          <a class="btn btn-secondary" href={`/${site.current_year}/cfp/`}>Call for Papers</a>
+          <a class="btn btn-secondary" href={`/${site.current_year}/dates/`}>Important Dates</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt" aria-labelledby="h-about">
+    <div class="wrap about-cols">
+      <div>
+        <div class="section-head"><h2 id="h-about">About ISPASS</h2></div>
+        <p>
+          ISPASS is the leading annual forum for research on the measurement,
+          characterization, modelling and simulation of computer systems and
+          software. It publishes research papers, tool and benchmark papers, and
+          extended poster abstracts, and runs an optional artifact evaluation
+          process that awards IEEE reproducibility badges.
+        </p>
+        <p class="about-link"><a class="btn btn-secondary" href="/about/">More about ISPASS</a></p>
+      </div>
+      <ul class="list-plain quick">
+        <li><a class="card card-link" href="/previous/">
+          <p class="quick-title">Previous symposia</p>
+          <p class="small muted">{site.past_conferences.length} past editions, 2000 onwards</p>
+        </a></li>
+        <li><a class="card card-link" href="/steering-committee/">
+          <p class="quick-title">Steering Committee</p>
+          <p class="small muted">Who oversees the symposium across years</p>
+        </a></li>
+        <li><a class="card card-link" href="/policies/">
+          <p class="quick-title">Policies</p>
+          <p class="small muted">Conduct, open conference and publication policies</p>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-recent">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="h-recent">Recent editions</h2>
+        <a class="section-more" href="/previous/">All symposia →</a>
+      </div>
+      <ul class="list-plain recent">
+        {recent.map((edition) => (
+          <li class="recent-item">
+            <span class="recent-year">{edition.year}</span>
+            <span class="recent-place">
+              {[edition.city, edition.country].filter(Boolean).join(', ') || <span class="tbd">Location not recorded</span>}
+            </span>
+            {edition.url && edition.archive_status === 'ok' ? (
+              <a class="recent-link small" href={edition.url} rel="noopener">Site ↗</a>
+            ) : (
+              <span class="small muted recent-link">Archive unavailable</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {site.sponsors_note && (
+    <section class="section-alt" aria-labelledby="h-sponsors">
+      <div class="wrap">
+        <div class="section-head"><h2 id="h-sponsors">Sponsorship</h2></div>
+        <p class="lede">{site.sponsors_note}</p>
+        <p class="about-link">
+          <a class="btn btn-secondary" href={`/${site.current_year}/sponsors/`}>
+            {meta.short_name} sponsors
+          </a>
+        </p>
+      </div>
+    </section>
+  )}
+</SiteLayout>
+
+<style>
+  .landing-hero {
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(60rem 22rem at 20% -30%, var(--accent-wash), transparent 65%),
+      var(--paper);
+  }
+  /* A child of .wrap, not .wrap itself: .wrap centres, which would indent the
+     hero relative to every section below it. */
+  .landing-inner { padding-block: var(--s-8) var(--s-7); max-width: 54rem; }
+  .landing-inner h1 {
+    font-size: clamp(3rem, 1.5rem + 7vw, 6rem);
+    letter-spacing: -0.035em;
+    margin-top: var(--s-2);
+  }
+  .full-name {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--ink-2);
+    margin-top: var(--s-2);
+    max-width: 24ch;
+    line-height: 1.25;
+  }
+  .landing-lede { margin-top: var(--s-5); }
+
+  .current-card {
+    display: grid;
+    gap: var(--s-5);
+    border: 1px solid var(--accent-line);
+    background: var(--accent-wash);
+    border-radius: var(--radius-lg);
+    padding: var(--s-6);
+  }
+  .current-name {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .current-place { font-size: var(--step-1); font-weight: 600; margin-top: var(--s-2); }
+  .current-host { display: block; font-size: var(--step--1); font-weight: 400; color: var(--ink-3); }
+  .current-dates { margin-top: var(--s-2); color: var(--ink-2); }
+  .current-status { margin-top: var(--s-3); }
+  .current-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); align-content: center; }
+
+  .about-cols { display: grid; gap: var(--s-6); }
+  .about-cols p { max-width: var(--measure); color: var(--ink-2); }
+  .about-link { margin-top: var(--s-5); }
+  .quick { display: grid; gap: var(--s-3); }
+  .quick-title { font-family: var(--font-display); font-size: var(--step-1); margin-bottom: var(--s-1); }
+
+  .recent { border-top: 1px solid var(--line); }
+  .recent-item {
+    display: grid;
+    grid-template-columns: 4rem 1fr auto;
+    gap: var(--s-4);
+    align-items: baseline;
+    padding-block: var(--s-3);
+    border-bottom: 1px solid var(--line);
+  }
+  .recent-year { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink); }
+  .recent-place { color: var(--ink-2); }
+  .recent-link { white-space: nowrap; }
+
+  @media (min-width: 52rem) {
+    .current-card { grid-template-columns: 1fr auto; align-items: center; padding: var(--s-7); }
+    .about-cols { grid-template-columns: 1.4fr 1fr; gap: var(--s-8); align-items: start; }
+  }
+</style>

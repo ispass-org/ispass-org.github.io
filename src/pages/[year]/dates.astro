@@ -1,0 +1,79 @@
+---
+import type { GetStaticPaths } from 'astro';
+import ConferenceLayout from '../../layouts/ConferenceLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ImportantDates from '../../components/ImportantDates.astro';
+import { conferenceYears, loadConference, visibleDates } from '../../lib/conferences';
+import { dateCategories } from '../../lib/schema';
+
+export const getStaticPaths = (() =>
+  conferenceYears().map((year) => ({ params: { year: String(year) } }))) satisfies GetStaticPaths;
+
+const year = Number(Astro.params.year);
+const c = loadConference(year);
+
+const GROUPS: Array<{ title: string; categories: Array<(typeof dateCategories)[number]> }> = [
+  { title: 'Papers', categories: ['submission', 'review', 'notification', 'camera_ready'] },
+  { title: 'Artifact evaluation', categories: ['artifact'] },
+  { title: 'Posters', categories: ['poster'] },
+  { title: 'Workshops and tutorials', categories: ['workshop'] },
+  { title: 'Attending', categories: ['registration', 'travel_grant', 'conference'] },
+];
+
+const present = visibleDates(c);
+const groups = GROUPS.filter((group) =>
+  present.some((entry) => group.categories.includes(entry.category)),
+);
+const anyScheduled = present.some((entry) => entry.date);
+---
+
+<ConferenceLayout
+  conference={c}
+  title="Important Dates"
+  description={`All deadlines for ${c.conference.short_name}, with timezones.`}
+>
+  <PageHeader
+    title="Important Dates"
+    eyebrow={c.conference.short_name}
+    lede="Every deadline for this edition, grouped by what it applies to. Times are shown in the timezone that governs each deadline."
+    breadcrumb={[{ label: c.conference.short_name, href: `/${year}/` }]}
+  />
+
+  <div class="wrap section">
+    {!anyScheduled && (
+      <aside class="callout callout-tbd">
+        <b class="callout-title">Not yet scheduled</b>
+        <p>
+          No dates for {c.conference.short_name} have been announced. The deadlines
+          below show the shape of the cycle; each will be filled in as it is set.
+        </p>
+      </aside>
+    )}
+
+    {anyScheduled && (
+      <p class="cal-note">
+        <a class="btn btn-secondary" href={`/${year}/dates.ics`} download>
+          Add all dates to your calendar (.ics)
+        </a>
+      </p>
+    )}
+
+    {groups.map((group) => (
+      <section class="date-group">
+        <div class="section-head"><h2>{group.title}</h2></div>
+        <ImportantDates conference={c} categories={group.categories} />
+      </section>
+    ))}
+
+    <p class="aoe-note small muted">
+      <b>AoE</b> means <i>Anywhere on Earth</i>: a deadline expires when it has passed
+      everywhere on the planet, which is 23:59 UTC−12.
+    </p>
+  </div>
+</ConferenceLayout>
+
+<style>
+  .cal-note { margin-bottom: var(--s-6); }
+  .date-group + .date-group { margin-top: var(--s-7); }
+  .aoe-note { margin-top: var(--s-7); max-width: var(--measure); }
+</style>

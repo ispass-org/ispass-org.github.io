@@ -1,0 +1,58 @@
+---
+import type { GetStaticPaths } from 'astro';
+import ConferenceLayout from '../../layouts/ConferenceLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ProgramSchedule from '../../components/ProgramSchedule.astro';
+import { conferenceYears, loadConference, hasProgram } from '../../lib/conferences';
+import { formatDateRange } from '../../lib/dates';
+
+export const getStaticPaths = (() =>
+  conferenceYears().map((year) => ({ params: { year: String(year) } }))) satisfies GetStaticPaths;
+
+const year = Number(Astro.params.year);
+const c = loadConference(year);
+const published = hasProgram(c);
+const span = c.program.days.length
+  ? formatDateRange(c.program.days[0]!.date, c.program.days.at(-1)!.date)
+  : null;
+---
+
+<ConferenceLayout
+  conference={c}
+  title="Program"
+  description={`The technical program of ${c.conference.short_name}.`}
+  noindex={c.program.sample}
+  mainClass="program-main"
+>
+  <PageHeader
+    title="Program"
+    eyebrow={c.conference.short_name}
+    lede={published && span ? `The technical program, ${span}.` : null}
+    breadcrumb={[{ label: c.conference.short_name, href: `/${year}/` }]}
+  />
+
+  <div class="wrap section">
+    {published ? (
+      <>
+        <p class="print-hint small muted no-print">
+          This page is designed to print: use your browser's print or
+          "save as PDF" command for a paper copy of the schedule.
+        </p>
+        <ProgramSchedule conference={c} />
+      </>
+    ) : (
+      <aside class="callout callout-tbd">
+        <b class="callout-title">Not yet published</b>
+        <p>
+          The {c.conference.short_name} program will be published once papers have
+          been accepted and sessions assigned. See the
+          <a href={`/${year}/dates/`}>important dates</a> for the notification date.
+        </p>
+      </aside>
+    )}
+  </div>
+</ConferenceLayout>
+
+<style>
+  .print-hint { margin-bottom: var(--s-4); }
+</style>
