@@ -2,7 +2,7 @@
 title: Poster Submission Instructions
 description: Formatting and length requirements for extended poster abstracts submitted to ISPASS {{YEAR}}.
 nav: authors
-nav_label: Posters
+nav_label: Poster Submission
 order: 60
 show_dates: [poster]
 ---

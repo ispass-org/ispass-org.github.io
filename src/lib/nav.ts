@@ -66,8 +66,11 @@ function dataDrivenPages(c: ConferenceData): GroupedNavItem[] {
     },
     { group: 'conference', order: 45, label: 'Important Dates', href: `/${c.year}/dates/` },
     {
-      group: 'authors',
-      order: 55,
+      // With the program, not under Authors: it is what attendees see at the
+      // conference. Submitting a poster (Call for Posters, Poster Submission)
+      // stays under Authors.
+      group: 'conference',
+      order: 32,
       label: 'Accepted Posters',
       href: `/${c.year}/accepted-posters/`,
       pending: !c.posters.published,
