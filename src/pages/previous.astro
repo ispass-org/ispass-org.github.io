@@ -4,8 +4,8 @@
  *
  * Lists every edition, whether its site is served from this repository or still
  * from the legacy host, and whether that archive currently works. The last part
- * matters: as of the audit, most pre-2018 archives are broken, and sending a
- * reader to a dead page without warning is worse than saying so.
+ * matters: an archive can go dark (2002 already has), and sending a reader to a
+ * dead page without warning is worse than saying so.
  */
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { conferenceYears, loadSite } from '../lib/conferences';
@@ -21,9 +21,16 @@ const editions = site.past_conferences
     here: edition.managed_here || managedHere.has(edition.year),
   }));
 
-const broken = editions.filter(
-  (e) => !e.here && (e.archive_status === 'broken' || e.archive_status === 'missing'),
-).length;
+const unreachable = editions
+  .filter((e) => !e.here && (e.archive_status === 'broken' || e.archive_status === 'missing'))
+  .map((e) => e.year)
+  .sort((a, b) => a - b);
+
+/** "2002", "2002 and 2005", "2002, 2005 and 2009". */
+const yearList =
+  unreachable.length <= 1
+    ? String(unreachable[0] ?? '')
+    : `${unreachable.slice(0, -1).join(', ')} and ${unreachable.at(-1)}`;
 
 const STATUS_NOTE: Record<string, string> = {
   broken: 'Archive currently unavailable',
@@ -48,14 +55,15 @@ const STATUS_NOTE: Record<string, string> = {
   </div>
 
   <div class="wrap section">
-    {broken > 0 && (
-      <aside class="callout callout-warning">
-        <b class="callout-title">Archive problems</b>
+    {unreachable.length > 0 && (
+      <aside class="callout callout-tbd">
+        <b class="callout-title">
+          {unreachable.length === 1 ? 'One archive is offline' : 'Some archives are offline'}
+        </b>
         <p>
-          {broken} of the archived sites linked below do not currently load
-          correctly on the legacy host. They are listed for the record and marked
-          accordingly. Restoring them is tracked in the repository's migration
-          plan; the original URLs have deliberately not been changed.
+          The archived {unreachable.length === 1 ? 'site' : 'sites'} for ISPASS {yearList}
+          {unreachable.length === 1 ? ' is' : ' are'} no longer online. {unreachable.length === 1 ? 'It is' : 'They are'} listed
+          below for the record. If you have a copy, please contact the organizers.
         </p>
       </aside>
     )}

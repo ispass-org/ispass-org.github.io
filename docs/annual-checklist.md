@@ -142,6 +142,6 @@ already planned around the old one.
 - **Unknown is `null`, not `"TBD"`.** The validator enforces it.
 - Run `npm run validate` before every commit, and `npm test` before every
   deploy.
-- If `archive_status` in `site/ispass.yaml` still says `broken` for the older
-  editions, that backlog is still open — see
-  [migration-plan.md](./migration-plan.md).
+- Once a year, click through the Previous Symposia page. If an archive has
+  stopped loading, set its `archive_status` to `broken` in `site/ispass.yaml`
+  so the page warns readers.
