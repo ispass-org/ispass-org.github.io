@@ -26,9 +26,9 @@ workflows live in [`.github/workflows/`](../.github/workflows/):
   `npm run validate` runs before anything is uploaded, so malformed content
   never reaches the live site.
 
-While the repository is **private**, the deploy step is skipped automatically:
-GitHub Pages is not available for private repositories on the free plan.
-Making the repository public switches publishing on with no edits.
+The repository must be **public**: GitHub Pages is not available for private
+repositories on GitHub's free plan, and on a private repository the deploy job
+fails.
 
 ```
 edit content on a branch

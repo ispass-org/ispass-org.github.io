@@ -1,9 +1,7 @@
 # Publishes the site to GitHub Pages on every push to main.
 #
-# While the repository is PRIVATE this workflow builds but skips the deploy
-# step: GitHub Pages is not available for private repositories on the free
-# plan. When the repository is made public, deploys start automatically —
-# no edit needed.
+# The repository must be public: GitHub Pages is not available for private
+# repositories on GitHub's free plan, so on a private repo the deploy job fails.
 #
 # Pointing ispass.org at the published site is a separate, manual step. See
 # docs/deployment.md, "Connecting a custom domain".
@@ -40,14 +38,11 @@ jobs:
       - run: npm run build:only
       - run: npm run lint
       - uses: actions/upload-pages-artifact@v3
-        if: ${{ !github.event.repository.private }}
         with:
           path: dist
 
   deploy:
     needs: build
-    # Skipped while the repository is private. See the note at the top.
-    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
