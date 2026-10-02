@@ -17,13 +17,21 @@ roles:
         affiliation: "New York University"
 
   - role: "Program Chair"
-    people: []
+    people:
+      - name: "Jason Lowe-Power"
+        affiliation: "Google"
 
   - role: "Finance Chair"
-    people: []
+    people:
+      - name: "Samuel Thomas"
+        affiliation: "Pomona College"
+      - name: "Lauren Biernacki"
+        affiliation: "Lafayette College"
 
   - role: "Registration Chair"
-    people: []
+    people:
+      - name: "Samah Saeed"
+        affiliation: "City College of New York"
 
   - role: "Web Chair"
     people:
@@ -31,31 +39,46 @@ roles:
         affiliation: "ETH Zürich"
 
   - role: "Workshops and Tutorials Chair"
-    people: []
+    people:
+      - name: "Sitao Huang"
+        affiliation: "University of California, Irvine"
+      - name: "Hyoukjun Kwon"
+        affiliation: "Meta"
 
   - role: "Sponsorship Chair"
-    people: []
+    people:
+      - name: "Sana Damani"
+        affiliation: "NVIDIA"
 
   - role: "Artifact Evaluation Chairs"
     people: []
 
-  - role: "Submissions Chairs"
-    people: []
-
   - role: "Student Travel Grants Chair"
-    people: []
+    people:
+      - name: "Lillian Pentecost"
+        affiliation: "Amherst College"
 
   - role: "Publications Chair"
-    people: []
+    people:
+      - name: "Austin Rovinski"
+        affiliation: "New York University"
 
   - role: "Local Arrangements Chair"
-    people: []
+    people:
+      - name: "Sai Zhang"
+        affiliation: "New York University"
 
   - role: "Publicity Chairs"
-    people: []
+    people:
+      - name: "Udit Gupta"
+        affiliation: "Cornell University"
 
   - role: "Posters Chair"
-    people: []
+    people:
+      - name: "Nishil Talati"
+        affiliation: "University of Illinois Urbana-Champaign"
+      - name: "Nathaniel Bleier"
+        affiliation: "University of Michigan"
 
 # The technical program committee, once the Program Chair has assembled it.
 # Rendered as a plain alphabetical list, grouped by initial.

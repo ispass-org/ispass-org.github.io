@@ -30,8 +30,8 @@ venue_address: null
 # Conference dates. Confirm with the General Chair before filling these in;
 # once set, they flow into the hero, the schedule, the ICS feed and the
 # structured event metadata automatically.
-start_date: null
-end_date: null
+start_date: 2027-05-09
+end_date: 2027-05-11
 
 # Local timezone of the conference. Used for the program and for calendar
 # export. New York is America/New_York.

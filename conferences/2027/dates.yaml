@@ -114,8 +114,8 @@
 
 - id: conference
   name: "ISPASS 2027"
-  date: null
-  end_date: null
+  date: 2027-05-09
+  end_date: 2027-05-11
   timezone: "America/New_York"
   category: conference
   note: "Workshops and tutorials on the first day."
