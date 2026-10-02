@@ -1,12 +1,17 @@
 # ---------------------------------------------------------------------------
 # Site news, newest first (order in this file does not matter — the site sorts).
 #
-# Every entry below is a PLACEHOLDER with `placeholder: true`, which renders a
-# visible "example entry" marker. Delete them as you publish real news; do not
-# leave placeholders live once the site is public.
-#
 # Fields: id, date (YYYY-MM-DD), title, body, link, link_text, importance.
 # `importance: high` pins the item to the top of the homepage with a marker.
 # ---------------------------------------------------------------------------
 
-[]
+- id: cfp-published
+  date: 2026-10-02
+  title: "Call for Papers available"
+  body: >-
+    The Call for Papers for ISPASS 2027 is available. Abstracts are due
+    December 11, 2026 and full papers December 18, 2026. The symposium will be
+    held May 9–11, 2027 in New York City.
+  link: "/2027/cfp/"
+  link_text: "Read the Call for Papers"
+  importance: high

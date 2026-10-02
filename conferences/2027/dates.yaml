@@ -20,7 +20,7 @@
 
 - id: abstract
   name: "Paper abstract submission"
-  date: null
+  date: 2026-12-11
   time: null
   timezone: "AoE"
   category: submission
@@ -28,21 +28,21 @@
 
 - id: paper
   name: "Full paper submission"
-  date: null
+  date: 2026-12-18
   time: null
   timezone: "AoE"
   category: submission
 
 - id: rebuttal
   name: "Author rebuttal period"
-  date: null
-  end_date: null
+  date: 2027-02-15
+  end_date: 2027-02-19
   timezone: "AoE"
   category: review
 
 - id: notification
   name: "Paper notification"
-  date: null
+  date: 2027-03-08
   timezone: "AoE"
   category: notification
 
@@ -60,7 +60,7 @@
 
 - id: poster-abstract
   name: "Extended poster abstract submission"
-  date: null
+  date: 2027-04-02
   timezone: "AoE"
   category: poster
 
