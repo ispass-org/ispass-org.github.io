@@ -22,8 +22,7 @@ Please make sure your submission satisfies all of the following.
   **one (1) additional page for references**. All content other than references
   must fit within the first two pages. Abstracts that exceed the length limit or
   deviate from the formatting requirements may be rejected without review.
-- References must **list all authors** for any reference with fewer than ten
-  co-authors.
+- References must **list all authors**.
 - Submissions must be **anonymous**. Do not omit references to preserve
   anonymity; cite your own work in the third person.
 - The submission must be legible **when printed in black and white**, including

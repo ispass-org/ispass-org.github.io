@@ -3,21 +3,20 @@ title: Call for Papers
 description: Call for Papers for ISPASS 2027, the IEEE International Symposium on Performance Analysis of Systems and Software, hosted by New York University.
 nav: authors
 order: 10
-show_dates: [submission, review, notification]
+show_dates: [submission, review, notification, conference]
 ---
 
 :::note
-The ISPASS 2027 Call for Papers is being prepared. Topics and submission
-requirements below reflect the scope of the symposium; **dates and the
-submission site are not yet final**. Check this page again once the Program
-Chair has been announced.
+The ISPASS 2027 submission site has not opened yet. It will be linked from this
+page and from the [Paper Submission Instructions](/2027/submission/).
 :::
 
 The IEEE International Symposium on Performance Analysis of Systems and Software
 (ISPASS) provides a forum for sharing advanced academic and industrial research
 focused on performance analysis in the design of computer systems and software.
 Authors are invited to submit previously unpublished work for possible
-presentation at the conference.
+presentation at the conference. ISPASS 2027 will be held in New York City on
+May 9–11, 2027.
 
 ## Topics of interest
 
@@ -75,6 +74,9 @@ expected to open-source their tool or benchmark before the conference.
 There is no separate page limit for tool and benchmark papers.
 
 ## How to submit
+
+Questions about the call may be sent to the General Chair, Brandon Reagen, or
+the Program Chair, Jason Lowe-Power.
 
 Full formatting requirements, the page limit, the double-blind policy, the arXiv
 policy and the conflict-of-interest rules are on the

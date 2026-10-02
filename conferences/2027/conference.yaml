@@ -41,7 +41,7 @@ timezone: "America/New_York"
 # appear. See docs/content-model.md for the full list and what each one does.
 #   pre_cfp -> cfp_open -> submissions_open -> review -> accepted_papers
 #   -> registration_open -> program_published -> conference -> archived
-phase: "pre_cfp"
+phase: "cfp_open"
 
 tagline: "Performance analysis of systems and software"
 
