@@ -7,3 +7,7 @@ dist/
 .env.*
 !.env.example
 .cache/
+
+# Internal working documents: plans, audits and committee material that must
+# not be published. Kept locally only. See internal/README.md.
+internal/

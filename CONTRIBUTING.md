@@ -98,7 +98,7 @@ The site must work without it. Any script is an enhancement:
 - Say **why** in the message, not just what.
 - In a pull request that changes anything visual, include a screenshot at a
   wide width **and** at 390px.
-- Once CI is configured (see [docs/deployment-plan.md](docs/deployment-plan.md)),
+- Once CI is configured (see [docs/deployment.md](docs/deployment.md)),
   every pull request gets a preview URL. Use it.
 
 ## Never commit

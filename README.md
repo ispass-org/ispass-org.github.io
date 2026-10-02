@@ -56,14 +56,10 @@ The separation is strict: **nothing under `src/` knows anything about ISPASS
 | Document | Contents |
 | --- | --- |
 | [HANDOFF.md](HANDOFF.md) | **Start here.** Normal operation for a Web Chair. |
-| [docs/improvements.md](docs/improvements.md) | What changed from the 2026 site, and why |
 | [docs/content-model.md](docs/content-model.md) | Every content file and field |
 | [docs/annual-checklist.md](docs/annual-checklist.md) | What to do at each stage of the cycle |
 | [docs/architecture.md](docs/architecture.md) | How the site is built and why |
-| [docs/legacy-site-audit.md](docs/legacy-site-audit.md) | The ISPASS 2026 site, page by page |
-| [docs/deployment-plan.md](docs/deployment-plan.md) | Recommended hosting and CI (GitHub Pages + Actions) — **not yet set up** |
-| [docs/migration-plan.md](docs/migration-plan.md) | How `ispass.org` could move — **not yet done** |
-| [DESIGN_NOTES.md](DESIGN_NOTES.md) | Design philosophy and what changed from 2026 |
+| [docs/deployment.md](docs/deployment.md) | How publishing works, and how to connect a domain |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Conventions for changing `src/` |
 
 ## Technology

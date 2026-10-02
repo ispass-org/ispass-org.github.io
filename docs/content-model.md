@@ -329,5 +329,4 @@ past_conferences:
 `archive_status` records whether the linked archive actually loads. It is
 surfaced on `/previous/` so nobody is sent to a dead page without warning, and
 so any dead archive stays visible. As of 29 September 2026 every edition loads
-except 2002, which is `missing` — see
-[legacy-site-audit.md](./legacy-site-audit.md#2-the-archives).
+except 2002, which is `missing`.

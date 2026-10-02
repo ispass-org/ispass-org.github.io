@@ -123,7 +123,8 @@ component writes a literal colour.
 The palette is ISPASS's own, taken from the original ispass.org stylesheet and
 from the logo artwork: navy `#000080`, green `#008000`, charcoal `#303030`,
 pale blue `#e1e1ff`, warm paper `#f5f5ef`. See
-[DESIGN_NOTES.md](../DESIGN_NOTES.md#visual-identity) for where each came from.
+[`public/brand/README.md`](../public/brand/README.md) for the logo colours and
+[`src/styles/tokens.css`](../src/styles/tokens.css) for the full palette.
 
 There is **one light theme** and no dark mode — a deliberate simplification for
 a document-like site that is also printed and projected.

@@ -231,9 +231,8 @@ on GitHub Pages the site is public either way — and it would cost money. What
 keeps an unfinished site out of sight is simply not pointing `ispass.org` at it
 yet.
 
-Read [docs/deployment-plan.md](docs/deployment-plan.md) before setting anything
-up, and [docs/migration-plan.md](docs/migration-plan.md) before touching
-`ispass.org`.
+Read [docs/deployment.md](docs/deployment.md) before changing hosting, and
+especially before touching the DNS for `ispass.org`.
 
 One thing to know now: when a hosting origin is chosen, set `origin` **and**
 `base` in [`src/lib/site-config.mjs`](src/lib/site-config.mjs). Canonical URLs,
@@ -300,7 +299,5 @@ one homepage, not nine.
 | [docs/content-model.md](docs/content-model.md) | Every field, in detail |
 | [docs/annual-checklist.md](docs/annual-checklist.md) | What to do, when |
 | [docs/architecture.md](docs/architecture.md) | How the site is built |
-| [docs/legacy-site-audit.md](docs/legacy-site-audit.md) | What the old site did and why this one differs |
-| [docs/deployment-plan.md](docs/deployment-plan.md) | Before setting up hosting |
-| [docs/migration-plan.md](docs/migration-plan.md) | Before touching `ispass.org` |
+| [docs/deployment.md](docs/deployment.md) | Before changing hosting or DNS |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Conventions, if you are changing `src/` |

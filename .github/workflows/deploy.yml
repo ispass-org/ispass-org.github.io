@@ -6,7 +6,7 @@
 # no edit needed.
 #
 # Pointing ispass.org at the published site is a separate, manual step. See
-# docs/migration-plan.md, Phase D.
+# docs/deployment.md, "Connecting a custom domain".
 name: Deploy
 
 on:
