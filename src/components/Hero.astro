@@ -7,7 +7,7 @@
  * page reads as "not announced yet" rather than as an oversight.
  */
 import type { ConferenceData } from '../lib/conferences';
-import { formatDateRange } from '../lib/dates';
+import { formatDateRange, timezoneLabel } from '../lib/dates';
 import type { CallToAction } from '../lib/phase';
 
 interface Props {
@@ -25,6 +25,8 @@ const meta = c.conference;
 const place = [meta.city, meta.country].filter(Boolean).join(', ');
 const dates = formatDateRange(meta.start_date, meta.end_date);
 const datesKnown = Boolean(meta.start_date);
+
+const timezoneText = timezoneLabel(meta.timezone, meta.start_date);
 ---
 
 <section class="hero">
@@ -53,7 +55,7 @@ const datesKnown = Boolean(meta.start_date);
         <dt>When</dt>
         <dd>
           {datesKnown ? dates : <span class="tbd">Dates to be announced</span>}
-          {datesKnown && <span class="fact-sub">{meta.timezone.replace('_', ' ')}</span>}
+          {datesKnown && <span class="fact-sub">{timezoneText}</span>}
         </dd>
       </div>
     </dl>

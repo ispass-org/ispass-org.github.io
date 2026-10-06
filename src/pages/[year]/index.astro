@@ -17,7 +17,7 @@ import {
   conferenceYears,
   loadConference,
   hasProgram,
-  hasSponsorSlots,
+  hasSponsors,
   visibleDates,
 } from '../../lib/conferences';
 import { homePlan } from '../../lib/phase';
@@ -36,9 +36,10 @@ const sections = new Set(plan.sections);
 const keynotes = c.keynotes.filter((k) => !k.placeholder);
 const showKeynotes = sections.has('keynotes') && keynotes.length > 0;
 const showProgram = sections.has('program') && hasProgram(c);
-// Placeholder slots count here, so the homepage shows its final shape during
-// review. The nav's "soon" marker, by contrast, waits for a real sponsor.
-const showSponsors = sections.has('sponsors') && hasSponsorSlots(c);
+// The homepage only shows sponsors once at least one is confirmed. Reserved
+// placeholder slots stay on the Sponsors page, where the notice above the grid
+// says what they are, but never appear on the front page of a live site.
+const showSponsors = sections.has('sponsors') && hasSponsors(c);
 const upcomingDates = visibleDates(c);
 
 /** External systems worth surfacing on the homepage, once they exist. */

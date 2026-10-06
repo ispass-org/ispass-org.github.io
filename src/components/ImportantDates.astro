@@ -13,7 +13,7 @@
  */
 import type { ConferenceData } from '../lib/conferences';
 import { visibleDates } from '../lib/conferences';
-import { classifyDates, deadlineInstant, formatDate, formatDateRange } from '../lib/dates';
+import { classifyDates, deadlineInstant, formatDate, formatDateRange, timezoneLabel } from '../lib/dates';
 import type { dateCategories } from '../lib/schema';
 
 interface Props {
@@ -58,7 +58,7 @@ const icsHref = `/${c.year}/dates.ics`;
             <div class="date-when">
               <span class="date-value">{entry.date ? when : <span class="tbd">TBD</span>}</span>
               <span class="date-tz small">
-                {entry.time ? `${entry.time} ` : ''}{entry.date ? entry.timezone : ''}
+                {entry.time ? `${entry.time} ` : ''}{entry.date ? timezoneLabel(entry.timezone, entry.date) : ''}
               </span>
             </div>
 
