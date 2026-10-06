@@ -16,12 +16,10 @@ ISPASS {{YEAR}} is hosted by **{{HOST}}** in **{{CITY}}**.
 
 ## What happens at ISPASS
 
-A typical ISPASS runs for three days:
-
-- **A day of workshops and tutorials**, proposed by the community and selected
-  by the Workshops and Tutorials Chair.
-- **Two days of main conference**, with single-track keynotes, parallel paper
-  sessions, and a poster session for late-breaking work.
+- **Workshops and tutorials**, proposed by the community and selected by the
+  Workshops and Tutorials Chair.
+- **The main conference**, with keynotes, paper sessions, and a poster session
+  for late-breaking work.
 - **A banquet**, at which the best paper and distinguished artifact awards are
   presented.
 

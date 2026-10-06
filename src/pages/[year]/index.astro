@@ -32,7 +32,8 @@ const meta = c.conference;
 const plan = homePlan(c);
 
 const sections = new Set(plan.sections);
-const keynotes = c.keynotes;
+// Confirmed speakers only, so the homepage never implies how many are planned.
+const keynotes = c.keynotes.filter((k) => !k.placeholder);
 const showKeynotes = sections.has('keynotes') && keynotes.length > 0;
 const showProgram = sections.has('program') && hasProgram(c);
 // Placeholder slots count here, so the homepage shows its final shape during

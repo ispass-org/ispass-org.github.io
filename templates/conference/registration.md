@@ -17,9 +17,9 @@ system are in place.
 In recent years ISPASS registration has been split into two parts, which can be
 bought separately:
 
-- **Main conference** — the two days of keynotes, paper sessions and the poster
-  session, including breakfasts, lunches, refreshments and the banquet.
-- **Workshops and tutorials** — the pre-conference day.
+- **Main conference** — keynotes, paper sessions and the poster session,
+  including breakfasts, lunches, refreshments and the banquet.
+- **Workshops and tutorials**.
 
 Rates are usually offered at four levels — IEEE member, non-member, IEEE student
 member and student non-member — with a reduced IEEE life member rate, and an

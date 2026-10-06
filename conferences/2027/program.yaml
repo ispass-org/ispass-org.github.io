@@ -1,23 +1,22 @@
 # ---------------------------------------------------------------------------
 # ISPASS 2027 technical program — EMPTY PLACEHOLDER SKELETON.
 #
-# The days match conference.yaml (9-11 May 2027). Every slot below is a
-# placeholder: no papers, no chairs, no rooms. Times follow the usual ISPASS
-# shape and are provisional; `draft: true` renders a "Provisional" notice on
-# the Program page.
+# The days match conference.yaml (9-11 May 2027). Every day has the same
+# neutral shape on purpose: it does not say how many keynotes there will be,
+# or on which day workshops and tutorials take place, because neither is
+# decided. Times are provisional; `draft: true` renders a "Provisional" notice.
 #
-# To fill it in after paper notification:
-#   - give each paper session a topic, e.g. "Session 1A: Machine Learning
-#     Systems", and add its `chair` and `room`
-#   - add the `papers:` list under each paper session
-#   - set the keynote `speaker` (and fill keynotes.yaml)
-#   - add workshops/tutorials as separate sessions in the day-one slots
+# To fill it in once decided:
+#   - replace "Sessions to be announced" slots with real sessions: keynotes
+#     (kind: keynote), paper sessions (kind: papers, with a topic, chair, room
+#     and papers list), workshops and tutorials (kind: workshop / tutorial)
+#   - add the opening, poster session, banquet and closing where they belong
 #   - adjust times, then set `draft: false` once the schedule is final
 #
 # Structure:
 #   days[]            one per conference day
 #     date            YYYY-MM-DD
-#     label           e.g. "Workshops & Tutorials"; defaults to the weekday
+#     label           e.g. "Main Conference"; defaults to the weekday
 #     slots[]         one row of the schedule, in time order
 #       start/end     HH:MM local time (program.timezone)
 #       sessions[]    one entry = one track. Two or more entries in the same
@@ -31,7 +30,7 @@
 sample: false
 draft: true
 timezone: "America/New_York"
-note: "Placeholder schedule. Sessions, papers, rooms and times will be filled in after paper notification."
+note: "Placeholder schedule. Keynotes, workshops, tutorials and paper sessions will be announced."
 
 legend:
   - symbol: "★"
@@ -40,29 +39,40 @@ legend:
     meaning: "Artifact evaluated"
 
 days:
-  # ---------------------------------------------- Sunday 9 May 2027 ---
   - date: 2027-05-09
-    label: "Workshops & Tutorials"
     slots:
       - start: "08:00"
         end: "09:00"
         sessions:
-          - id: d1-registration
-            kind: admin
-            title: "Registration and breakfast"
+          - id: d1-breakfast
+            kind: break
+            title: "Breakfast"
             start: "08:00"
             end: "09:00"
-
       - start: "09:00"
+        end: "10:30"
+        sessions:
+          - id: d1-am1
+            kind: papers
+            title: "Sessions to be announced"
+            start: "09:00"
+            end: "10:30"
+      - start: "10:30"
+        end: "11:00"
+        sessions:
+          - id: d1-coffee-am
+            kind: break
+            title: "Coffee break"
+            start: "10:30"
+            end: "11:00"
+      - start: "11:00"
         end: "12:30"
         sessions:
-          - id: d1-morning
-            kind: workshop
-            title: "Workshops and tutorials (morning)"
-            start: "09:00"
+          - id: d1-am2
+            kind: papers
+            title: "Sessions to be announced"
+            start: "11:00"
             end: "12:30"
-            description: "Accepted workshops and tutorials will be listed here."
-
       - start: "12:30"
         end: "14:00"
         sessions:
@@ -71,201 +81,161 @@ days:
             title: "Lunch"
             start: "12:30"
             end: "14:00"
-
       - start: "14:00"
+        end: "15:30"
+        sessions:
+          - id: d1-pm1
+            kind: papers
+            title: "Sessions to be announced"
+            start: "14:00"
+            end: "15:30"
+      - start: "15:30"
+        end: "16:00"
+        sessions:
+          - id: d1-coffee-pm
+            kind: break
+            title: "Coffee break"
+            start: "15:30"
+            end: "16:00"
+      - start: "16:00"
         end: "17:30"
         sessions:
-          - id: d1-afternoon
-            kind: workshop
-            title: "Workshops and tutorials (afternoon)"
-            start: "14:00"
+          - id: d1-pm2
+            kind: papers
+            title: "Sessions to be announced"
+            start: "16:00"
             end: "17:30"
-            description: "Accepted workshops and tutorials will be listed here."
 
-  # ---------------------------------------------- Monday 10 May 2027 ---
   - date: 2027-05-10
-    label: "Main Conference"
     slots:
       - start: "08:00"
-        end: "08:45"
+        end: "09:00"
         sessions:
           - id: d2-breakfast
             kind: break
             title: "Breakfast"
             start: "08:00"
-            end: "08:45"
-
-      - start: "08:45"
-        end: "09:00"
-        sessions:
-          - id: d2-opening
-            kind: admin
-            title: "Welcome and opening remarks"
-            start: "08:45"
             end: "09:00"
-
       - start: "09:00"
-        end: "10:00"
-        sessions:
-          - id: d2-keynote
-            kind: keynote
-            title: "Keynote I"
-            start: "09:00"
-            end: "10:00"
-            description: "Speaker to be announced."
-
-      - start: "10:00"
         end: "10:30"
         sessions:
-          - id: d2-coffee
+          - id: d2-am1
+            kind: papers
+            title: "Sessions to be announced"
+            start: "09:00"
+            end: "10:30"
+      - start: "10:30"
+        end: "11:00"
+        sessions:
+          - id: d2-coffee-am
             kind: break
             title: "Coffee break"
-            start: "10:00"
-            end: "10:30"
-
-      - start: "10:30"
-        end: "12:00"
+            start: "10:30"
+            end: "11:00"
+      - start: "11:00"
+        end: "12:30"
         sessions:
-          - id: s1a
+          - id: d2-am2
             kind: papers
-            title: "Session 1A"
-            start: "10:30"
-            end: "12:00"
-            description: "Papers to be announced."
-          - id: s1b
-            kind: papers
-            title: "Session 1B"
-            start: "10:30"
-            end: "12:00"
-            description: "Papers to be announced."
-
-      - start: "12:00"
-        end: "13:30"
+            title: "Sessions to be announced"
+            start: "11:00"
+            end: "12:30"
+      - start: "12:30"
+        end: "14:00"
         sessions:
           - id: d2-lunch
             kind: break
             title: "Lunch"
-            start: "12:00"
-            end: "13:30"
-
-      - start: "13:30"
-        end: "15:00"
+            start: "12:30"
+            end: "14:00"
+      - start: "14:00"
+        end: "15:30"
         sessions:
-          - id: s2a
+          - id: d2-pm1
             kind: papers
-            title: "Session 2A"
-            start: "13:30"
-            end: "15:00"
-            description: "Papers to be announced."
-          - id: s2b
+            title: "Sessions to be announced"
+            start: "14:00"
+            end: "15:30"
+      - start: "15:30"
+        end: "16:00"
+        sessions:
+          - id: d2-coffee-pm
+            kind: break
+            title: "Coffee break"
+            start: "15:30"
+            end: "16:00"
+      - start: "16:00"
+        end: "17:30"
+        sessions:
+          - id: d2-pm2
             kind: papers
-            title: "Session 2B"
-            start: "13:30"
-            end: "15:00"
-            description: "Papers to be announced."
+            title: "Sessions to be announced"
+            start: "16:00"
+            end: "17:30"
 
-      - start: "15:00"
-        end: "16:30"
-        sessions:
-          - id: d2-posters
-            kind: poster
-            title: "Poster session and refreshments"
-            start: "15:00"
-            end: "16:30"
-            description: "Accepted posters will be listed here."
-
-      - start: "16:30"
-        end: "18:00"
-        sessions:
-          - id: s3
-            kind: papers
-            title: "Session 3"
-            start: "16:30"
-            end: "18:00"
-            description: "Papers to be announced."
-
-      - start: "19:00"
-        end: "21:30"
-        sessions:
-          - id: d2-banquet
-            kind: social
-            title: "Conference banquet"
-            start: "19:00"
-            end: "21:30"
-            description: "Venue to be announced."
-
-  # --------------------------------------------- Tuesday 11 May 2027 ---
   - date: 2027-05-11
-    label: "Main Conference"
     slots:
       - start: "08:00"
-        end: "08:45"
+        end: "09:00"
         sessions:
           - id: d3-breakfast
             kind: break
             title: "Breakfast"
             start: "08:00"
-            end: "08:45"
-
-      - start: "08:45"
-        end: "09:45"
+            end: "09:00"
+      - start: "09:00"
+        end: "10:30"
         sessions:
-          - id: d3-keynote
-            kind: keynote
-            title: "Keynote II"
-            start: "08:45"
-            end: "09:45"
-            description: "Speaker to be announced."
-
-      - start: "09:45"
-        end: "10:15"
+          - id: d3-am1
+            kind: papers
+            title: "Sessions to be announced"
+            start: "09:00"
+            end: "10:30"
+      - start: "10:30"
+        end: "11:00"
         sessions:
-          - id: d3-coffee
+          - id: d3-coffee-am
             kind: break
             title: "Coffee break"
-            start: "09:45"
-            end: "10:15"
-
-      - start: "10:15"
-        end: "12:00"
+            start: "10:30"
+            end: "11:00"
+      - start: "11:00"
+        end: "12:30"
         sessions:
-          - id: s4a
+          - id: d3-am2
             kind: papers
-            title: "Session 4A"
-            start: "10:15"
-            end: "12:00"
-            description: "Papers to be announced."
-          - id: s4b
-            kind: papers
-            title: "Session 4B"
-            start: "10:15"
-            end: "12:00"
-            description: "Papers to be announced."
-
-      - start: "12:00"
-        end: "13:30"
+            title: "Sessions to be announced"
+            start: "11:00"
+            end: "12:30"
+      - start: "12:30"
+        end: "14:00"
         sessions:
           - id: d3-lunch
             kind: break
             title: "Lunch"
-            start: "12:00"
-            end: "13:30"
-
-      - start: "13:30"
-        end: "15:00"
-        sessions:
-          - id: s5
-            kind: papers
-            title: "Session 5"
-            start: "13:30"
-            end: "15:00"
-            description: "Papers to be announced."
-
-      - start: "15:00"
+            start: "12:30"
+            end: "14:00"
+      - start: "14:00"
         end: "15:30"
         sessions:
-          - id: d3-closing
-            kind: admin
-            title: "Awards and closing remarks"
-            start: "15:00"
+          - id: d3-pm1
+            kind: papers
+            title: "Sessions to be announced"
+            start: "14:00"
             end: "15:30"
+      - start: "15:30"
+        end: "16:00"
+        sessions:
+          - id: d3-coffee-pm
+            kind: break
+            title: "Coffee break"
+            start: "15:30"
+            end: "16:00"
+      - start: "16:00"
+        end: "17:30"
+        sessions:
+          - id: d3-pm2
+            kind: papers
+            title: "Sessions to be announced"
+            start: "16:00"
+            end: "17:30"
