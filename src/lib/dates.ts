@@ -155,3 +155,18 @@ export function nextDay(iso: string): string {
   d.setUTCDate(d.getUTCDate() + 1);
   return d.toISOString().slice(0, 10);
 }
+
+/**
+ * A reader-friendly timezone name: "Eastern Daylight Time" for an IANA id,
+ * "AoE" left as is. `iso` picks the offset in force (standard vs daylight).
+ */
+export function timezoneLabel(zone: string, iso: string | null = null): string {
+  if (zone === 'AoE') return zone;
+  try {
+    const at = new Date(`${iso ?? '2000-01-01'}T12:00:00Z`);
+    const parts = new Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'long' }).formatToParts(at);
+    return parts.find((p) => p.type === 'timeZoneName')?.value ?? zone.replace(/_/g, ' ');
+  } catch {
+    return zone.replace(/_/g, ' ');
+  }
+}
