@@ -56,7 +56,7 @@ const icsHref = `/${c.year}/dates.ics`;
             data-deadline={instant ? instant.toISOString() : undefined}
           >
             <div class="date-when">
-              <span class="date-value">{entry.date ? when : <span class="tbd">TBD</span>}</span>
+              <span class="date-value">{entry.date ? when : <span class="tbd">TBA</span>}</span>
               <span class="date-tz small">
                 {entry.time ? `${entry.time} ` : ''}{entry.date ? timezoneLabel(entry.timezone, entry.date) : ''}
               </span>

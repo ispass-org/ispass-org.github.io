@@ -55,8 +55,8 @@ site/                    ← the evergreen ISPASS layer
 
 **Two rules, and the validator enforces both:**
 
-1. Unknown is `null`, never the string `"TBD"`. The site renders `null` as
-   *TBD* for you.
+1. Unknown is `null`, never the string `"TBD"`. The site shows `null` for you:
+   *TBA* for a date, *TBD* or "to be announced" elsewhere.
 2. A deadline is written **once**, in `dates.yaml`.
 
 ## 4. Change a date
@@ -287,7 +287,7 @@ one homepage, not nine.
 | --- | --- |
 | `npm run validate` fails | It names the file and the field. Fix that. |
 | A page is missing from the menu | `nav:` in its frontmatter, or `since_phase:` gating it |
-| A date shows as TBD | `date:` is still `null` in `dates.yaml` |
+| A date shows as TBA | `date:` is still `null` in `dates.yaml` |
 | The wrong button on the homepage | `phase` in `conference.yaml` |
 | A link 404s | `npm run build && npm run lint` finds every broken internal link |
 | A section is missing from the homepage | It has no content yet — that is by design |

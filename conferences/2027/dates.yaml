@@ -60,7 +60,7 @@
 
 - id: poster-abstract
   name: "Extended poster abstract submission"
-  date: 2027-04-02
+  date: null
   timezone: "AoE"
   category: poster
 
