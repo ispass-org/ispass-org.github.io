@@ -164,9 +164,10 @@ real news — and `npm run validate` warns while any remain.
 `id`, `speaker`, `affiliation`, `title`, `abstract`, `bio`, `photo`,
 `photo_alt`, `url`, `session_id`, `placeholder`.
 
-Set `placeholder: true` for a slot whose speaker is not confirmed; it renders
-as a "Speaker to be announced" card so the page has its final shape from day
-one.
+Add an entry only once a speaker is confirmed. Until then leave the list empty:
+the Keynotes page says speakers are "to be announced" and the homepage omits
+the section. Entries marked `placeholder: true` are never shown, so the site
+does not reveal how many talks are planned before that is decided.
 
 `photo` is a path under `public/`, e.g. `/images/keynotes/ada-example.jpg`. The
 validator fails if the file is missing, if `photo_alt` is absent, or if a

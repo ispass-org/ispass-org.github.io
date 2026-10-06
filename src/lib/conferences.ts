@@ -206,6 +206,13 @@ export function hasProgram(data: ConferenceData): boolean {
   return data.program.days.some((day) => day.slots.length > 0);
 }
 
+/** True once at least one paper is listed — a placeholder skeleton has none. */
+export function hasPapers(data: ConferenceData): boolean {
+  return data.program.days.some((day) =>
+    day.slots.some((slot) => slot.sessions.some((session) => session.papers.length > 0)),
+  );
+}
+
 export function hasKeynotes(data: ConferenceData): boolean {
   return data.keynotes.some((k) => !k.placeholder);
 }

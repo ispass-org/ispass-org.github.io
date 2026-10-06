@@ -3,14 +3,14 @@ import type { GetStaticPaths } from 'astro';
 import ConferenceLayout from '../../layouts/ConferenceLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import KeynoteCard from '../../components/KeynoteCard.astro';
-import { conferenceYears, loadConference, hasKeynotes } from '../../lib/conferences';
+import { conferenceYears, loadConference } from '../../lib/conferences';
 
 export const getStaticPaths = (() =>
   conferenceYears().map((year) => ({ params: { year: String(year) } }))) satisfies GetStaticPaths;
 
 const year = Number(Astro.params.year);
 const c = loadConference(year);
-const announced = hasKeynotes(c);
+const confirmed = c.keynotes.filter((k) => !k.placeholder);
 ---
 
 <ConferenceLayout
@@ -26,22 +26,16 @@ const announced = hasKeynotes(c);
   />
 
   <div class="wrap section">
-    {!announced && c.keynotes.length > 0 && (
+    {/* Only confirmed speakers are shown. Placeholder entries would reveal how
+        many talks are planned, which is often not decided yet. */}
+    {confirmed.length === 0 ? (
       <aside class="callout callout-tbd">
         <b class="callout-title">Speakers not yet announced</b>
-        <p>
-          {c.conference.short_name} will have {c.keynotes.length} keynote
-          {c.keynotes.length === 1 ? ' talk' : ' talks'}. Speakers and titles are
-          announced here as they are confirmed.
-        </p>
+        <p>Keynote speakers will be announced here as they are confirmed.</p>
       </aside>
-    )}
-
-    {c.keynotes.length === 0 ? (
-      <p class="tbd">Keynotes for this edition have not been arranged yet.</p>
     ) : (
       <div class="keynotes">
-        {c.keynotes.map((keynote, index) => (
+        {confirmed.map((keynote, index) => (
           <KeynoteCard keynote={keynote} index={index} detail headingLevel={2} />
         ))}
       </div>

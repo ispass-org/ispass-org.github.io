@@ -1,34 +1,19 @@
 # ---------------------------------------------------------------------------
-# Keynote speakers.
+# Keynote speakers. Add one entry per CONFIRMED speaker; until then leave the
+# list empty and the site says speakers are "to be announced", without
+# revealing how many talks are planned.
 #
-# Placeholders (`placeholder: true`) render as "Speaker to be announced" cards
-# so the page has shape before speakers are confirmed. Fill in the fields and
-# set `placeholder: false` to publish one.
+#   - id: keynote-1
+#     speaker: "Ada Example"
+#     affiliation: "Example University"
+#     title: "Talk title"
+#     abstract: "…"
+#     bio: "…"
+#     photo: /images/keynotes/ada-example.jpg   # file in public/
+#     photo_alt: "Ada Example"
+#     url: "https://example.edu/~ada"
 #
-# Do NOT carry speakers over from a previous year.
-#
-# `photo` is a path under public/, e.g. /images/keynotes/jane-doe.jpg.
-# `npm run validate` fails if the file is missing. Always write `photo_alt`.
+# Do NOT carry speakers over from a previous year. `npm run validate` fails if
+# a photo file is missing or has no `photo_alt`.
 # ---------------------------------------------------------------------------
-
-- id: keynote-1
-  placeholder: true
-  speaker: null
-  affiliation: null
-  title: null
-  abstract: null
-  bio: null
-  photo: null
-  photo_alt: null
-  url: null
-
-- id: keynote-2
-  placeholder: true
-  speaker: null
-  affiliation: null
-  title: null
-  abstract: null
-  bio: null
-  photo: null
-  photo_alt: null
-  url: null
+[]

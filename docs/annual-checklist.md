@@ -89,7 +89,7 @@ already planned around the old one.
       `sample: false`. Keep `draft: true` until the schedule is final.
 - [ ] Check the program at 390px as well as on a laptop, and print it to PDF.
 - [ ] **keynotes.yaml:** speakers, titles, abstracts, biographies, photos.
-      Add `photo_alt` for every photo. Set `placeholder: false`.
+      Add one entry per confirmed speaker, with `photo_alt` for every photo.
       Resize photos to about 400×400 before committing — do not commit a
       multi-megabyte portrait.
 - [ ] **workshops.yaml:** rooms and per-event schedules.
