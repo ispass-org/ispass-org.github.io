@@ -7,10 +7,9 @@ order: 20
 show_dates: [submission, review, notification]
 ---
 
-:::warning
-The ISPASS 2027 submission site has not opened yet. The requirements below are
-the ISPASS norm and are expected to carry over, but they are **not final** until
-the Program Chair confirms them.
+:::note
+The ISPASS 2027 submission site has not opened yet. It will be linked here when
+it does.
 :::
 
 ## Requirements
@@ -29,8 +28,7 @@ Please make sure that your submission satisfies all of the following.
   references**. All content other than references — figures, appendices and so
   on — must fit within the first nine pages. Papers that exceed the length limit
   or deviate from the formatting requirements may be rejected without review.
-- References must **list all authors** for any reference with fewer than ten
-  co-authors.
+- References must **list all authors**.
 - Papers are reviewed **double-blind**. Author names and other hints of identity
   must be removed from the submitted paper.
 - Do **not** omit references in order to preserve anonymity — that leaves
@@ -62,17 +60,44 @@ after submitting it. The submission system allows you to record the arXiv link.
 - We expect authors to **refrain from advertising the work on social media**
   during the evaluation period.
 
+## Policy on the use of generative AI
+
+Generative AI tools may assist with editing and language polishing without
+disclosure. Any substantial use, for example to generate text, code, data,
+figures or citations, must be disclosed in the paper's acknowledgments.
+
+Generative AI tools may not be listed as an author of an ISPASS submission.
+Authors remain fully responsible for the accuracy and originality of all
+content, including verifying that AI-assisted text does not fabricate or
+misrepresent results, data or citations.
+
 ## Conflicts of interest
 
 A conflict of interest exists with:
 
-- Your PhD advisor and your PhD students, in perpetuity.
+- Your PhD advisor(s), postdoctoral advisor(s), PhD students and postdoctoral
+  advisees, in perpetuity.
 - Family relations by blood or marriage, in perpetuity.
-- People with whom you have collaborated in the past five years. Collaborators
-  include co-authors on accepted, rejected or pending research papers, co-PIs on
-  accepted, rejected or pending grants, those who fund your research, and
-  researchers whom you fund.
-  - *Service* collaborations, such as co-writing a report or serving together on
-    a program committee, are not by themselves a conflict of interest.
-- Anyone else with whom you believe a conflict exists. If in doubt, ask the
-  Program Chair.
+- People with whom you have collaborated in the past **four** years:
+  co-authors on accepted, rejected or pending papers, co-PIs on accepted,
+  rejected or pending grants, those who fund your research, and researchers
+  whom you fund.
+- People at your current institution, at an institution where you were in the
+  past four years, or at an institution with which you are actively discussing
+  employment.
+- Co-PIs within the same umbrella-funded research structure who participate
+  regularly in non-public meetings where unpublished work is discussed.
+- Anyone else with whom you believe a conflict exists. If the reason is not
+  listed above, please contact the Program Chair.
+
+The following are **not**, by themselves, conflicts of interest:
+
+- *Service* collaborations, such as writing a report, serving together on a
+  program committee, or co-presenting a tutorial.
+- Co-authorship of a survey, compendium, tool or artifact to which multiple
+  authors contributed without an actual project collaboration. For example,
+  authors who each contributed different modules to an open-source framework
+  are not in conflict with one another.
+
+Undeclared conflicts, or conflicts falsely declared to influence reviewer
+assignment, may result in rejection of the paper.
