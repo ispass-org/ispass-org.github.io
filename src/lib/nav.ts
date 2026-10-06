@@ -7,7 +7,7 @@
  */
 import { getCollection } from 'astro:content';
 import type { ConferenceData } from './conferences';
-import { hasKeynotes, hasProgram, hasSponsors } from './conferences';
+import { hasKeynotes, hasPapers, hasSponsors } from './conferences';
 import { phaseAtLeast } from './phase';
 import type { navGroups } from './schema';
 
@@ -55,7 +55,8 @@ function dataDrivenPages(c: ConferenceData): GroupedNavItem[] {
       order: 30,
       label: 'Program',
       href: `/${c.year}/program/`,
-      pending: !hasProgram(c) || c.program.sample,
+      // Still "soon" while the program is an empty skeleton or sample data.
+      pending: !hasPapers(c) || c.program.sample,
     },
     {
       group: 'conference',

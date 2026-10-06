@@ -247,6 +247,7 @@ function checkConference(year: number, knownRoutes: Set<string>): ConferenceData
   if (end && !start) fail(at('conference.yaml'), 'end_date is set but start_date is not');
 
   /* --- program ------------------------------------------------------ */
+  let emptyPaperSessions = 0;
   for (const day of c.program.days) {
     if (start && end && (day.date < start || day.date > end)) {
       warn(
@@ -262,9 +263,7 @@ function checkConference(year: number, knownRoutes: Set<string>): ConferenceData
         if (session.end <= session.start) {
           fail(at('program.yaml'), `session "${session.id}" ends before it starts`);
         }
-        if (session.kind === 'papers' && session.papers.length === 0) {
-          warn(at('program.yaml'), `session "${session.id}" is a paper session with no papers`);
-        }
+        if (session.kind === 'papers' && session.papers.length === 0) emptyPaperSessions += 1;
         for (const paper of session.papers) {
           if (paper.authors.length === 0) {
             warn(at('program.yaml'), `paper "${paper.title}" has no authors`);
@@ -272,6 +271,16 @@ function checkConference(year: number, knownRoutes: Set<string>): ConferenceData
         }
       }
     }
+  }
+
+  if (emptyPaperSessions > 0) {
+    // One reminder rather than one line per slot: an empty skeleton is a normal
+    // state until paper notification, but it must not survive to publication.
+    const report = phaseAtLeast(c.conference.phase, 'program_published') ? fail : warn;
+    report(
+      at('program.yaml'),
+      `${emptyPaperSessions} paper session${emptyPaperSessions === 1 ? ' has' : 's have'} no papers yet`,
+    );
   }
 
   if (c.program.sample && phaseAtLeast(c.conference.phase, 'program_published')) {
