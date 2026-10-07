@@ -18,6 +18,18 @@ Authors are invited to submit previously unpublished work for possible
 presentation at the conference. ISPASS 2027 will be held in New York City on
 May 9–11, 2027.
 
+:::warning
+**Accepted papers must be presented in person.** Each accepted paper must be
+presented at ISPASS 2027 in New York City by one of its authors. There is no
+remote, virtual or pre-recorded presentation option, and no option to publish a
+paper without presenting it: accepted papers that are not presented in person
+are not included in the proceedings or in IEEE Xplore.
+
+Before you submit, make sure at least one author will be able to travel to New
+York in May 2027, including obtaining a US visa if needed. Visa processing can
+take several months; see [Visa Information](/2027/visa/).
+:::
+
 ## Topics of interest
 
 Papers are solicited in fields that include the following.
