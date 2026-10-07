@@ -14,7 +14,8 @@ const MONTHS = [
 
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-export const TBD = 'TBD';
+/** Shown for a date that is not public yet: decided or not, it is "to be announced". */
+export const TBA = 'TBA';
 
 function parts(iso: string) {
   const [y, m, d] = iso.split('-').map(Number);
@@ -23,14 +24,14 @@ function parts(iso: string) {
 
 /** `2027-04-26` -> `April 26, 2027`. */
 export function formatDate(iso: string | null): string {
-  if (!iso) return TBD;
+  if (!iso) return TBA;
   const { y, m, d } = parts(iso);
   return `${MONTHS[m - 1]} ${d}, ${y}`;
 }
 
 /** `2027-04-26` -> `Mon, Apr 26`. Used where space is tight. */
 export function formatDateShort(iso: string | null): string {
-  if (!iso) return TBD;
+  if (!iso) return TBA;
   const { y, m, d } = parts(iso);
   return `${MONTHS[m - 1]!.slice(0, 3)} ${d}, ${y}`;
 }
@@ -46,7 +47,7 @@ export function weekdayName(iso: string): string {
  * Either end may be missing, in which case the known end is returned alone.
  */
 export function formatDateRange(startIso: string | null, endIso: string | null): string {
-  if (!startIso && !endIso) return TBD;
+  if (!startIso && !endIso) return TBA;
   if (!startIso) return formatDate(endIso);
   if (!endIso || startIso === endIso) return formatDate(startIso);
 

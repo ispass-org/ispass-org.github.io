@@ -166,10 +166,10 @@ function checkNoLiteralTbd(file: string): void {
   const raw = fs.readFileSync(file, 'utf8');
   raw.split(/\r?\n/).forEach((line, index) => {
     if (line.trimStart().startsWith('#')) return;
-    if (/:\s*["']?TBD["']?\s*(#.*)?$/i.test(line)) {
+    if (/:\s*["']?TB[DA]["']?\s*(#.*)?$/i.test(line)) {
       fail(
         `${relative(file)}:${index + 1}`,
-        'the literal "TBD" was written as a value. Use null (or ~) instead — the site renders that as TBD for you',
+        'a literal "TBD"/"TBA" was written as a value. Use null (or ~) instead — the site shows unknown values for you (dates as TBA)',
       );
     }
   });

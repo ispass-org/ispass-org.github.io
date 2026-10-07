@@ -8,7 +8,8 @@ there, no page reads it. `npm run validate` checks every rule below.
 ## Two universal rules
 
 1. **Unknown is `null`, never `"TBD"`.** Write `venue: null`. The site renders
-   that as *TBD* for you, and often hides the surrounding section entirely.
+   that for you — *TBA* for a date, *TBD* for anything else — and often hides
+   the surrounding section entirely.
    `npm run validate` rejects the literal string `TBD` as a value, because a
    string is indistinguishable from a real answer to the templates.
 2. **A deadline is written exactly once**, in `dates.yaml`. Never in Markdown,
@@ -75,7 +76,7 @@ A list. **The only place a deadline may be written.**
 | --- | --- | --- |
 | `id` | slug | Stable. Referenced by `phase.ts` and by the per-date `.ics` link. |
 | `name` | string | What the visitor reads. |
-| `date` | `YYYY-MM-DD` \| null | `null` until announced. |
+| `date` | `YYYY-MM-DD` \| null | `null` until announced; shown as *TBA*. Leave it `null` even when a date is decided but must not be public yet — and don't park it in a comment, because the repository is public. |
 | `time` | `HH:MM` \| null | 24-hour. Omit for an all-day deadline. |
 | `end_date` | `YYYY-MM-DD` \| null | For ranges: a rebuttal period, the conference itself. |
 | `timezone` | IANA name or `AoE` | **Always shown to the reader.** `AoE` is Anywhere on Earth, UTC−12. |
