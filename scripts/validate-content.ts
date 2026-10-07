@@ -429,6 +429,13 @@ function checkSite(knownRoutes: Set<string>): void {
 
   const seen = new Set<number>();
   for (const edition of site.past_conferences) {
+    // An archive served from this repository must actually be in public/.
+    if (edition.url?.startsWith('/') && edition.archive_status === 'ok') {
+      const index = path.join(publicDir, edition.url.replace(/^\//, ''), 'index.html');
+      if (!fs.existsSync(index)) {
+        fail('site/ispass.yaml', `${edition.year}: url ${edition.url} has no archive at public${edition.url}`);
+      }
+    }
     if (seen.has(edition.year)) fail('site/ispass.yaml', `past_conferences lists ${edition.year} twice`);
     seen.add(edition.year);
     if (edition.year >= site.current_year) {

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-189628616-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-189628616-1');
+    </script>
+    
+    
+<meta charset="utf-8">
+<title>ISPASS 2026 Keynotes</title>
+<link rel="stylesheet" type="text/css" href="/ispass11.css">
+
+<style>
+.bio-photo {
+    float: left;
+    width: 140px;
+    height: auto;
+    margin: 0 25px 12px 0;
+    border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+    .bio-photo {
+        float: none;
+        display: block;
+        margin: 0 auto 15px auto;
+    }
+}
+.keynote-section { margin-bottom: 36px; }
+</style>
+
+</head>
+
+<body>
+
+<!-- Keynote 1 -->
+<div class="keynote-section">
+  <h2>Keynote 1: Back to the Future: The Return of Rigorous Full-System Timing Simulation</h2>
+
+  <h3>Speaker: Babak Falsafi (EPFL)</h3>
+
+  <h3>Abstract:</h3>
+  <p>Accurate and fast full-system simulation is a silver bullet for designers. Today, the most popular simulation platform runs on a single core and at 250 KIPS. At this speed, 10 seconds of a 64-core chip would take 2 months to run one experiment. In this talk, I will present QFlex 3.0, a family of tools based on QEMU for full-system simulation of manycore ARM (and soon RISC-V) servers. QFlex uses statistical sampling in simulation to bound the error in performance estimates, parallel functional simulation to cover tens of seconds of workload execution and checkpointing to allow for embarrassingly parallel cycle-accurate simulation from a library of 100 to 500 checkpoints. QFlex reduces full-system cycle-accurate simulation from months to hours.</p>
+
+  <h3>Bio:</h3>
+
+  <img src="/ispass2026/images/babak_falsafi.png"
+       alt="Babak Falsafi"
+       class="bio-photo">
+
+  <p>Babak is a Professor of Computer and Communication Sciences at EPFL and founder of EcoCloud. His contributions to computer systems include the first NUMA multiprocessors built by Sun Microsystems (WildFire/WildCat), spatial memory streaming in ARM A-72 cores onwards,  temporal memory streaming in IBM BlueGene P/Q and ARM Neoverse N2 cores, and performance evaluation methodologies adopted by AMD, HP and Google PerfKit. His work on cloud-native CPU design laid the foundation for Cavium’s first generation of ARM server CPUs, ThunderX. He is the founding president of the Swiss Datacenter Efficiency Association with an online platform and a label that helps operators quantify their energy efficiency. He is a recipient of an Alfred P. Sloan Research Fellowship, and a fellow of ACM and IEEE.</p>
+
+  <br style="clear: both;">
+</div>
+
+<hr>
+
+<!-- Keynote 2 -->
+<div class="keynote-section">
+  <h2>Keynote 2: From AI Models to AI Infrastructure: Rethinking Datacenters with CXL</h2>
+
+  <h3>Speaker: Myoungsoo Jung (KAIST, Panmnesia)</h3>
+
+  <h3>Abstract:</h3>
+  <p>Large-scale AI workloads are rapidly exposing the limits of conventional system architectures, as model growth drives unprecedented demand for memory capacity, memory bandwidth, and interconnect performance. This talk begins with a concise overview of how modern AI models evolved from earlier sequence-based approaches to transformer-based architectures, highlighting why their scale and execution behavior create new system-level bottlenecks. It then examines how these workloads stress today’s AI infrastructure, particularly through the growing cost of collective communication, KV-cache capacity, and the imbalance between accelerator compute capability and available memory resources.</p>
+
+  <p>To address these challenges, the talk presents a composable view of next-generation AI datacenters in which compute, memory, and switching resources are organized as modular infrastructure elements rather than fixed server configurations. Within this context, it discusses how CXL-based memory expansion and fabric connectivity can help reduce software overheads, improve memory accessibility, and support more scalable accelerator deployments. The talk also introduces Panmnesia’s approach to AI infrastructure, including link controller IP, switch SoCs, retimers, and hardware-based link acceleration techniques designed to unify diverse interconnect technologies and enable one-chip-like behavior across distributed AI systems.</p>
+
+  <h3>Biography</h3>
+
+  <img src="/ispass2026/images/myoungsoo_jung.png"
+       alt="Myoungsoo Jung"
+       class="bio-photo">
+
+  <p>Dr. Myoungsoo Jung is the KAIST Endowed Chair Professor and a Full Professor in the School of Electrical Engineering at the Korea Advanced Institute of Science and Technology (KAIST). He is also the Founder and Chief Executive Officer of Panmnesia, a KAIST-based startup developing next-generation link and memory technologies for AI infrastructure.</p>
+
+  <p>Dr. Jung received his Ph.D. in Computer Science from Pennsylvania State University and M.S. degrees in Computer Science and Embedded Systems from Georgia Institute of Technology and Korea University. His research spans computer architecture, operating systems, memory and storage systems, non-volatile memory, and large-scale AI infrastructure. In recent years, his work has focused on cache-coherent interconnects such as CXL and the design of scalable, composable architectures for AI datacenters. He has authored more than 140 research papers published in leading venues including SOSP, OSDI, ISCA, MICRO, ASPLOS, FAST, USENIX ATC, and HPCA, and holds numerous U.S. patents in memory and storage system technologies. His research has been supported by major funding agencies including the U.S. National Science Foundation (NSF), the U.S. Department of Energy (DOE), and the National Research Foundation of Korea.</p>
+
+  <p>Dr. Jung has received numerous honors, including the Korea Science and Technology Award (2026), IEEE/ACM HPCA Hall of Fame (2026), IEEE/ACM ISCA Hall of Fame (2024), CES Innovation Awards (2024 and 2025), the Presidential Commendation at the 2025 K-Technology Innovation, and the Digital Innovation Award from the Minister of Science and ICT (2025). He frequently delivers keynote and invited talks across academia and industry on CXL, memory-centric system design, and next-generation AI datacenter infrastructure.</p>
+
+  <br style="clear: both;">
+</div>
+
+<br><hr><br>
+<p>This website is maintained by the ISPASS-2026 Committee.</p>
+<p>Contact <a href="mailto:chengtan@google.com" target="_new">Cheng Tan</a> if you have any questions or comments on this website.</p>
+<br>
+
+</body>
+
+</html>
