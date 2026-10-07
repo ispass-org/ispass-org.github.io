@@ -1,0 +1,94 @@
+body {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+h2 {
+	color: #008000;
+	font-weight: bold;
+}
+
+tr {
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+
+td {
+    border: 1px solid black;
+	border-collapse: collapse;
+}
+
+table.reg {
+	border-collapse: collapse;
+	border: 2px solid black;
+}
+
+div.paper {
+	margin-left: 25px;
+}
+
+
+/* Hotel table */
+section.hotel table {
+	border: 0;
+	border-collapse: collapse;
+}
+
+section.hotel th, td {
+	padding: 6px;
+	margin: 6px;
+	border: 0px 1px;
+}
+
+/* Top and sidebar customizations */
+body.frame {
+	background-color: #e1e1ff;
+}
+
+.subhead h1 {
+	color: #000080;
+    font-size: 200%;
+ 	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.subhead h2 {
+  color: #000000;
+  font-size: 125%;
+  font-weight: normal;
+  margin-top: 0;
+	margin-bottom: 0;
+}
+
+.subhead p {
+  font-weight: bold;
+  margin-top: 0;
+	margin-bottom: 0;
+}
+
+.subhead {
+  text-align: center;
+}
+
+nav p {
+  margin: 6px 0;
+  padding: 0;
+}
+
+nav ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+nav ul {
+	list-style-type: none;
+}
+
+nav li {
+	margin: 0 0 0 15px;
+}
+
+section.sponsors {
+	text-align: center;
+}
+
+

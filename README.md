@@ -45,7 +45,8 @@ templates/conference/ The blank year used by `new-conference`.
 src/                  The renderer: lib, components, layouts, pages, styles.
 scripts/              validate-content, new-conference, lint.
 docs/                 Architecture, content model, checklists, plans.
-public/               Static assets. public/brand/ holds the ISPASS logo and its usage guide.
+public/               Static assets. public/brand/ holds the ISPASS logo and its usage guide;
+                      public/ispassYYYY/ are frozen copies of past editions (docs/archives.md).
 ```
 
 The separation is strict: **nothing under `src/` knows anything about ISPASS
@@ -60,6 +61,7 @@ The separation is strict: **nothing under `src/` knows anything about ISPASS
 | [docs/annual-checklist.md](docs/annual-checklist.md) | What to do at each stage of the cycle |
 | [docs/architecture.md](docs/architecture.md) | How the site is built and why |
 | [docs/deployment.md](docs/deployment.md) | How publishing works, and how to connect a domain |
+| [docs/archives.md](docs/archives.md) | The archived past editions, and how to check them |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Conventions for changing `src/` |
 
 ## Technology

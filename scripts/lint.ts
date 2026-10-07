@@ -74,7 +74,13 @@ function main(): void {
 
   let totalBytes = 0;
 
-  for (const file of htmlFiles) {
+  // The archived editions in public/ispassYYYY/ are frozen copies of the
+  // original sites. They are not ours to restyle, so they are not held to this
+  // site's markup rules — but they still count as link targets above.
+  const isArchive = (url: string) => /^\/ispass\d{4}\//.test(url);
+  const ownHtml = htmlFiles.filter((file) => !isArchive(urlOf(file)));
+
+  for (const file of ownHtml) {
     const url = urlOf(file);
     const raw = fs.readFileSync(file, 'utf8');
     const html = stripNonMarkup(raw);
@@ -144,7 +150,7 @@ function main(): void {
   }
 
   /* --- report -------------------------------------------------------- */
-  const avgKb = Math.round(totalBytes / htmlFiles.length / 1024);
+  const avgKb = Math.round(totalBytes / ownHtml.length / 1024);
 
   if (warnings.length > 0) {
     console.log(`\n${warnings.length} warning${warnings.length === 1 ? '' : 's'}:`);
@@ -158,7 +164,8 @@ function main(): void {
     process.exit(1);
   }
 
-  console.log(`\n✓ Lint clean — ${htmlFiles.length} pages, ${avgKb} KB average HTML.\n`);
+  const archived = htmlFiles.length - ownHtml.length;
+  console.log(`\n✓ Lint clean — ${ownHtml.length} pages, ${avgKb} KB average HTML (plus ${archived} archived pages, not linted).\n`);
 }
 
 main();

@@ -1,0 +1,120 @@
+=====================================================================================
+                                     
+                                     CALL FOR PAPERS
+
+International Symposium on Performance Analysis of Systems and Software (ISPASS-2004)
+
+                                   March 10-12, 2004
+                                     Austin, Texas
+
+=====================================================================================
+
+The IEEE International Symposium on Performance Analysis of Systems and Software 
+provides a forum for sharing advanced academic and industrial R&D work focused on 
+performance analysis in the design of computer systems and software. Research insight 
+into performance issues of hardware and software components of computers are welcome. 
+Authors are invited to submit previously unpublished work for possible presentation 
+at this conference. Papers are solicited in fields including the following:
+
+- Microprocessor, memory and disk performance issues
+- Performance of software
+- Impact of hardware and software optimizations on performance
+- Tuning of application code
+- Tuning of system code
+- Performance of computer networks
+- Benchmarking
+- Workload characterization
+- Simulation
+- Analytical models
+- Statistical approaches
+- Performance metrics
+- Tracing, profiling and simulation tools
+- Bottleneck identification
+- Power and thermal modeling
+- Performance validation
+- Characterization of emerging applications
+- Case studies
+
+Papers of no more than 20 double-spaced pages (no less than 11pt font), including 
+figures, are solicited. Authors are requested to submit papers in PDF format. 
+For more information on manuscript submissions, please check:
+
+                 http://ispass.org/ispass2004/submit.html
+
+Important Dates
+===============
+
+Deadline for submissions: October 8, 2003
+  (Automatic extension: October 15, 2003. No further extensions will be given)
+Notification of acceptance: December 19, 2003
+Final version due: January 23, 2004
+
+Committee
+=========
+
+GENERAL CHAIRS
+--------------
+Craig Chase, Univ. of Texas at Austin
+chase@ece.utexas.edu
+Nasr Ullah, Motorola
+	nasr.ullah@motorola.com
+
+PROGRAM CHAIR
+-------------
+Lizy John, Univ. of  Texas at Austin
+ljohn@ece.utexas.edu
+         
+PROGRAM COMMITTEE
+-----------------
+David August, Princeton Univ.
+Bryan Black, Intel
+Pradip Bose, IBM
+Mauricio Breternitz Jr, Intel
+John Carter, Univ. of Utah
+Tom Conte, North Carolina State Univ.
+Lee D. Coraor, Penn State Univ.
+Babak Falsafi, Carnegie Mellon Univ. 
+Matthew Farrens, UC Davis
+Manoj Franklin, Univ. of Maryland 
+Michael Gschwind, IBM 
+David Kaeli, Northeastern Univ.
+Mikko H. Lipasti, Univ. of Wisconsin
+David Murrell, Motorola 
+Vijaykrishnan Narayanan, Penn State Univ.
+Brian O'Krafka, Sun
+Nagarajan Ranganathan, Univ. of South Florida
+Steven K. Reinhardt, Univ. of Michigan
+Olivier Temam, LRI, France
+Pen-Chung Yew, Univ. of Minnesota
+
+PUBLICITY CHAIR
+---------------
+Suleyman Sair, North Carolina State University
+
+FINANCE CHAIR
+-------------
+Nadeem Malik, IBM
+
+WEB CHAIR
+---------
+Michael Gschwind, IBM T.J. Watson
+Byeong Kil Lee, Univ. of Texas at Austin
+
+WORKSHOPS/TUTORIALS CHAIR
+-------------------------
+Charles Lefurgy, IBM 
+
+REGISTRATION CHAIR
+------------------
+Brian Grayson, Motorola
+
+ADVISORY COMMITTEE
+------------------
+Frederica Darema, NSF
+Edward Davidson, Univ. of Michigan 
+Eric Kronstadt, IBM
+Mark McDermott
+Antonio Gonzalez, Intel Labs & UPC
+
+
+For more information visit the ISPASS web site at http://ispass.org

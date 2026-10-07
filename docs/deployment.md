@@ -85,9 +85,9 @@ setting on its own changes nothing, because visitors are still sent elsewhere.
 
 - **Everything under the domain must already be in this repository.** DNS is
   domain-wide: once the domain points at GitHub, any path not in the published
-  site returns 404 — including every archived `/ispassYYYY/` site. Archives
-  belong in `public/ispassYYYY/`, which is copied verbatim into `dist/` and so
-  keeps every historic URL working at its exact original path.
+  site returns 404 — including every archived `/ispassYYYY/` site. The archives
+  are in `public/ispassYYYY/` (see [archives.md](./archives.md)); run its
+  `verify.py` check against the preview before changing DNS.
 - **Inventory every existing DNS record** and keep a copy.
 - **Lower the TTL** on the records you will change to 300 seconds, a day ahead,
   so both the switch and any rollback take effect within minutes.

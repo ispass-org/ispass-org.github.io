@@ -300,4 +300,5 @@ one homepage, not nine.
 | [docs/annual-checklist.md](docs/annual-checklist.md) | What to do, when |
 | [docs/architecture.md](docs/architecture.md) | How the site is built |
 | [docs/deployment.md](docs/deployment.md) | Before changing hosting or DNS |
+| [docs/archives.md](docs/archives.md) | Before touching `public/ispassYYYY/` (don't) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Conventions, if you are changing `src/` |

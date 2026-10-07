@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>ISPASS 2026 — Workshops & Tutorials</title>
+<link rel="stylesheet" type="text/css" href="/ispass11.css">
+
+<style>
+.doc-title { font-size: 1.25em; font-weight: 700; margin-top: 18px; }
+.meta { margin: 6px 0; }
+.summary { margin: 12px 0 18px 0; white-space: pre-wrap; }
+.table { width: 100%; border-collapse: collapse; margin: 10px 0 25px 0; }
+.table th, .table td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+.table th { background:#f5f5f5; }
+.section { margin-bottom: 30px; }
+.homepage { margin: 6px 0 12px 0; }
+</style>
+</head>
+
+<body>
+
+<h2><font color="green">Workshops and Tutorials</font></h2>
+
+<div class="section">
+
+<div class="doc-title">
+How Fast Will It Train? From ML Workload Representation to System-Level Performance Modeling
+</div>
+
+<div class="meta">
+Organizer: Debjyoti Bhattacharjee, Jonas Svedas (IMEC), Tushar Krishna, Jinsun Yoo (Gatech)<br>
+Date: Sunday, April 26, 09:00 ~ 12:00
+</div>
+
+<div class="summary">
+Summary: The rapid scaling of machine learning (ML) workloads, particularly large language models, has intensified the need for system-level performance modeling techniques that can reason about training behavior across multiple accelerator architectures, system scales, and modeling fidelities. However, today’s ML performance studies are fragmented: simulators are typically architecture-specific, training models are tied to specialized workload representations which can require large compute systems to collect traces. This fragmentation makes it difficult for researchers and system designers to compare results, reuse workflows, or reason consistently across platforms and tools.
+
+This tutorial highlights the opportunities and challenges in reasoning about performance trends, fidelity trade-offs, and modeling assumptions illustrated through concrete examples. The tutorial emphasizes methodology, modeling choices, and interpretation, rather than championing a new simulator. Furthermore, the tutorial aims at introducing the participant a collective API extension to ASTRA-sim’s system layer, which would allow modelling arbitrary collective.
+</div>
+
+<strong>Tentative schedule (09:00 ~ 12:00)</strong>
+
+<table class="table">
+<tr>
+<th>Time</th>
+<th>Title</th>
+<th>Duration</th>
+<th>Speaker</th>
+</tr>
+<tr>
+<td>09:00 ~ 09:55</td>
+<td>StableHLO as a unifying representation for enabling unified ComputeAPI</td>
+<td>45mins + 10mins Q&amp;A</td>
+<td>Debjyoti Bhattacharjee</td>
+</tr>
+<tr>
+<td>09:55 ~ 10:50</td>
+<td>Performance Prediction for StableHLO based representation using ASTRA-sim</td>
+<td>45mins + 10mins Q&amp;A</td>
+<td>Jonas Svedas</td>
+</tr>
+<tr>
+<td>10:50 ~ 11:00</td>
+<td>Coffee Break</td>
+<td>10mins</td>
+<td></td>
+</tr>
+<tr>
+<td>11:00 ~ 11:55</td>
+<td>Representing and modelling arbitrary collective algorithms with CollectiveAPI</td>
+<td>45mins + 10mins Q&amp;A</td>
+<td>Tushar Krishna &amp; Jinsun Yoo</td>
+</tr>
+</table>
+
+</div>
+
+
+<div class="section">
+
+<div class="doc-title">
+NPU Compiler and Architecture Performance Modeling with PyTorchSim
+</div>
+
+<div class="meta">
+Organizer: Gwangsun Kim, Wonhyuk Yang, Yunseon Shin, Okkyun Woo (POSTECH)<br>
+Date: Sunday, April 26, 13:30 ~ 17:10
+</div>
+
+<div class="summary">
+Summary: As the computational demands of recent AI models have grown exponentially, the importance of Neural Processing Units (NPUs) has increased. This trend has created a strong need for frameworks that can both broadly support the compilation of state-of-the-art DNN models for inference and training via AI compilers and provide fast and accurate NPU simulation across diverse scenarios, thereby facilitating NPU architecture research and development.
+
+In this tutorial, we introduce PyTorchSim, a framework designed to meet these demands by leveraging PyTorch’s compilation capabilities (i.e., torch.compile). We first guide participants through an end-to-end workflow, covering basic environment setup, model mapping, and performance log analysis. Building on this foundation, we systematically explore PyTorchSim’s internal design, execution flow, and integrated compiler–simulator stack. Finally, we provide a hands-on session on implementing custom units and instructions to extend NPU models. Through these exercises, participants gain a practical understanding of how to modify key components of PyTorchSim, including its MLIR-based compiler backend, Gem5, and Spike, to support new architectural features.
+</div>
+
+<div class="homepage">
+Homepage: <a href="https://www.psal.postech.ac.kr/ispass2026-pytorchsim-tutorial" target="_blank" rel="noopener noreferrer">https://www.psal.postech.ac.kr/ispass2026-pytorchsim-tutorial</a>
+</div>
+
+<strong>Tentative schedule (13:30 ~ 17:10)</strong>
+
+<table class="table">
+<tr>
+<th>Time</th>
+<th>Title</th>
+<th>Duration</th>
+<th>Speaker</th>
+</tr>
+<tr>
+<td>13:30 ~ 14:20</td>
+<td>Introduction to PyTorchSim</td>
+<td>45mins</td>
+<td>Gwangsun Kim</td>
+</tr>
+<tr>
+<td>14:20 ~ 15:25</td>
+<td>Hands-on Session I: Basic Usage</td>
+<td>60mins</td>
+<td>Yunseon Shin</td>
+</tr>
+<tr>
+<td>15:25 ~ 15:40</td>
+<td>Coffee Break</td>
+<td>10mins</td>
+<td></td>
+</tr>
+<tr>
+<td>15:40 ~ 17:10</td>
+<td>Hands-on Session II: Internals and How to Extend PyTorchSim</td>
+<td>75mins</td>
+<td>Wonhyuk Yang</td>
+</tr>
+</table>
+
+</div>
+
+<br><hr><br>
+
+<p>This website is maintained by the ISPASS-2026 Committee.</p>
+<p>Contact <a href="mailto:chengtan@google.com" target="_new">Cheng Tan</a> if you have any questions or comments on this website.</p>
+
+</body>
+</html>
