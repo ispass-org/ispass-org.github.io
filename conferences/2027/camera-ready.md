@@ -15,9 +15,12 @@ announced after paper notifications go out.
 ## Before you start
 
 :::warning
-**At least one author must pre-register** for the symposium, and at least one
-author must attend to present the paper. Papers without a pre-registered author
-by the camera-ready deadline are not included in the proceedings.
+**At least one author must pre-register** for the symposium, and one of the
+authors must **present the paper in person** in New York City. Remote and
+pre-recorded presentations are not accepted. Papers without a pre-registered
+author by the camera-ready deadline, and papers that are not presented in
+person at the conference, are not included in the proceedings or in IEEE
+Xplore.
 :::
 
 All authors of accepted papers must complete the **copyright transfer** before
