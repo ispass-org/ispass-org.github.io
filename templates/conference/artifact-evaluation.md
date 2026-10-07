@@ -21,7 +21,7 @@ decision, which has already been made by the time AE begins.
 The availability and quality of artifacts is denoted by badges that appear on
 the first page of the paper in the digital library. Because ISPASS is an
 IEEE-sponsored conference, it follows the [IEEE Xplore reproducibility badge
-scheme](https://www.ieee.org/publications/services/thesaurus-thank-you.html).
+scheme](https://ieeexplore.ieee.org/Xplorehelp/overview-of-ieee-xplore/about-content#reproducibility-badges).
 ISPASS awards three of them:
 
 - **Available** — the code and/or datasets, including associated data and

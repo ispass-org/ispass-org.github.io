@@ -39,20 +39,20 @@ steering_committee_note: >-
 
 policies:
   - title: "IEEE Event Conduct and Safety Statement"
-    url: "https://www.ieee.org/conferences/event-conduct-and-safety-statement.html"
+    url: "https://events.ieee.org/planning-basics/general-guidelines/ieee-event-conduct-and-safety-statement-for-conferences/"
     description: >-
-      IEEE events are intended to provide a safe, productive and welcoming
-      environment for every participant. This statement applies at every ISPASS.
+      A safe, productive and welcoming environment at every IEEE event, with no
+      tolerance for discrimination, harassment or bullying. Concerns can be
+      reported to eventconduct@ieee.org.
   - title: "IEEE Computer Society Open Conference Statement"
-    url: "https://www.computer.org/about/policies/open-conference-statement"
+    url: "/files/ieee-cs-open-conference-statement.pdf"
     description: >-
-      IEEE Computer Society conferences are open to all who wish to attend,
-      regardless of nationality.
-  - title: "IEEE Publication Principles"
-    url: "https://www.ieee.org/publications/rights/index.html"
+      The Computer Society's commitment to broad participation in all of its
+      activities, free of discrimination and harassment.
+  - title: "IEEE Intellectual Property Rights"
+    url: "https://www.ieee.org/publications/rights"
     description: >-
-      Authorship, plagiarism and duplicate submission policies for papers
-      published in IEEE Xplore.
+      Copyright, author rights and permissions for papers published by IEEE.
 
 # ---------------------------------------------------------------------------
 # Previous symposia.
@@ -69,135 +69,135 @@ past_conferences:
   - year: 2026
     city: "Seoul"
     country: "South Korea"
-    url: "https://www.ispass.org/ispass2026/"
+    url: "https://ispass.org/ispass2026/"
     archive_status: ok
   - year: 2025
     city: "Ghent"
     country: "Belgium"
-    url: "https://www.ispass.org/ispass2025/"
+    url: "https://ispass.org/ispass2025/"
     archive_status: ok
   - year: 2024
     city: "Indianapolis, Indiana"
     country: "USA"
-    url: "https://www.ispass.org/ispass2024/"
+    url: "https://ispass.org/ispass2024/"
     archive_status: ok
   - year: 2023
     city: "Raleigh, North Carolina"
     country: "USA"
-    url: "https://www.ispass.org/ispass2023/"
+    url: "https://ispass.org/ispass2023/"
     archive_status: ok
   - year: 2022
     city: "Singapore"
     country: "Singapore"
-    url: "https://www.ispass.org/ispass2022/"
+    url: "https://ispass.org/ispass2022/"
     archive_status: ok
   - year: 2021
     city: "Virtual"
     country: null
-    url: "https://www.ispass.org/ispass2021/"
+    url: "https://ispass.org/ispass2021/"
     archive_status: ok
   - year: 2020
     city: "Virtual"
     country: null
-    url: "https://www.ispass.org/ispass2020/"
+    url: "https://ispass.org/ispass2020/"
     archive_status: ok
   - year: 2019
     city: "Madison, Wisconsin"
     country: "USA"
-    url: "https://www.ispass.org/ispass2019/"
+    url: "https://ispass.org/ispass2019/"
     archive_status: ok
   - year: 2018
     city: "Belfast"
     country: "United Kingdom"
-    url: "https://www.ispass.org/ispass2018/"
+    url: "https://ispass.org/ispass2018/"
     archive_status: ok
   - year: 2017
     city: "Santa Rosa, California"
     country: "USA"
-    url: "https://www.ispass.org/ispass2017/"
+    url: "https://ispass.org/ispass2017/"
     archive_status: ok
   - year: 2016
     city: "Uppsala"
     country: "Sweden"
-    url: "https://www.ispass.org/ispass2016/"
+    url: "https://ispass.org/ispass2016/"
     archive_status: ok
   - year: 2015
     city: "Philadelphia, Pennsylvania"
     country: "USA"
-    url: "https://www.ispass.org/ispass2015/"
+    url: "https://ispass.org/ispass2015/"
     archive_status: ok
   - year: 2014
     city: "Monterey, California"
     country: "USA"
-    url: "https://www.ispass.org/ispass2014/"
+    url: "https://ispass.org/ispass2014/"
     archive_status: ok
   - year: 2013
     city: "Austin, Texas"
     country: "USA"
-    url: "https://www.ispass.org/ispass2013/"
+    url: "https://ispass.org/ispass2013/"
     archive_status: ok
   - year: 2012
     city: "New Brunswick, New Jersey"
     country: "USA"
-    url: "https://www.ispass.org/ispass2012/"
+    url: "https://ispass.org/ispass2012/"
     archive_status: ok
   - year: 2011
     city: "Austin, Texas"
     country: "USA"
-    url: "https://www.ispass.org/ispass2011/"
+    url: "https://ispass.org/ispass2011/"
     archive_status: ok
   - year: 2010
     city: "White Plains, New York"
     country: "USA"
-    url: "https://www.ispass.org/ispass2010/"
+    url: "https://ispass.org/ispass2010/"
     archive_status: ok
   - year: 2009
     city: "Boston, Massachusetts"
     country: "USA"
-    url: "https://www.ispass.org/ispass2009/"
+    url: "https://ispass.org/ispass2009/"
     archive_status: ok
   - year: 2008
     city: "Austin, Texas"
     country: "USA"
-    url: "https://www.ispass.org/ispass2008/"
+    url: "https://ispass.org/ispass2008/"
     archive_status: ok
   - year: 2007
     city: "San Jose, California"
     country: "USA"
-    url: "https://www.ispass.org/ispass2007/"
+    url: "https://ispass.org/ispass2007/"
     archive_status: ok
   - year: 2006
     city: "Austin, Texas"
     country: "USA"
-    url: "https://www.ispass.org/ispass2006/"
+    url: "https://ispass.org/ispass2006/"
     archive_status: ok
   - year: 2005
     city: "Austin, Texas"
     country: "USA"
-    url: "https://www.ispass.org/ispass2005/"
+    url: "https://ispass.org/ispass2005/"
     archive_status: ok
   - year: 2004
     city: "Austin, Texas"
     country: "USA"
-    url: "https://www.ispass.org/ispass2004/"
+    url: "https://ispass.org/ispass2004/"
     archive_status: ok
   - year: 2003
     city: "Austin, Texas"
     country: "USA"
-    url: "https://www.ispass.org/ispass2003/"
+    url: "https://ispass.org/ispass2003/"
     archive_status: ok
   - year: 2002
     city: null
     country: null
-    url: "https://www.ispass.org/ispass2002/"
+    url: "https://ispass.org/ispass2002/"
     archive_status: missing
   - year: 2001
     city: "Tucson, Arizona"
     country: "USA"
-    url: "https://www.ispass.org/ispass2001/"
+    url: "https://ispass.org/ispass2001/"
     archive_status: ok
   - year: 2000
     city: "Austin, Texas"
     country: "USA"
-    url: "https://www.ispass.org/ispass2000/"
+    url: "https://ispass.org/ispass2000/"
     archive_status: ok
