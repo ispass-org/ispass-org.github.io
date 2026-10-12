@@ -16,11 +16,11 @@ announced after paper notifications go out.
 
 :::warning
 **At least one author must pre-register** for the symposium, and one of the
-authors must **present the paper in person** in New York City. Remote and
-pre-recorded presentations are not accepted. Papers without a pre-registered
-author by the camera-ready deadline, and papers that are not presented in
-person at the conference, are not included in the proceedings or in IEEE
-Xplore.
+authors must **present the paper in person** in New York City. Papers without a
+pre-registered author by the camera-ready deadline are not included in the
+proceedings, and papers that are not presented at the conference are withdrawn
+from the proceedings and from IEEE Xplore. Exceptions are rare and must be
+approved in advance; see the [in-person presentation policy](/2027/cfp/#in-person-presentation).
 :::
 
 All authors of accepted papers must complete the **copyright transfer** before

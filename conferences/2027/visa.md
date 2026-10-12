@@ -71,10 +71,13 @@ decisions.
 
 ## If your visa is refused
 
-If you cannot obtain a visa in time, contact the General Chair as soon as
-possible.
+Accepted papers must be presented in person. Authors who need a visa to
+present must submit their application no later than **two weeks after the
+acceptance notification**, and keep proof of the application date.
 
-ISPASS 2027 does **not** offer remote or pre-recorded presentations. Any author
-of an accepted paper may present it, so if you cannot travel, arrange for a
-co-author who can. A paper that is not presented in person by one of its
-authors is not included in the proceedings or in IEEE Xplore.
+If your visa is refused, or will not be issued before the conference, contact
+the Program Chair **as soon as possible** with evidence of when you requested an
+invitation letter and applied for the visa. In exceptional circumstances like
+these the General and Program Chairs may allow a remote presentation, decided
+case by case. If a co-author can travel instead, they may present the paper.
+See the [in-person presentation policy](/2027/cfp/#in-person-presentation).
