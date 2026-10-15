@@ -37,6 +37,9 @@ Please make sure that your submission satisfies all of the following.
 - Please **number the pages** of the submission.
 - The paper must be submitted as a **PDF**. No other format can be accepted, and
   the document must print exactly as received.
+- If the paper is accepted, **one of its authors must present it in person** in
+  New York City. Papers that are not presented are withdrawn from the
+  proceedings. See the [in-person presentation policy](/2027/cfp/#in-person-presentation).
 
 For tool and benchmark papers, tick the tool/benchmark box in the paper topics.
 Do not include a URL to the tool or benchmark if it would reveal your identity;

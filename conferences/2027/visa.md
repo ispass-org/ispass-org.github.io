@@ -8,7 +8,7 @@ order: 40
 :::warning
 **Start early.** US visa interview wait times vary enormously by country and can
 run to several months. Begin the process as soon as you intend to attend, and do
-not wait for a paper acceptance.
+not wait for a paper acceptance: accepted papers must be presented in person.
 :::
 
 ISPASS 2027 will be held in New York City, USA. Whether you need a visa depends
@@ -71,7 +71,13 @@ decisions.
 
 ## If your visa is refused
 
-If you cannot obtain a visa in time, contact the General Chair. Recent ISPASS
-editions have accommodated pre-recorded presentations for authors unable to
-travel; whether ISPASS 2027 will do so is for the Organizing Committee to
-decide.
+Accepted papers must be presented in person. Authors who need a visa to
+present must submit their application no later than **two weeks after the
+acceptance notification**, and keep proof of the application date.
+
+If your visa is refused, or will not be issued before the conference, contact
+the Program Chair **as soon as possible** with evidence of when you requested an
+invitation letter and applied for the visa. In exceptional circumstances like
+these the General and Program Chairs may allow a remote presentation, decided
+case by case. If a co-author can travel instead, they may present the paper.
+See the [in-person presentation policy](/2027/cfp/#in-person-presentation).

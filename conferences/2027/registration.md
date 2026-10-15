@@ -27,9 +27,11 @@ early-bird price that rises after the early registration deadline.
 
 :::warning
 **Authors must register.** At least one author of each accepted paper must
-register by the camera-ready deadline, and attend to present the paper.
-Papers without a registered author are not included in the proceedings. See
-[Camera-Ready Instructions](/2027/camera-ready/).
+register by the camera-ready deadline, and one of the authors must present the
+paper in person. Papers without a registered author are not included in the
+proceedings, and papers that are not presented are withdrawn from it. See
+[Camera-Ready Instructions](/2027/camera-ready/) and the
+[in-person presentation policy](/2027/cfp/#in-person-presentation).
 :::
 
 ## Students

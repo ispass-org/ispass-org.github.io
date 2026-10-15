@@ -18,6 +18,14 @@ Authors are invited to submit previously unpublished work for possible
 presentation at the conference. ISPASS 2027 will be held in New York City on
 May 9–11, 2027.
 
+:::warning
+**Accepted papers must be presented in person.** One of the authors of each
+accepted paper must attend ISPASS 2027 in New York City and present the paper.
+Papers that are not presented are withdrawn from the proceedings and from IEEE
+Xplore. Please read the [in-person presentation policy](#in-person-presentation)
+before you submit.
+:::
+
 ## Topics of interest
 
 Papers are solicited in fields that include the following.
@@ -72,6 +80,33 @@ motivated in the paper. Authors of accepted tool and benchmark papers are
 expected to open-source their tool or benchmark before the conference.
 
 There is no separate page limit for tool and benchmark papers.
+
+## In-person presentation
+
+ISPASS 2027 is an in-person conference. Each accepted paper must be presented at
+the conference, in person, by one of its authors. Remote and pre-recorded
+presentations are not an alternative to attending. Before you submit, make sure
+that at least one author will be able to travel to New York in May 2027.
+
+**Visas.** If the presenting author needs a visa to enter the United States,
+apply early; interview wait times can run to several months. Request an
+invitation letter promptly, and submit the visa application no later than
+**two weeks after the acceptance notification**. Keep proof of the application
+date: the chairs may ask for it. See [Visa Information](/2027/visa/).
+
+**Exceptions.** In exceptional circumstances that prevent the authors from
+travelling, the General and Program Chairs may allow a remote presentation.
+Examples include a visa that was applied for on time but was refused or not
+issued before the conference, or a travel ban that applies to the authors.
+Exceptions are decided case by case. Contact the Program Chair **as soon as**
+you know there is a problem, and be ready to show evidence, such as the date of
+your invitation-letter request and visa application. Requests made shortly
+before the conference without evidence of a timely visa application will not
+normally be granted.
+
+**Papers that are not presented.** An accepted paper that is not presented —
+in person, or remotely under an exception approved in advance by the chairs — is
+withdrawn from the proceedings and does not appear in IEEE Xplore.
 
 ## How to submit
 
